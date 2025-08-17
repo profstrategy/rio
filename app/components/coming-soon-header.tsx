@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 
 const ComingSoonHeader = () => {
       const [timeLeft, setTimeLeft] = useState({
-        days: 15,
-        hours: 8,
+        days: 180,
+        hours: 23,
         minutes: 42,
         seconds: 30
       });
