@@ -1,0 +1,534 @@
+@import "tailwindcss";
+
+:root {
+  /* Primary Colors - Macaw Inspired */
+  --rio-fire-50: #fff4ed;
+  --rio-fire-100: #ffe4cc;
+  --rio-fire-200: #ffcf99;
+  --rio-fire-300: #ffb366;
+  --rio-fire-400: #ff8a47;
+  --rio-fire-500: #FF6B35;  /* Main macaw orange */
+  --rio-fire-600: #e55a2b;
+  --rio-fire-700: #cc4a21;
+  --rio-fire-800: #b33b17;
+  --rio-fire-900: #99310d;
+
+  /* Secondary Colors - Brazilian Sky */
+  --rio-sky-50: #f0fbff;
+  --rio-sky-100: #e0f6fe;
+  --rio-sky-200: #b8ebfe;
+  --rio-sky-300: #7dd3fc;
+  --rio-sky-400: #38bdf8;
+  --rio-sky-500: #00B4DB;  /* Main sky blue */
+  --rio-sky-600: #0ea5e9;
+  --rio-sky-700: #0284c7;
+  --rio-sky-800: #0369a1;
+  --rio-sky-900: #0c4a6e;
+
+  /* Accent Colors - Golden Flight */
+  --rio-gold-50: #fefce8;
+  --rio-gold-100: #fef9c3;
+  --rio-gold-200: #fef08a;
+  --rio-gold-300: #fde047;
+  --rio-gold-400: #facc15;
+  --rio-gold-500: #FFD23F;  /* Main gold */
+  --rio-gold-600: #ca8a04;
+  --rio-gold-700: #a16207;
+  --rio-gold-800: #854d0e;
+  --rio-gold-900: #713f12;
+
+  /* Nature Colors - Jungle & Growth */
+  --rio-jungle-50: #f0fdf4;
+  --rio-jungle-100: #dcfce7;
+  --rio-jungle-200: #bbf7d0;
+  --rio-jungle-300: #86efac;
+  --rio-jungle-400: #4ade80;
+  --rio-jungle-500: #56AB2F;  /* Jungle green */
+  --rio-jungle-600: #16a34a;
+  --rio-jungle-700: #15803d;
+  --rio-jungle-800: #166534;
+  --rio-jungle-900: #14532d;
+
+  /* Flight Colors - High Altitude Mystery */
+  --rio-flight-50: #f8fafc;
+  --rio-flight-100: #f1f5f9;
+  --rio-flight-200: #e2e8f0;
+  --rio-flight-300: #cbd5e1;
+  --rio-flight-400: #94a3b8;
+  --rio-flight-500: #667EEA;  /* Flight purple */
+  --rio-flight-600: #475569;
+  --rio-flight-700: #334155;
+  --rio-flight-800: #1e293b;
+  --rio-flight-900: #0f172a;
+
+  /* Neutral Colors */
+  --rio-white: #ffffff;
+  --rio-black: #0a0a0a;
+  --rio-gray-50: #f9fafb;
+  --rio-gray-100: #f3f4f6;
+  --rio-gray-200: #e5e7eb;
+  --rio-gray-300: #d1d5db;
+  --rio-gray-400: #9ca3af;
+  --rio-gray-500: #6b7280;
+  --rio-gray-600: #4b5563;
+  --rio-gray-700: #374151;
+  --rio-gray-800: #1f2937;
+  --rio-gray-900: #111827;
+
+  /* ========================================
+     🎨 RIO GRADIENTS
+  ======================================== */
+  --gradient-fire: linear-gradient(45deg, var(--rio-fire-500), #F7931E);
+  --gradient-sky: linear-gradient(45deg, var(--rio-sky-500), var(--rio-sky-700));
+  --gradient-sunset: linear-gradient(135deg, var(--rio-fire-500), var(--rio-gold-500), var(--rio-sky-500));
+  --gradient-flight: linear-gradient(45deg, var(--rio-flight-500), #764ba2);
+  --gradient-jungle: linear-gradient(45deg, var(--rio-jungle-500), #a8e6cf);
+  --gradient-freedom: linear-gradient(45deg, #ffecd2, #fcb69f);
+  --gradient-tropical: linear-gradient(135deg, var(--rio-fire-500) 0%, var(--rio-sky-500) 50%, var(--rio-gold-500) 100%);
+
+  /* ========================================
+     📝 TYPOGRAPHY SYSTEM
+  ======================================== */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-secondary: 'Poppins', sans-serif; /* Alternative for headings */
+
+  /* ========================================
+     🌊 SHADOWS & EFFECTS
+  ======================================== */
+  /* --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25); */
+  --shadow-rio: 0 20px 40px -12px rgba(255, 107, 53, 0.25); /* Rio-themed shadow */
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+}
+
+/* ========================================
+   🧱 BASE STYLES
+======================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+
+/* ========================================
+   📝 TYPOGRAPHY CLASSES
+======================================== */
+
+/* Headings with Rio Gradient Effect */
+.rio-heading {
+  font-weight: var(--font-extrabold);
+  background: var(--gradient-fire);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.rio-heading-1 { font-size: var(--text-6xl); }
+.rio-heading-2 { font-size: var(--text-5xl); }
+.rio-heading-3 { font-size: var(--text-4xl); }
+.rio-heading-4 { font-size: var(--text-3xl); }
+
+.rio-subheading {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--rio-gray-600);
+  margin-bottom: var(--space-4);
+}
+
+.rio-body {
+  font-size: var(--text-base);
+  color: var(--rio-gray-700);
+  line-height: 1.7;
+}
+
+.rio-body-lg {
+  font-size: var(--text-lg);
+  color: var(--rio-gray-700);
+  line-height: 1.7;
+}
+
+.rio-caption {
+  font-size: var(--text-sm);
+  color: var(--rio-gray-500);
+  font-weight: var(--font-medium);
+}
+
+/* ========================================
+   🎛️ BUTTON SYSTEM
+======================================== */
+
+/* Base Button */
+.rio-btn {
+  font-family: var(--font-primary);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Primary Button - Rio Fire Gradient */
+.rio-btn-primary {
+  background: var(--gradient-fire);
+  color: var(--rio-white);
+  box-shadow: var(--shadow-lg);
+}
+
+.rio-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-rio);
+  filter: brightness(110%);
+}
+
+.rio-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button - Rio Sky */
+.rio-btn-secondary {
+  background: var(--gradient-sky);
+  color: var(--rio-white);
+  box-shadow: var(--shadow-md);
+}
+
+.rio-btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(0, 180, 219, 0.3);
+}
+
+/* Accent Button - Rio Gold */
+.rio-btn-accent {
+  background: var(--gradient-sunset);
+  color: var(--rio-white);
+  box-shadow: var(--shadow-md);
+}
+
+.rio-btn-accent:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(255, 210, 63, 0.3);
+}
+
+/* Outline Button */
+.rio-btn-outline {
+  background: transparent;
+  color: var(--rio-fire-500);
+  border: 2px solid var(--rio-fire-500);
+}
+
+.rio-btn-outline:hover {
+  background: var(--rio-fire-500);
+  color: var(--rio-white);
+}
+
+/* Button Sizes */
+.rio-btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.rio-btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-lg);
+}
+
+.rio-btn-xl {
+  padding: var(--space-5) var(--space-10);
+  font-size: var(--text-xl);
+}
+
+/* ========================================
+   🃏 CARD SYSTEM
+======================================== */
+
+/* Base Card */
+.rio-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.rio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-2xl);
+}
+
+/* Card with Top Border */
+.rio-card-bordered {
+  border-top: 4px solid var(--rio-fire-500);
+}
+
+.rio-card-sky { border-top-color: var(--rio-sky-500); }
+.rio-card-gold { border-top-color: var(--rio-gold-500); }
+.rio-card-jungle { border-top-color: var(--rio-jungle-500); }
+
+/* Glass Card Effect */
+.rio-card-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient Card */
+.rio-card-gradient {
+  background: var(--gradient-tropical);
+  color: var(--rio-white);
+}
+
+/* ========================================
+   📊 STATS & DASHBOARD COMPONENTS
+======================================== */
+
+/* Stats Card */
+.rio-stats-card {
+  background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(0,180,219,0.1));
+  border: 2px solid rgba(255,107,53,0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.rio-stats-card:hover {
+  border-color: var(--rio-fire-500);
+  box-shadow: var(--shadow-lg);
+}
+
+.rio-stat-number {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-black);
+  color: var(--rio-fire-500);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.rio-stat-label {
+  font-size: var(--text-sm);
+  color: var(--rio-gray-600);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   🏆 LEADERBOARD COMPONENTS
+======================================== */
+
+/* Leaderboard Item */
+.rio-leaderboard-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-4);
+  background: var(--rio-white);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+  box-shadow: var(--shadow-md);
+  border-left: 4px solid var(--rio-gold-500);
+  transition: all var(--transition-normal);
+}
+
+.rio-leaderboard-item:hover {
+  transform: translateX(5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Rank Badge */
+.rio-rank-badge {
+  background: var(--gradient-fire);
+  color: var(--rio-white);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-bold);
+  margin-right: var(--space-4);
+  flex-shrink: 0;
+}
+
+.rio-rank-badge-1 { background: linear-gradient(45deg, #FFD700, #FFA500); }
+.rio-rank-badge-2 { background: linear-gradient(45deg, #C0C0C0, #A9A9A9); }
+.rio-rank-badge-3 { background: linear-gradient(45deg, #CD7F32, #B87333); }
+
+/* ========================================
+   🌟 SPECIAL EFFECTS
+======================================== */
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.rio-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Glow Effect */
+.rio-glow {
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+}
+
+.rio-glow:hover {
+  box-shadow: 0 0 30px rgba(255, 107, 53, 0.7);
+}
+
+/* Pulse Effect */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.rio-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ========================================
+   📱 RESPONSIVE UTILITIES
+======================================== */
+
+/* Container */
+.rio-container {
+  max-width: 1200px;
+  margin: 2rem;
+  padding: 0 var(--space-4);
+}
+
+/* Grid System */
+.rio-grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.rio-grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.rio-grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.rio-grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+/* Flex Utilities */
+.rio-flex { display: flex; }
+.rio-flex-col { flex-direction: column; }
+.rio-items-center { align-items: center; }
+.rio-justify-center { justify-content: center; }
+.rio-justify-between { justify-content: space-between; }
+.rio-gap-4 { gap: var(--space-4); }
+
+/* Text Alignment */
+.rio-text-center { text-align: center; }
+.rio-text-left { text-align: left; }
+.rio-text-right { text-align: right; }
+
+/* Spacing */
+.rio-mb-4 { margin-bottom: var(--space-4); }
+.rio-mb-6 { margin-bottom: var(--space-6); }
+.rio-mb-8 { margin-bottom: var(--space-8); }
+.rio-mt-4 { margin-top: var(--space-4); }
+.rio-mt-6 { margin-top: var(--space-6); }
+.rio-mt-8 { margin-top: var(--space-8); }
+
+/* ========================================
+   📱 MOBILE RESPONSIVENESS
+======================================== */
+
+@media (max-width: 768px) {
+  .rio-heading-1 { font-size: var(--text-4xl); }
+  .rio-heading-2 { font-size: var(--text-3xl); }
+  .rio-heading-3 { font-size: var(--text-2xl); }
+  
+  .rio-card {
+    padding: var(--space-6);
+  }
+  
+  .rio-btn-xl {
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--text-lg);
+  }
+  
+  .rio-grid-2,
+  .rio-grid-3,
+  .rio-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .rio-leaderboard-item {
+    padding: var(--space-3);
+  }
+  
+  .rio-rank-badge {
+    width: 35px;
+    height: 35px;
+    font-size: var(--text-sm);
+  }
+}
+
+/* ========================================
+   🎯 ACCESSIBILITY
+======================================== */
+
+/* Focus States */
+.rio-btn:focus,
+.rio-card:focus {
+  outline: 3px solid var(--rio-fire-300);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .rio-float,
+  .rio-pulse {
+    animation: none;
+  }
+}
