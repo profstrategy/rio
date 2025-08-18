@@ -1,7 +1,11 @@
-import RioComingSoon from "./components/coming-soon";
+import MainHeader from "./components/layouts/header";
+import Navbar, { Logo } from "./components/layouts/navbar";
 
 export default function Home() {
   return (
-  <div><RioComingSoon /></div>
+  <section>
+    <Navbar />
+    <MainHeader />
+  </section>
   );
 }
