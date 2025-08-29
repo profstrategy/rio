@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import HowItWorks from "./_components/hero-section/rio-sub-hero";
 import RioSubHero from "./_components/hero-section/rio-sub-hero";
 
 const Navbar = dynamic(() => import('@/components/reusables/navbar'), { ssr: true });

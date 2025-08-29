@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 
 export const cn = (...inputs:ClassValue[]) => {
 return twMerge(clsx(...inputs));
+<<<<<<< HEAD
 }
 
 /**
@@ -19,4 +20,6 @@ return twMerge(clsx(...inputs));
 export const cleanName = (name:string): string => {
     if(!name) return ''
     return name.trim().toLowerCase()
+=======
+>>>>>>> bdb8ca02c6618833f1a21f4a84c8239f9c3e814e
 }
