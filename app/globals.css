@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   /* Primary Colors - Macaw Inspired */
@@ -116,6 +119,38 @@
   --transition-fast: 150ms ease;
   --transition-normal: 300ms ease;
   --transition-slow: 500ms ease;
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
 /* ========================================
@@ -169,49 +204,393 @@ body {
   color: var(--foreground);
 }
 
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 4rem;
-}
 
-.container-sm {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
+/* ========================================
+   📝 TYPOGRAPHY CLASSES
+======================================== */
 
-.connect-x-button {
-  background: linear-gradient(135deg, 
-    #2dd4bf 0%, 
-    #14b8a6 50%, 
-    #0f766e 100%);
-  border: 1px solid rgba(45, 212, 191, 0.3);
-}
-
-.title-text {
-  background: linear-gradient(180deg, 
-    #ffffff 0%, 
-    #e5e7eb 100%);
+/* Headings with Rio Gradient Effect */
+.rio-heading {
+  font-weight: var(--font-extrabold);
+  background: var(--gradient-fire);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.connect-x-button:hover {
-  background: linear-gradient(135deg, 
-    #34d5c7 0%, 
-    #16a085 50%, 
-    #117a65 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(45, 212, 191, 0.3);
+.rio-heading-1 { font-size: var(--text-6xl); }
+.rio-heading-2 { font-size: var(--text-5xl); }
+.rio-heading-3 { font-size: var(--text-4xl); }
+.rio-heading-4 { font-size: var(--text-3xl); }
+
+.rio-subheading {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--rio-gray-600);
+  margin-bottom: var(--space-4);
 }
 
-.join-community-button:hover {
-  background: linear-gradient(135deg, 
-    #5eea8a 0%, 
-    #26d15e 50%, 
-    #1a9c4a 100%);
+.rio-body {
+  font-size: var(--text-base);
+  color: var(--rio-gray-700);
+  line-height: 1.7;
+}
+
+.rio-body-lg {
+  font-size: var(--text-lg);
+  color: var(--rio-gray-700);
+  line-height: 1.7;
+}
+
+.rio-caption {
+  font-size: var(--text-sm);
+  color: var(--rio-gray-500);
+  font-weight: var(--font-medium);
+}
+
+/* ========================================
+   🎛️ BUTTON SYSTEM
+======================================== */
+
+/* Base Button */
+.rio-btn {
+  font-family: var(--font-primary);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Primary Button - Rio Fire Gradient */
+.rio-btn-primary {
+  background: var(--gradient-fire);
+  color: var(--rio-white);
+  box-shadow: var(--shadow-lg);
+}
+
+.rio-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+  box-shadow: var(--shadow-rio);
+  filter: brightness(110%);
+}
+
+.rio-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button - Rio Sky */
+.rio-btn-secondary {
+  background: var(--gradient-sky);
+  color: var(--rio-white);
+  box-shadow: var(--shadow-md);
+}
+
+.rio-btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(0, 180, 219, 0.3);
+}
+
+/* Accent Button - Rio Gold */
+.rio-btn-accent {
+  background: var(--gradient-sunset);
+  color: var(--rio-white);
+  box-shadow: var(--shadow-md);
+}
+
+.rio-btn-accent:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(255, 210, 63, 0.3);
+}
+
+/* Outline Button */
+.rio-btn-outline {
+  background: transparent;
+  color: var(--rio-fire-500);
+  border: 2px solid var(--rio-fire-500);
+}
+
+.rio-btn-outline:hover {
+  background: var(--rio-fire-500);
+  color: var(--rio-white);
+}
+
+/* Button Sizes */
+.rio-btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.rio-btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-lg);
+}
+
+.rio-btn-xl {
+  padding: var(--space-5) var(--space-10);
+  font-size: var(--text-xl);
+}
+
+/* ========================================
+   🃏 CARD SYSTEM
+======================================== */
+
+/* Base Card */
+.rio-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.rio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-2xl);
+}
+
+/* Card with Top Border */
+.rio-card-bordered {
+  border-top: 4px solid var(--rio-fire-500);
+}
+
+.rio-card-sky { border-top-color: var(--rio-sky-500); }
+.rio-card-gold { border-top-color: var(--rio-gold-500); }
+.rio-card-jungle { border-top-color: var(--rio-jungle-500); }
+
+/* Glass Card Effect */
+.rio-card-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient Card */
+.rio-card-gradient {
+  background: var(--gradient-tropical);
+  color: var(--rio-white);
+}
+
+/* ========================================
+   📊 STATS & DASHBOARD COMPONENTS
+======================================== */
+
+/* Stats Card */
+.rio-stats-card {
+  background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(0,180,219,0.1));
+  border: 2px solid rgba(255,107,53,0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.rio-stats-card:hover {
+  border-color: var(--rio-fire-500);
+  box-shadow: var(--shadow-lg);
+}
+
+.rio-stat-number {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-black);
+  color: var(--rio-fire-500);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.rio-stat-label {
+  font-size: var(--text-sm);
+  color: var(--rio-gray-600);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   🏆 LEADERBOARD COMPONENTS
+======================================== */
+
+/* Leaderboard Item */
+.rio-leaderboard-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-4);
+  background: var(--rio-white);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+  box-shadow: var(--shadow-md);
+  border-left: 4px solid var(--rio-gold-500);
+  transition: all var(--transition-normal);
+}
+
+.rio-leaderboard-item:hover {
+  transform: translateX(5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Rank Badge */
+.rio-rank-badge {
+  background: var(--gradient-fire);
+  color: var(--rio-white);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-bold);
+  margin-right: var(--space-4);
+  flex-shrink: 0;
+}
+
+.rio-rank-badge-1 { background: linear-gradient(45deg, #FFD700, #FFA500); }
+.rio-rank-badge-2 { background: linear-gradient(45deg, #C0C0C0, #A9A9A9); }
+.rio-rank-badge-3 { background: linear-gradient(45deg, #CD7F32, #B87333); }
+
+/* ========================================
+   🌟 SPECIAL EFFECTS
+======================================== */
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.rio-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Glow Effect */
+.rio-glow {
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+}
+
+.rio-glow:hover {
+  box-shadow: 0 0 30px rgba(255, 107, 53, 0.7);
+}
+
+/* Pulse Effect */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.rio-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ========================================
+   📱 RESPONSIVE UTILITIES
+======================================== */
+
+/* Container */
+.rio-container {
+  max-width: 1200px;
+  margin: 2rem;
+  padding: 0 var(--space-4);
+}
+
+/* Grid System */
+.rio-grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.rio-grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.rio-grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.rio-grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+/* Flex Utilities */
+.rio-flex { display: flex; }
+.rio-flex-col { flex-direction: column; }
+.rio-items-center { align-items: center; }
+.rio-justify-center { justify-content: center; }
+.rio-justify-between { justify-content: space-between; }
+.rio-gap-4 { gap: var(--space-4); }
+
+/* Text Alignment */
+.rio-text-center { text-align: center; }
+.rio-text-left { text-align: left; }
+.rio-text-right { text-align: right; }
+
+/* Spacing */
+.rio-mb-4 { margin-bottom: var(--space-4); }
+.rio-mb-6 { margin-bottom: var(--space-6); }
+.rio-mb-8 { margin-bottom: var(--space-8); }
+.rio-mt-4 { margin-top: var(--space-4); }
+.rio-mt-6 { margin-top: var(--space-6); }
+.rio-mt-8 { margin-top: var(--space-8); }
+
+/* ========================================
+   📱 MOBILE RESPONSIVENESS
+======================================== */
+
+@media (max-width: 768px) {
+  .rio-heading-1 { font-size: var(--text-4xl); }
+  .rio-heading-2 { font-size: var(--text-3xl); }
+  .rio-heading-3 { font-size: var(--text-2xl); }
+  
+  .rio-card {
+    padding: var(--space-6);
+  }
+  
+  .rio-btn-xl {
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--text-lg);
+  }
+  
+  .rio-grid-2,
+  .rio-grid-3,
+  .rio-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .rio-leaderboard-item {
+    padding: var(--space-3);
+  }
+  
+  .rio-rank-badge {
+    width: 35px;
+    height: 35px;
+    font-size: var(--text-sm);
+  }
+}
+
+/* ========================================
+   🎯 ACCESSIBILITY
+======================================== */
+
+/* Focus States */
+.rio-btn:focus,
+.rio-card:focus {
+  outline: 3px solid var(--rio-fire-300);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .rio-float,
+  .rio-pulse {
+    animation: none;
+  }
 }

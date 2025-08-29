@@ -1,2 +1,4 @@
 import logo from './rio-logo.png'
-export { logo }
+import heroImage from './rio-wallpapper.jpg'
+export { logo, heroImage }
+
