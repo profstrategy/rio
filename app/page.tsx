@@ -1,7 +1,19 @@
-import RioComingSoon from "./components/coming-soon";
+import dynamic from "next/dynamic";
+import HowItWorks from "./_components/hero-section/rio-sub-hero";
+import RioSubHero from "./_components/hero-section/rio-sub-hero";
+
+const Navbar = dynamic(() => import('@/components/reusables/navbar'), { ssr: true });
+const MainHeader = dynamic(() => import('@/app/_components/hero-section/hero'), { ssr: true });
+const TokenLeaderBoardLayout = dynamic(() => import('@/components/layouts/ui-layout/token-leaderboard-layout'), { ssr: true });
 
 export default function Home() {
   return (
-  <div><RioComingSoon /></div>
+  <section className="relative">
+    <Navbar />
+    <MainHeader />
+    <TokenLeaderBoardLayout />
+    <RioSubHero />
+  </section>
   );
 }
+ 

@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   /* Primary Colors - Macaw Inspired */
@@ -7,7 +10,8 @@
   --rio-fire-200: #ffcf99;
   --rio-fire-300: #ffb366;
   --rio-fire-400: #ff8a47;
-  --rio-fire-500: #FF6B35;  /* Main macaw orange */
+  --rio-fire-500: #FF6B35;
+  /* Main macaw orange */
   --rio-fire-600: #e55a2b;
   --rio-fire-700: #cc4a21;
   --rio-fire-800: #b33b17;
@@ -19,7 +23,8 @@
   --rio-sky-200: #b8ebfe;
   --rio-sky-300: #7dd3fc;
   --rio-sky-400: #38bdf8;
-  --rio-sky-500: #00B4DB;  /* Main sky blue */
+  --rio-sky-500: #00B4DB;
+  /* Main sky blue */
   --rio-sky-600: #0ea5e9;
   --rio-sky-700: #0284c7;
   --rio-sky-800: #0369a1;
@@ -31,7 +36,8 @@
   --rio-gold-200: #fef08a;
   --rio-gold-300: #fde047;
   --rio-gold-400: #facc15;
-  --rio-gold-500: #FFD23F;  /* Main gold */
+  --rio-gold-500: #FFD23F;
+  /* Main gold */
   --rio-gold-600: #ca8a04;
   --rio-gold-700: #a16207;
   --rio-gold-800: #854d0e;
@@ -43,7 +49,8 @@
   --rio-jungle-200: #bbf7d0;
   --rio-jungle-300: #86efac;
   --rio-jungle-400: #4ade80;
-  --rio-jungle-500: #56AB2F;  /* Jungle green */
+  --rio-jungle-500: #56AB2F;
+  /* Jungle green */
   --rio-jungle-600: #16a34a;
   --rio-jungle-700: #15803d;
   --rio-jungle-800: #166534;
@@ -55,7 +62,8 @@
   --rio-flight-200: #e2e8f0;
   --rio-flight-300: #cbd5e1;
   --rio-flight-400: #94a3b8;
-  --rio-flight-500: #667EEA;  /* Flight purple */
+  --rio-flight-500: #667EEA;
+  /* Flight purple */
   --rio-flight-600: #475569;
   --rio-flight-700: #334155;
   --rio-flight-800: #1e293b;
@@ -90,7 +98,8 @@
      📝 TYPOGRAPHY SYSTEM
   ======================================== */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-secondary: 'Poppins', sans-serif; /* Alternative for headings */
+  --font-secondary: 'Poppins', sans-serif;
+  /* Alternative for headings */
 
   /* ========================================
      🌊 SHADOWS & EFFECTS
@@ -100,12 +109,45 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25); */
-  --shadow-rio: 0 20px 40px -12px rgba(255, 107, 53, 0.25); /* Rio-themed shadow */
+  --shadow-rio: 0 20px 40px -12px rgba(255, 107, 53, 0.25);
+  /* Rio-themed shadow */
 
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-normal: 300ms ease;
   --transition-slow: 500ms ease;
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
 /* ========================================
@@ -126,20 +168,44 @@ html {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
-
+  --color-sky-rio-base: var(--rio-sky-500);
+  --color-fire-rio-sec: var(--rio-fire-500);
+  --color-fire-rio-sec-300: var(--rio-fire-300);
+  --color-flight-rio-500: var(--rio-flight-500)
+;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px)}
 
 /* ========================================
    📝 TYPOGRAPHY CLASSES
@@ -156,10 +222,21 @@ body {
   letter-spacing: -0.02em;
 }
 
-.rio-heading-1 { font-size: var(--text-6xl); }
-.rio-heading-2 { font-size: var(--text-5xl); }
-.rio-heading-3 { font-size: var(--text-4xl); }
-.rio-heading-4 { font-size: var(--text-3xl); }
+.rio-heading-1 {
+  font-size: var(--text-6xl);
+}
+
+.rio-heading-2 {
+  font-size: var(--text-5xl);
+}
+
+.rio-heading-3 {
+  font-size: var(--text-4xl);
+}
+
+.rio-heading-4 {
+  font-size: var(--text-3xl);
+}
 
 .rio-subheading {
   font-size: var(--text-xl);
@@ -305,9 +382,17 @@ body {
   border-top: 4px solid var(--rio-fire-500);
 }
 
-.rio-card-sky { border-top-color: var(--rio-sky-500); }
-.rio-card-gold { border-top-color: var(--rio-gold-500); }
-.rio-card-jungle { border-top-color: var(--rio-jungle-500); }
+.rio-card-sky {
+  border-top-color: var(--rio-sky-500);
+}
+
+.rio-card-gold {
+  border-top-color: var(--rio-gold-500);
+}
+
+.rio-card-jungle {
+  border-top-color: var(--rio-jungle-500);
+}
 
 /* Glass Card Effect */
 .rio-card-glass {
@@ -328,8 +413,8 @@ body {
 
 /* Stats Card */
 .rio-stats-card {
-  background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(0,180,219,0.1));
-  border: 2px solid rgba(255,107,53,0.2);
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 180, 219, 0.1));
+  border: 2px solid rgba(255, 107, 53, 0.2);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   text-align: center;
@@ -394,9 +479,17 @@ body {
   flex-shrink: 0;
 }
 
-.rio-rank-badge-1 { background: linear-gradient(45deg, #FFD700, #FFA500); }
-.rio-rank-badge-2 { background: linear-gradient(45deg, #C0C0C0, #A9A9A9); }
-.rio-rank-badge-3 { background: linear-gradient(45deg, #CD7F32, #B87333); }
+.rio-rank-badge-1 {
+  background: linear-gradient(45deg, #FFD700, #FFA500);
+}
+
+.rio-rank-badge-2 {
+  background: linear-gradient(45deg, #C0C0C0, #A9A9A9);
+}
+
+.rio-rank-badge-3 {
+  background: linear-gradient(45deg, #CD7F32, #B87333);
+}
 
 /* ========================================
    🌟 SPECIAL EFFECTS
@@ -404,8 +497,15 @@ body {
 
 /* Floating Animation */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .rio-float {
@@ -423,8 +523,15 @@ body {
 
 /* Pulse Effect */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .rio-pulse {
@@ -436,99 +543,115 @@ body {
 ======================================== */
 
 /* Container */
-.rio-container {
-  max-width: 1200px;
-  margin: 2rem;
-  padding: 0 var(--space-4);
+.container {
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 2rem;
 }
-
-/* Grid System */
-.rio-grid {
-  display: grid;
-  gap: var(--space-6);
-}
-
-.rio-grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-.rio-grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-.rio-grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-
-/* Flex Utilities */
-.rio-flex { display: flex; }
-.rio-flex-col { flex-direction: column; }
-.rio-items-center { align-items: center; }
-.rio-justify-center { justify-content: center; }
-.rio-justify-between { justify-content: space-between; }
-.rio-gap-4 { gap: var(--space-4); }
-
-/* Text Alignment */
-.rio-text-center { text-align: center; }
-.rio-text-left { text-align: left; }
-.rio-text-right { text-align: right; }
-
-/* Spacing */
-.rio-mb-4 { margin-bottom: var(--space-4); }
-.rio-mb-6 { margin-bottom: var(--space-6); }
-.rio-mb-8 { margin-bottom: var(--space-8); }
-.rio-mt-4 { margin-top: var(--space-4); }
-.rio-mt-6 { margin-top: var(--space-6); }
-.rio-mt-8 { margin-top: var(--space-8); }
-
-/* ========================================
-   📱 MOBILE RESPONSIVENESS
-======================================== */
 
 @media (max-width: 768px) {
-  .rio-heading-1 { font-size: var(--text-4xl); }
-  .rio-heading-2 { font-size: var(--text-3xl); }
-  .rio-heading-3 { font-size: var(--text-2xl); }
-  
-  .rio-card {
-    padding: var(--space-6);
-  }
-  
-  .rio-btn-xl {
-    padding: var(--space-4) var(--space-6);
-    font-size: var(--text-lg);
-  }
-  
-  .rio-grid-2,
-  .rio-grid-3,
-  .rio-grid-4 {
-    grid-template-columns: 1fr;
-  }
-  
-  .rio-leaderboard-item {
-    padding: var(--space-3);
-  }
-  
-  .rio-rank-badge {
-    width: 35px;
-    height: 35px;
-    font-size: var(--text-sm);
+  .container {
+    max-width: 900px;
+    padding: 0 1rem;
+    overflow-x: hidden;
   }
 }
 
-/* ========================================
-   🎯 ACCESSIBILITY
-======================================== */
-
-/* Focus States */
-.rio-btn:focus,
-.rio-card:focus {
-  outline: 3px solid var(--rio-fire-300);
-  outline-offset: 2px;
+.container-reverse {
+  position: relative;
+  left: -10;
 }
 
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
+.token-background {
+  padding: 2rem 0;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(-5deg);
+  }
+
+  75% {
+    transform: translateY(-15px) rotate(3deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
   * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    @apply border-border outline-ring/50;
   }
-  
-  .rio-float,
-  .rio-pulse {
-    animation: none;
+  body {
+    @apply bg-background text-foreground;
   }
 }
