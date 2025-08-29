@@ -7,7 +7,6 @@ import { DesktopNavLinksProps, MobileNavMenuProps } from '@/constants/types'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { signIn, useSession } from 'next-auth/react'
-import Link from 'next/link'
 import { LiaTimesSolid } from 'react-icons/lia'
 import { FaBarsStaggered } from 'react-icons/fa6'
 import AppButton from '../ui/app-button'
@@ -26,9 +25,6 @@ export const Logo = () => {
 const DesktopNavMenu = ({ navItems, activeItem, setActiveItem }: DesktopNavLinksProps) => {
     const session = useSession()
     // const { openDialog } = useAppDialog()
-    const handleNavbarButton = () => {
-        return session ? null : signIn('twitch', { callbackUrl: '/' })
-    }
     return (
         <>
             <ul className="md:flex items-center justify-center lg:gap-8 md:gap-6 hidden">
@@ -55,8 +51,8 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem }: DesktopNavLinks
                     </li>
                 ))}
 
-                <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={handleNavbarButton}>
-                    {session ? `View Whitepaper` : `Connect X`}
+                <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn('twitch', { callbackUrl: '/' })}>
+                    Connect X
                 </AppButton>
             </ul>
 
@@ -75,9 +71,6 @@ const MobileNavMenu = ({
     const session = useSession()
     // const { openDialog } = useAppDialog()
 
-    const handleNavbarButton = () => {
-        return session ? null : signIn('twitch', { callbackUrl: '/' })
-    }
     return (
         <AnimatePresence>
             {isOpen && (
@@ -157,8 +150,8 @@ const MobileNavMenu = ({
                                 transition={{ type: 'spring', stiffness: 500 }}
                                 className="mt-8"
                             >
-                                <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={handleNavbarButton}>
-                                    {session ? `View Whitepaper` : `Connect X`}
+                                <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn('twitch', { callbackUrl: '/' })}>
+                                    Connect X
                                 </AppButton>
 
                             </motion.li>
