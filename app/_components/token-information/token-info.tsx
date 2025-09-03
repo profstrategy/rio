@@ -1,13 +1,14 @@
 'use client'
-import { MdOutlineBlurCircular } from 'react-icons/md';
+// import { MdOutlineBlurCircular } from 'react-icons/md';
 import { motion } from 'framer-motion';
-import { SiVirustotal } from 'react-icons/si';
-import { HiStatusOnline } from 'react-icons/hi';
+// import { SiVirustotal } from 'react-icons/si';
+// import { HiStatusOnline } from 'react-icons/hi';
 import { AppHeading } from '@/components/reusables/app-heading';
 import AppButton from '@/components/ui/app-button';
 import React, { useState, useEffect } from 'react'
 import AppDialogBox from '@/components/reusables/alert-dialog';
 import { useAppDialog } from '@/hooks/use-app-dialog';
+import { LeaderboardEmptyState } from '@/components/reusables/empty-states';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -34,48 +35,48 @@ const itemVariants: any = {
 
 const TokenInfo = () => {
     const [mounted, setMounted] = useState(false);
-    const [animatedSupply, setAnimatedSupply] = useState(0);
-    const [animatedTotal, setAnimatedTotal] = useState(0);
+    // const [animatedSupply, setAnimatedSupply] = useState(0);
+    // const [animatedTotal, setAnimatedTotal] = useState(0);
 
     const { openDialog, dialogProps } = useAppDialog()
 
-    const targetCirculating = 4675474;
-    const targetTotal = 4675474685;
+    // const targetCirculating = 4675474;
+    // const targetTotal = 4675474685;
 
     useEffect(() => {
         setMounted(true);
 
         // Animate numbers on mount
-        const animateNumbers = () => {
-            const duration = 2000; // 2 seconds
-            const steps = 60;
-            const stepDuration = duration / steps;
+        // const animateNumbers = () => {
+        //     const duration = 2000; // 2 seconds
+        //     const steps = 60;
+        //     const stepDuration = duration / steps;
 
-            let currentStep = 0;
-            const timer = setInterval(() => {
-                currentStep++;
-                const progress = currentStep / steps;
+        //     let currentStep = 0;
+        //     const timer = setInterval(() => {
+        //         currentStep++;
+        //         const progress = currentStep / steps;
 
-                setAnimatedSupply(Math.floor(targetCirculating * progress));
-                setAnimatedTotal(Math.floor(targetTotal * progress));
+        //         setAnimatedSupply(Math.floor(targetCirculating * progress));
+        //         setAnimatedTotal(Math.floor(targetTotal * progress));
 
-                if (currentStep >= steps) {
-                    clearInterval(timer);
-                    setAnimatedSupply(targetCirculating);
-                    setAnimatedTotal(targetTotal);
-                }
-            }, stepDuration);
+        //         if (currentStep >= steps) {
+        //             clearInterval(timer);
+        //             setAnimatedSupply(targetCirculating);
+        //             setAnimatedTotal(targetTotal);
+        //         }
+        //     }, stepDuration);
 
-            return () => clearInterval(timer);
-        };
+        //     return () => clearInterval(timer);
+        // };
 
-        const cleanup = animateNumbers();
-        return cleanup;
+        // const cleanup = animateNumbers();
+        // return cleanup;
     }, []);
 
-    const formatNumber = (num: number) => {
-        return num.toLocaleString();
-    };
+    // const formatNumber = (num: number) => {
+    //     return num.toLocaleString();
+    // };
 
     if (!mounted) {
         return (
@@ -91,9 +92,7 @@ const TokenInfo = () => {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
             variants={containerVariants}
-            className=' lg:h-[30.5rem] relative' role="complementary" aria-label="Token Information Section" style={{
-                marginBottom: '1rem'
-            }} id='token'>
+            className='h-auto relative w-full col-span-2' role="complementary" aria-label="Token Information Section" id='token' style={{ marginBottom: '1rem' }}>
             {/* Background Rio Character - Blu the Macaw */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
                 <div
@@ -148,7 +147,7 @@ const TokenInfo = () => {
                         style={{
                             background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
                             padding: '1rem',
-                            marginTop: '1rem'
+                            marginTop: '4px'
                         }}
                     >
                         <div className='flex flex-col gap-6 text-white'>
@@ -168,8 +167,9 @@ const TokenInfo = () => {
 
                             {/* Token Stats */}
                             <div className="flex flex-col gap-4">
+                                <LeaderboardEmptyState message='Coming Soon' />
                                 {/* Circulating Supply */}
-                                <div
+                                {/* <div
                                     className='flex justify-between items-center rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300 hover:scale-[1.02]'
                                     role="group"
                                     aria-label="Circulating Supply Information"
@@ -192,10 +192,10 @@ const TokenInfo = () => {
                                         </p>
                                         <p className="text-xs text-white/50">RIO Tokens</p>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 {/* Total Supply */}
-                                <div
+                                {/* <div
                                     className='flex justify-between items-center p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-400/20 hover:border-purple-400/40 transition-all duration-300 hover:scale-[1.02]'
                                     role="group"
                                     aria-label="Total Supply Information"
@@ -217,10 +217,10 @@ const TokenInfo = () => {
                                         </p>
                                         <p className="text-xs text-white/50">RIO Tokens</p>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 {/* Market Cap Placeholder */}
-                                <div
+                                {/* <div
                                     className='flex justify-between items-center p-4 rounded-lg bg-gradient-to-r from-orange-500/10 to-yellow-500/10 border border-orange-400/20 hover:border-orange-400/40 transition-all duration-300 hover:scale-[1.02]'
                                     role="group"
                                     aria-label="Market Information"
@@ -242,7 +242,7 @@ const TokenInfo = () => {
                                         </p>
                                         <p className="text-xs text-white/50">Above The Noise</p>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
 
                             {/* Action Button */}

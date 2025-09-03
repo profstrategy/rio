@@ -32,7 +32,7 @@ const RioSubHero = () => {
 
     return (
         <main
-            className='absolute md:top-[20rem] top-1/6 w-full overflow-hidden expended-lg'
+            className='absolute md:top-[24rem] top-1/5 w-full overflow-hidden expended-lg'
             style={{
                 background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(15,23,42,0.8) 20%, rgba(15,23,42,0.95) 100%)',
                 backdropFilter: 'blur(10px)',
