@@ -6,6 +6,7 @@ import { BsSlack } from 'react-icons/bs';
 import { AppHeading } from '@/components/reusables/app-heading';
 import { motion } from 'framer-motion';
 import React from 'react'
+import Link from 'next/link';
 
 const SocialLinks = () => {
 
@@ -35,7 +36,7 @@ const SocialLinks = () => {
         <motion.main
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: true, margin: '-50px' }}
             variants={containerVariants}
             className='' role="complementary" aria-label="Contact Information Section" >
 
@@ -47,9 +48,7 @@ const SocialLinks = () => {
                     Community Links
                 </AppHeading>
 
-                <div className="relative overflow-hidden rounded-xl" style={{
-                    marginTop: '.5rem'
-                }}>
+                <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
                     <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
                         <div className="w-full h-full rounded-xl" style={{
@@ -71,17 +70,21 @@ const SocialLinks = () => {
                             <div className="flex flex-col gap-4">
 
                                 <div
-                                    className='flex justify-around items-center rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 hover:scale-z-50 cursor-pointer'
+                                    className='flex justify-center gap-8 items-center rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 hover:scale-z-50 cursor-pointer'
                                     role="group"
                                     aria-label="Circulating Supply Information"
                                     style={{
                                         paddingInline: '1rem'
                                     }}
                                 >
+                                    <Link href='https://t.me/rioonbonk' target='_blank'>
                                     <BsTelegram className='w-8 h-8' />
+                                    </Link>
+                                    <Link href='https://x.com/rioonbonk' target='_blank'>
                                     <BsTwitterX className='w-8 h-8' />
-                                    <BsDiscord className='w-8 h-8' />
-                                    <BsSlack className='w-8 h-8' />
+                                    </Link>
+                                    {/* <BsDiscord className='w-8 h-8' />
+                                    <BsSlack className='w-8 h-8' /> */}
                                 </div>
                             </div>
                         </div>

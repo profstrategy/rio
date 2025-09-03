@@ -11,9 +11,9 @@ const TokenLeaderBoardLayout = () => {
     return (
         <section className='relative'>
             <AppBackground>
-                <div className='grid md:grid-cols-5 grid-cols-1 w-full gap-4 token-background token-padding' >
+                <div className='grid md:grid-cols-6 grid-cols-1 w-full gap-8 token-background token-padding' >
                     <LeaderBoard />
-                    <div className='col-span-2 w-fit'>
+                    <div className='col-span-3 '>
                         <TokenInfo />
                         <SocialLinks />
                     </div>
@@ -22,12 +22,12 @@ const TokenLeaderBoardLayout = () => {
 
             <style jsx>{
                 `.token-padding{
-                padding: 14rem 0 0 0
+                padding: 20rem 0 0 0
                 }
 
                 @media(max-width: 1024px){
                 .token-padding {
-                    padding: 20rem 0 0 0
+                    padding: 28rem 0 0 0
                 }
                 }
 
@@ -45,7 +45,7 @@ const TokenLeaderBoardLayout = () => {
 
                 @media(max-width: 560px){
                 .token-padding {
-                    padding: 28rem 0 0 0
+                    padding: 24rem 0 0 0
                 }
                 }
 

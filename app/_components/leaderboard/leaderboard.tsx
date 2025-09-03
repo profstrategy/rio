@@ -2,6 +2,7 @@
 import { AppHeading } from '@/components/reusables/app-heading';
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion';
+import { LeaderboardEmptyState } from '@/components/reusables/empty-states';
 
 const LeaderBoard = () => {
 
@@ -35,22 +36,11 @@ const LeaderBoard = () => {
     }, []);
 
     // Mock leaderboard data with proper ranking
-    const leaderboardData = [
-        { rank: 1, user: 'BluMacaw', points: '125,000 RIO', avatar: '🦜' },
-        { rank: 2, user: 'TropicalFlyer', points: '98,500 RIO', avatar: '🐦' },
-        { rank: 3, user: 'RioEscapist', points: '87,200 RIO', avatar: '🦅' },
-        { rank: 4, user: 'FeatherWing', points: '76,800 RIO', avatar: '🕊️' },
-        { rank: 5, user: 'JungleBird', points: '65,400 RIO', avatar: '🐤' },
-        { rank: 6, user: 'SkyDancer', points: '54,200 RIO', avatar: '🦆' },
-        { rank: 7, user: 'WildFlight', points: '43,800 RIO', avatar: '🐧' },
-        { rank: 8, user: 'FreeBird', points: '32,600 RIO', avatar: '🦉' },
-        { rank: 9, user: 'Aviator', points: '28,400 RIO', avatar: '🐔' },
-        { rank: 10, user: 'Soarer', points: '21,200 RIO', avatar: '🦃' },
-    ];
+    const leaderboardData:string[] = [];
 
-    const filteredData = leaderboardData.filter(item =>
-        item.user.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // const filteredData = leaderboardData.filter(item =>
+    //     item.user.toLowerCase().includes(searchTerm.toLowerCase())
+    // );
 
     if (!mounted) {
         return (
@@ -105,7 +95,7 @@ const LeaderBoard = () => {
                     Leaderboard
                 </AppHeading>
 
-                <div className='flex justify-end'>
+                <div className='flex justify-end' style={{ marginTop: '4px' }}>
                     <div className="relative w-full md:w-6/12" style={{ marginBottom: '.5rem' }}>
                         <input
                             type="text"
@@ -143,7 +133,7 @@ const LeaderBoard = () => {
                         tabIndex={0}
                     >
                         {/* Table Header */}
-                        <div className='flex justify-between items-center border-b border-white/20 pb-3 mb-4 sticky top-0 bg-inherit z-10'>
+                        {/* <div className='flex justify-between items-center border-b border-white/20 pb-3 mb-4 sticky top-0 bg-inherit z-10'>
                             <div className='w-2/12 text-center font-semibold text-orange-300' role="columnheader">
                                 Rank
                             </div>
@@ -153,12 +143,12 @@ const LeaderBoard = () => {
                             <div className='w-4/12 text-center font-semibold text-pink-300' role="columnheader">
                                 Points
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Table Body */}
                         <div className="space-y-2" role="table" aria-label="User rankings">
-                            {filteredData.length > 0 ? (
-                                filteredData.map((item, _) => (
+                            {/* {leaderboardData.length > 0 ? (
+                                leaderboardData.map((item, _) => (
                                     <div
                                         key={item.rank}
                                         className={`
@@ -199,7 +189,9 @@ const LeaderBoard = () => {
                                     <div className="text-4xl mb-4">🔍</div>
                                     <p>No users found matching "{searchTerm}"</p>
                                 </div>
-                            )}
+                            )} */}
+
+                            {leaderboardData && <LeaderboardEmptyState message='Coming soon' />}
                         </div>
                     </div>
                 </div>
