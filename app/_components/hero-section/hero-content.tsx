@@ -2,6 +2,7 @@
 import AppButton from '@/components/ui/app-button'
 import React from 'react'
 import  { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -26,6 +27,7 @@ const containerVariants = {
   };
 
 const HeroContent = () => {
+  const router = useRouter()
     return (
          <motion.div
         initial="hidden"
@@ -39,7 +41,7 @@ const HeroContent = () => {
              className="text-9xl font-bold bg-gradient-to-r from-orange-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent animate-pulse">
                 $RIO
             </motion.div>
-            <AppButton className='md:w-80 w-60'><h3 className='text-2xl font-bold'>JOIN WAITLIST</h3></AppButton>
+            <AppButton className='md:w-80 w-60' onClick={() => router.push('https://x.com/rioonbonk')}><h3 className='text-2xl font-bold'>JOIN COMMUNITY</h3></AppButton>
         </motion.div>
     )
 }
