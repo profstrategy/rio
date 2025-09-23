@@ -1,6 +1,4 @@
-// Alternative useAppDialog.js
-import AppDialogBox from '@/components/reusables/alert-dialog'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const useAppDialog = () => {
   const [showWhitePaper, setShowWhitePaper] = useState(false)
@@ -12,7 +10,6 @@ export const useAppDialog = () => {
     showWhitePaper,
     openDialog,
     closeDialog,
-    // Return props for the dialog
     dialogProps: {
       open: showWhitePaper,
       title: 'Your White Paper',

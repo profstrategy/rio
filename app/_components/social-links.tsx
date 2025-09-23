@@ -80,7 +80,7 @@ const SocialLinks = () => {
                                     <Link href='https://t.me/rioonbonk' target='_blank'>
                                     <BsTelegram className='w-8 h-8' />
                                     </Link>
-                                    <Link href='https://x.com/rioonbonk' target='_blank'>
+                                    <Link href='https://x.com/rioonbonk1' target='_blank'>
                                     <BsTwitterX className='w-8 h-8' />
                                     </Link>
                                     {/* <BsDiscord className='w-8 h-8' />
