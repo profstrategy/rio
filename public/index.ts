@@ -1,4 +1,2 @@
-import logo from './rio-logo.png'
-import heroImage from './rio-wallpapper.jpg'
-export { logo, heroImage }
-
+export const heroImage = '/rio-wallpapper.jpg';
+export const logo = '/rio-logo.png';
