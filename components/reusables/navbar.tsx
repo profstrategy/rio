@@ -10,8 +10,8 @@ import { signIn, useSession } from 'next-auth/react'
 import { LiaTimesSolid } from 'react-icons/lia'
 import { FaBarsStaggered } from 'react-icons/fa6'
 import AppButton from '../ui/app-button'
-// import { useAppDialog } from '@/hooks/use-app-dialog'
-// import AppDialogBox from './alert-dialog'
+import { useAppDialog } from '@/hooks/use-app-dialog'
+import AppDialogBox from './alert-dialog'
 
 export const Logo = () => {
     return (
@@ -22,9 +22,8 @@ export const Logo = () => {
     )
 }
 
-const DesktopNavMenu = ({ navItems, activeItem, setActiveItem }: DesktopNavLinksProps) => {
+const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialogProps }: DesktopNavLinksProps) => {
     const session = useSession()
-    // const { openDialog } = useAppDialog()
     return (
         <>
             <ul className="md:flex items-center justify-center lg:gap-8 md:gap-6 hidden">
@@ -51,11 +50,13 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem }: DesktopNavLinks
                     </li>
                 ))}
 
-                <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn('twitch', { callbackUrl: '/' })}>
+                {session ? <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={openDialog}>
+                    View Whitepaper
+                </AppButton> : <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                     Connect X
-                </AppButton>
+                </AppButton>}
             </ul>
-
+            {dialogProps.open && <AppDialogBox {...dialogProps} />}
         </>
     )
 }
@@ -67,33 +68,34 @@ const MobileNavMenu = ({
     activeItem,
     setActiveItem,
     setIsOpen,
+    openDialog, dialogProps
 }: MobileNavMenuProps) => {
     const session = useSession()
-    // const { openDialog } = useAppDialog()
 
     return (
-        <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="fixed inset-0 z-50 md:hidden top-16 backdrop-blur-3xl"
-                    onClick={() => setIsOpen(false)}
-                >
+        <>
+            <AnimatePresence>
+                {isOpen && (
                     <motion.div
-                        initial={{ x: '100%' }}
-                        animate={{ x: 0 }}
-                        exit={{ x: '100%' }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-full w-full max-w-sm shadow-xl rounded-lg overflow-hidden"
-                        onClick={(e) => e.stopPropagation()}
-                        style={{
-                            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
-                        }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="fixed inset-0 z-50 md:hidden top-16 backdrop-blur-3xl"
+                        onClick={() => setIsOpen(false)}
                     >
-                        {/* <div className="flex justify-end p-4">
+                        <motion.div
+                            initial={{ x: '100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-full w-full max-w-sm shadow-xl rounded-lg overflow-hidden"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                                background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
+                            }}
+                        >
+                            {/* <div className="flex justify-end p-4">
                             <button
                                 onClick={() => setIsOpen(false)}
                                 className="p-2 rounded-full hover:bg-gray-100 transition-colors"
@@ -103,70 +105,74 @@ const MobileNavMenu = ({
                             </button>
                         </div> */}
 
-                        <motion.ul
-                            className="flex flex-col items-center w-full gap-8 border-2 h-full justify-center"
-                            initial="closed"
-                            animate="open"
-                            variants={{
-                                open: {
-                                    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-                                },
-                                closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
-                            }}
-                            style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
-                        >
-                            {navItems?.map((item) => (
+                            <motion.ul
+                                className="flex flex-col items-center w-full gap-8 border-2 h-full justify-center"
+                                initial="closed"
+                                animate="open"
+                                variants={{
+                                    open: {
+                                        transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+                                    },
+                                    closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+                                }}
+                                style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+                            >
+                                {navItems?.map((item) => (
+                                    <motion.li
+                                        key={item.id}
+                                        variants={{
+                                            open: { x: 0, opacity: 1 },
+                                            closed: { x: 50, opacity: 0 },
+                                        }}
+                                        transition={{ type: 'spring', stiffness: 500 }}
+                                        onClick={() => {
+                                            setActiveItem(item.id);
+                                            setIsOpen(false);
+                                        }}
+                                        className={` w-5/6 text-center text-lg font-medium transition-colors border-b-2 text-white
+                    ${item.id === activeItem
+                                                ? 'bg-accent-white/10 text-accent-primary'
+                                                : 'text-gray-700 hover:text-gray-900'
+                                            }`}
+                                    >
+                                        <a
+
+                                            href={`${item.id}`}
+                                        >
+                                            {item.item}
+                                        </a>
+                                    </motion.li>
+                                ))}
+
                                 <motion.li
-                                    key={item.id}
                                     variants={{
                                         open: { x: 0, opacity: 1 },
                                         closed: { x: 50, opacity: 0 },
                                     }}
                                     transition={{ type: 'spring', stiffness: 500 }}
-                                    onClick={() => {
-                                        setActiveItem(item.id);
-                                        setIsOpen(false);
-                                    }}
-                                    className={` w-5/6 text-center text-lg font-medium transition-colors border-b-2 text-white
-                    ${item.id === activeItem
-                                            ? 'bg-accent-white/10 text-accent-primary'
-                                            : 'text-gray-700 hover:text-gray-900'
-                                        }`}
+                                    className="mt-8"
                                 >
-                                    <a
+                                    {session ? <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
+                                        Connect X
+                                    </AppButton> : <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={openDialog}>
+                                        View Whitepaper
+                                    </AppButton>}
 
-                                        href={`${item.id}`}
-                                    >
-                                        {item.item}
-                                    </a>
                                 </motion.li>
-                            ))}
-
-                            <motion.li
-                                variants={{
-                                    open: { x: 0, opacity: 1 },
-                                    closed: { x: 50, opacity: 0 },
-                                }}
-                                transition={{ type: 'spring', stiffness: 500 }}
-                                className="mt-8"
-                            >
-                                <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn('twitch', { callbackUrl: '/' })}>
-                                    Connect X
-                                </AppButton>
-
-                            </motion.li>
-                        </motion.ul>
+                            </motion.ul>
+                        </motion.div>
                     </motion.div>
-                </motion.div>
-            )}
-        </AnimatePresence>
+                )}
+            </AnimatePresence>
+            {dialogProps.open && <AppDialogBox {...dialogProps} />}
+        </>
     );
 };
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [activeItem, setActiveItem] = React.useState('');
-    // const { dialogProps } = useAppDialog()
+    const { dialogProps, openDialog } = useAppDialog()
     const navItems = [
         { id: '/', item: 'Home' },
         { id: '#token', item: 'Token' },
@@ -174,7 +180,7 @@ const Navbar = () => {
         // { id: 'contact', item: 'Contact' },
     ]
 
-     useEffect(() => {
+    useEffect(() => {
         const handleSmoothScroll = (e: Event) => {
             e.preventDefault();
             const anchor = e.target as HTMLAnchorElement;
@@ -224,10 +230,9 @@ const Navbar = () => {
                     )}
                 </button>
 
-                <MobileNavMenu navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} activeItem={activeItem} setActiveItem={setActiveItem} />
-                {/* {dialogProps.open && <AppDialogBox {...dialogProps} />} */}
+                <MobileNavMenu navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
 
-                <DesktopNavMenu navItems={navItems} activeItem={activeItem} setActiveItem={setActiveItem} />
+                <DesktopNavMenu navItems={navItems} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
             </nav>
         </header >
     )

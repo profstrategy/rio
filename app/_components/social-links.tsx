@@ -1,12 +1,11 @@
 'use client'
 import { BsTelegram } from 'react-icons/bs';
 import { BsTwitterX } from 'react-icons/bs';
-import { BsDiscord } from 'react-icons/bs';
-import { BsSlack } from 'react-icons/bs';
 import { AppHeading } from '@/components/reusables/app-heading';
 import { motion } from 'framer-motion';
 import React from 'react'
 import Link from 'next/link';
+import { globalRoutes } from '@/constants/routes';
 
 const SocialLinks = () => {
 
@@ -77,10 +76,10 @@ const SocialLinks = () => {
                                         paddingInline: '1rem'
                                     }}
                                 >
-                                    <Link href='https://t.me/rioonbonk' target='_blank'>
+                                    <Link href={globalRoutes.externalPage.telegram} target='_blank'>
                                     <BsTelegram className='w-8 h-8' />
                                     </Link>
-                                    <Link href='https://x.com/rioonbonk' target='_blank'>
+                                    <Link href={globalRoutes.externalPage.twitter} target='_blank'>
                                     <BsTwitterX className='w-8 h-8' />
                                     </Link>
                                     {/* <BsDiscord className='w-8 h-8' />
