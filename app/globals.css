@@ -568,7 +568,7 @@ body {
 }
 
 /* Additional mobile safety */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .container {
     padding: 0 0.75rem;
   }
@@ -581,7 +581,7 @@ body {
 
 .token-background {
   padding: 2rem 0;
-}
+} */
 
 @keyframes float {
 

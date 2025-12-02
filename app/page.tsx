@@ -10,8 +10,8 @@ export default function Home() {
   <section className="relative">
     <Navbar />
     <MainHeader />
-    <TokenLeaderBoardLayout />
     <RioSubHero />
+    <TokenLeaderBoardLayout />
   </section>
   );
 }

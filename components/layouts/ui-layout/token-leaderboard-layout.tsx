@@ -9,11 +9,11 @@ const SocialLinks = dynamic(() => import('@/app/_components/social-links'), { ss
 
 const TokenLeaderBoardLayout = () => {
     return (
-        <section className='relative'>
+        <section className=''>
             <AppBackground>
-                <div className='grid md:grid-cols-6 grid-cols-1 w-full gap-8 token-background token-padding' >
+                <div className='' >
                     <LeaderBoard />
-                    <div className='col-span-3 '>
+                    <div className=''>
                         <TokenInfo />
                         <SocialLinks />
                     </div>

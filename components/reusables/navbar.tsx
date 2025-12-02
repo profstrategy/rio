@@ -15,8 +15,8 @@ import AppDialogBox from './alert-dialog'
 
 export const Logo = () => {
     return (
-        <div className='flex items-center justify-baseline container-reverse'>
-            <Image src={logo} alt='logo' priority={true} height={50} width={50} quality={100} />
+        <div className='flex '>
+            {/* <Image src={logo} alt='logo' priority={true} height={50} width={50} quality={100} /> */}
             <AppHeading className='lg:text-5xl font-extrabold text-sky-700'>RIO</AppHeading>
         </div>
     )
@@ -215,7 +215,7 @@ const Navbar = () => {
         <header className={` sticky top-0 z-50 opacity-85 transition-shadow duration-300 h-16 grid m-auto `} style={{
             background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
         }}>
-            <nav className=" flex items-center justify-between container">
+            <nav className=" flex items-center justify-between ">
                 <Logo />
                 <button
                     className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"

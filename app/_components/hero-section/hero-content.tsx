@@ -44,7 +44,7 @@ const HeroContent = () => {
             </motion.div>
             <AppButton className='md:w-80 w-60' onClick={() => router.push(globalRoutes.externalPage.twitter)}><h3 className='text-2xl font-bold'>JOIN COMMUNITY</h3></AppButton>
         </motion.div>
-    )
+    ) 
 }
 
 export default HeroContent

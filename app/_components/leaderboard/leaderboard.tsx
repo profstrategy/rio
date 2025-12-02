@@ -36,7 +36,7 @@ const LeaderBoard = () => {
     }, []);
 
     // Mock leaderboard data with proper ranking
-    const leaderboardData:string[] = [];
+    const leaderboardData:any[] = [];
 
     // const filteredData = leaderboardData.filter(item =>
     //     item.user.toLowerCase().includes(searchTerm.toLowerCase())
@@ -54,9 +54,9 @@ const LeaderBoard = () => {
         <motion.main
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
+            // viewport={{ once: true, margin: '-100px' }}
             variants={containerVariants}
-            className="col-span-3 rounded-xl flex flex-col gap-4 relative" role="main" aria-label="Leaderboard Section" id='leaderboard'>
+            className="" role="main" aria-label="Leaderboard Section" id='leaderboard'>
             {/* Background Rio Character - Nigel the Cockatoo */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
                 <div
@@ -133,7 +133,7 @@ const LeaderBoard = () => {
                         tabIndex={0}
                     >
                         {/* Table Header */}
-                        {/* <div className='flex justify-between items-center border-b border-white/20 pb-3 mb-4 sticky top-0 bg-inherit z-10'>
+                        <div className='flex justify-between items-center border-b border-white/20 pb-3 mb-4 sticky top-0 bg-inherit z-10'>
                             <div className='w-2/12 text-center font-semibold text-orange-300' role="columnheader">
                                 Rank
                             </div>
@@ -143,11 +143,11 @@ const LeaderBoard = () => {
                             <div className='w-4/12 text-center font-semibold text-pink-300' role="columnheader">
                                 Points
                             </div>
-                        </div> */}
+                        </div>
 
                         {/* Table Body */}
                         <div className="space-y-2" role="table" aria-label="User rankings">
-                            {/* {leaderboardData.length > 0 ? (
+                            {leaderboardData.length > 0 ? (
                                 leaderboardData.map((item, _) => (
                                     <div
                                         key={item.rank}
@@ -189,9 +189,9 @@ const LeaderBoard = () => {
                                     <div className="text-4xl mb-4">🔍</div>
                                     <p>No users found matching "{searchTerm}"</p>
                                 </div>
-                            )} */}
+                            )}
 
-                            {leaderboardData && <LeaderboardEmptyState message='Coming soon' />}
+                            {/* {leaderboardData && <LeaderboardEmptyState message='Coming soon' />} */}
                         </div>
                     </div>
                 </div>

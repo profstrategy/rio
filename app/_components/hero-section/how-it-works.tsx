@@ -90,7 +90,7 @@ const HowItWorks = () => {
             variants={containerVariants}
             className="relative">
             {/* Shimmer Border */}
-            <div className="absolute inset-0 rounded-2xl p-0.5 bg-gradient-to-r from-cyan-400 via-purple-500  to-cyan-400 animate-spin-slow" style={{ animationDelay: '2s' }}>
+            <div className="absolute inset-0 rounded-2xl p-0.5 bg-gradient-to-r from-cyan-400 via-purple-500  to-cyan-400 animate-spin-slow" style={{ animationDelay: '20s' }}>
                 <div className="w-full h-full rounded-2xl bg-gradient-to-br from-slate-900/90 to-slate-800/90" />
             </div>
 

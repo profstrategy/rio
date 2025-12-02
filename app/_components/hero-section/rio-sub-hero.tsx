@@ -32,15 +32,15 @@ const RioSubHero = () => {
 
     return (
         <main
-            className='absolute md:top-[24rem] top-1/5 w-full overflow-hidden expended-lg'
+            className='overflow-hidden expended-lg'
             style={{
                 background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(15,23,42,0.8) 20%, rgba(15,23,42,0.95) 100%)',
                 backdropFilter: 'blur(10px)',
             }}
         >
 
-            <div className='container mx-auto px-4 py-12'>
-                <div className={`w-full max-w-7xl mx-auto grid ${isMobile ? 'grid-cols-1 gap-8' : ' lg:grid-cols-[400px_1fr] gap-8 items-start'}`}>
+            <div className=''>
+                <div className={``}>
                     <AboutRio />
                     <HowItWorks />
                 </div>
