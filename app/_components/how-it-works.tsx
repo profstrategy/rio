@@ -112,27 +112,31 @@ const HowItWorks = () => {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
             variants={containerVariants}
-            className='relative bg-black border-0 backdrop-blur-lg'
+            className='relative bg-black border-0 backdrop-blur-lg container'
+            style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
         >
             <motion.div
                 variants={itemVariants}
                 className="relative" >
-                <AppHeading className="text-white bg-clip-text font-bold">
-                    HOW IT WORKS
+                <AppHeading
+                    variant='h2'
+                    className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text relative z-10'
+                >
+                    How it works
                 </AppHeading>
 
-                <div style={{padding: '1rem'}}>
+                <div style={{ padding: '1rem' }}>
                     {isMobile ? (
                         /* Mobile Dropdown Layout */
                         <div className="flex flex-col gap-4" >
                             {howItWorks.map((item, _) => (
-                                <div 
-                                    key={item.id} 
-                                    className="border rounded-xl overflow-hidden" 
-                                    style={{ 
+                                <div
+                                    key={item.id}
+                                    className="border rounded-xl overflow-hidden"
+                                    style={{
                                         paddingInline: '.5rem',
                                         borderColor: 'rgba(255, 186, 107, 0.15)'
-                                    }} 
+                                    }}
                                 >
                                     <button
                                         onClick={() => toggleStep(item.id)}
@@ -157,13 +161,13 @@ const HowItWorks = () => {
                                                 {item.icon}
                                             </div>
                                             <div>
-                                                <CardDescription 
+                                                <CardDescription
                                                     className="text-xs opacity-90 font-medium"
                                                     style={{ color: '#FFA64D' }}
                                                 >
                                                     {item.step}
                                                 </CardDescription>
-                                                <CardTitle 
+                                                <CardTitle
                                                     className="text-sm font-semibold"
                                                     style={{ color: '#FFBA6B' }}
                                                 >
@@ -171,7 +175,7 @@ const HowItWorks = () => {
                                                 </CardTitle>
                                             </div>
                                         </div>
-                                        <div 
+                                        <div
                                             className={`transform transition-transform duration-300 ${expandedStep === item.id ? 'rotate-180' : ''}`}
                                             style={{ color: '#FFD4A3' }}
                                         >
@@ -183,14 +187,14 @@ const HowItWorks = () => {
                                         id={`step-content-${item.id}`}
                                         className={`transition-all duration-300 overflow-hidden ${expandedStep === item.id ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
                                     >
-                                        <div 
-                                            className="bg-black/20 border-t" 
+                                        <div
+                                            className="bg-black/20 border-t"
                                             style={{
                                                 borderColor: 'rgba(255, 186, 107, 0.15)',
                                                 padding: '1rem'
                                             }}
                                         >
-                                            <p 
+                                            <p
                                                 className="leading-relaxed text-sm"
                                                 style={{ color: '#FFD4A3' }}
                                             >
@@ -214,8 +218,8 @@ const HowItWorks = () => {
                                                     <div className="w-full h-full rounded-xl bg-gradient-to-br from-slate-800/90 to-slate-900/90" />
                                                 </div> */}
 
-                                    <Card 
-                                        className="relative h-full bg-gradient-to-br from-slate-800/50 to-slate-900/50 transition-all duration-300" 
+                                    <Card
+                                        className="relative h-full bg-gradient-to-br from-slate-800/50 to-slate-900/50 transition-all duration-300"
                                         style={{
                                             padding: '.5rem',
                                             border: '1px solid rgba(255, 186, 107, 0.15)',
@@ -224,7 +228,7 @@ const HowItWorks = () => {
                                     >
                                         <CardHeader className="pb-2">
                                             <div className="flex items-center gap-3 mb-2">
-                                                <div 
+                                                <div
                                                     className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center text-xl transition-transform duration-300 group-hover:scale-110`}
                                                     style={{
                                                         boxShadow: '0 6px 16px rgba(255, 107, 44, 0.4)'
@@ -233,13 +237,13 @@ const HowItWorks = () => {
                                                     {item.icon}
                                                 </div>
                                                 <div>
-                                                    <CardDescription 
+                                                    <CardDescription
                                                         className="font-medium text-md opacity-90"
                                                         style={{ color: '#FFA64D' }}
                                                     >
                                                         {item.step}
                                                     </CardDescription>
-                                                    <CardTitle 
+                                                    <CardTitle
                                                         className="text-sm font-semibold"
                                                         style={{ color: '#FFBA6B' }}
                                                     >
@@ -250,7 +254,7 @@ const HowItWorks = () => {
                                         </CardHeader>
 
                                         <CardContent className="pt-0">
-                                            <p 
+                                            <p
                                                 className="leading-relaxed text-sm"
                                                 style={{ color: '#FFD4A3' }}
                                             >

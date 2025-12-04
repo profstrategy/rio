@@ -227,6 +227,11 @@ body {
   --radius-xl: calc(var(--radius) + 4px)
 }
 
+/* white space */
+.mar-b {
+  margin-bottom: 8px;
+}
+
 /* ========================================
    📝 TYPOGRAPHY CLASSES
 ======================================== */
@@ -566,7 +571,7 @@ body {
 .container {
   max-width: 1440px;
   margin: auto;
-  padding: 0 2rem;
+  padding: 0 150px;
   overflow-x: hidden;
   /* Added overflow protection */
 }
@@ -576,19 +581,35 @@ body {
   .container {
     max-width: 100%;
     /* FIXED: Was 900px causing overflow */
-    padding: 0 1rem;
+    padding: 0 2rem;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    max-width: 100%;
+    padding: 0 40px;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 1240px) {
+  .container {
+    max-width: 100%;
+    padding: 0 60px;
     overflow-x: hidden;
   }
 }
 
 /* Additional mobile safety */
-/* @media (max-width: 480px) {
+@media (max-width: 480px) {
   .container {
     padding: 0 0.75rem;
   }
 }
 
-.container-reverse {
+/* .container-reverse {
   position: relative;
   left: -10;
 }

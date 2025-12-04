@@ -210,29 +210,30 @@ const Navbar = () => {
         };
     }, []);
 
+    // bg-black/50 backdrop-blur-md border-b border-rio-fire-900/50
 
     return (
-        // <header className="">
-        <nav className="flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto absolute inset-x-0">
-            <Logo />
-            <button
-                className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
-                onClick={() => setIsOpen(!isOpen)}
-                aria-label={isOpen ? 'Close menu' : 'Open menu'}
-                aria-controls='mobile-menu'
-            >
-                {isOpen ? (
-                    <LiaTimesSolid className="w-6 h-6 text-white" />
-                ) : (
-                    <FaBarsStaggered className="w-6 h-6 text-white" />
-                )}
-            </button>
+        <header className="">
+            <nav className="flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto absolute inset-x-0 container">
+                <Logo />
+                <button
+                    className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
+                    onClick={() => setIsOpen(!isOpen)}
+                    aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                    aria-controls='mobile-menu'
+                >
+                    {isOpen ? (
+                        <LiaTimesSolid className="w-6 h-6 text-white" />
+                    ) : (
+                        <FaBarsStaggered className="w-6 h-6 text-white" />
+                    )}
+                </button>
 
-            <MobileNavMenu navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
+                <MobileNavMenu navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
 
-            <DesktopNavMenu navItems={navItems} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
-        </nav>
-        // </header >
+                <DesktopNavMenu navItems={navItems} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
+            </nav>
+        </header >
     )
 }
 

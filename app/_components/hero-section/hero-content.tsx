@@ -37,7 +37,7 @@ const HeroContent = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-100px' }}
-      variants={containerVariants} className="z-10 grid md:grid-cols-2 text-center relative min-h-[35rem]"
+      variants={containerVariants} className="z-10 grid md:grid-cols-2 text-center relative md:min-h-[32rem] min-h-[28rem] container"
     >
       <motion.div variants={itemVariants} className='flex flex-col items-start justify-center gap-8'>
           <About />

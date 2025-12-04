@@ -92,7 +92,7 @@ const TokenInfo = () => {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
             variants={containerVariants}
-            className='h-auto relative w-full col-span-2' role="complementary" aria-label="Token Information Section" id='token' style={{ marginBottom: '1rem' }}>
+            className='h-auto relative w-full col-span-2 container' role="complementary" aria-label="Token Information Section" id='token' style={{ marginBottom: '1rem', paddingTop: '2rem', paddingBottom: '2rem' }}>
             {/* Background Rio Character - Blu the Macaw */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
                 <div
@@ -127,8 +127,8 @@ const TokenInfo = () => {
                 variants={itemVariants}
             >
                 <AppHeading
-                    variant='h1'
-                    className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text relative z-10'
+                    variant='h2'
+                    className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text relative z-10 mar-b'
                 >
                     Token Information
                 </AppHeading>
@@ -249,7 +249,7 @@ const TokenInfo = () => {
                             {/* Action Button */}
                             <div className='flex justify-center pt-4'>
                                 <AppButton
-                                    className='w-full max-w-xs text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-black border-b-2'
+                                    className='w-full max-w-xs text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-rio-fire-500/50 focus:ring-offset-2 focus:ring-offset-rio-fire-200 border-b-2'
                                     aria-label="View RIO Token Whitepaper"
                                     onClick={openDialog}
                                 >

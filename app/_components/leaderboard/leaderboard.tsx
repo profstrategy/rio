@@ -56,7 +56,7 @@ const LeaderBoard = () => {
     if (!mounted) {
         return (
             <main className="col-span-3 rounded-xl flex flex-col gap-4">
-                <div className="h-16 bg-gradient-to-r from-slate-800 to-slate-700 rounded-lg animate-pulse" />
+                <div className="radial-gradient(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)" />
             </main>
         );
     }
@@ -65,9 +65,11 @@ const LeaderBoard = () => {
         <motion.main
             initial="hidden"
             whileInView="visible"
-            // viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: true, margin: '-100px' }}
             variants={containerVariants}
-            className="" role="main" aria-label="Leaderboard Section" id='leaderboard'>
+            className="container" role="main" aria-label="Leaderboard Section" id='leaderboard'
+            style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
+            >
             {/* Background Rio Character - Nigel the Cockatoo */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
                 <div
@@ -101,7 +103,7 @@ const LeaderBoard = () => {
             <motion.div variants={itemVariants}>
                 <AppHeading
                     variant='h1'
-                    className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text'
+                    className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text mar-b'
                 >
                     Leaderboard
                 </AppHeading>

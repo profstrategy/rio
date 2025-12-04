@@ -37,12 +37,14 @@ const SocialLinks = () => {
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
             variants={containerVariants}
-            className='' role="complementary" aria-label="Contact Information Section" >
+            className='container' role="complementary" aria-label="Contact Information Section" 
+            style={{paddingTop: '2rem', paddingBottom: '2rem'}}
+            >
 
             <motion.div variants={itemVariants}>
-                <AppHeading
-                    variant='h1'
-                    className=' text-2xl md:text-3xl font-bold bg-clip-text text-white/70 drop-shadow-lg '
+               <AppHeading
+                    variant='h2'
+                    className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text mar-b'
                 >
                     Community Links
                 </AppHeading>
