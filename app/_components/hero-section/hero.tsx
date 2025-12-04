@@ -7,7 +7,7 @@ const HeroContent = dynamic(() => import('@/app/_components/hero-section/hero-co
 
 const MainHeader = () => {
   return (
-    <section className='relative' id='home'>
+    <section id='home'>
       <HeroEffect>
         <HeroContent />
       </HeroEffect>

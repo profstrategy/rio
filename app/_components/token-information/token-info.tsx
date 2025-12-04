@@ -128,7 +128,7 @@ const TokenInfo = () => {
             >
                 <AppHeading
                     variant='h1'
-                    className='text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-400 bg-clip-text text-transparent drop-shadow-lg relative z-10'
+                    className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text relative z-10'
                 >
                     Token Information
                 </AppHeading>
@@ -161,7 +161,7 @@ const TokenInfo = () => {
                                     <h2 className="text-xl font-bold bg-gradient-to-r from-orange-400 to-cyan-400 bg-clip-text text-transparent">
                                         RIO TOKEN
                                     </h2>
-                                    <p className="text-sm text-white/60">The Rare Bird That Flies Above The Noise</p>
+                                    {/* <p className="text-sm text-white/60">The Rare Bird That Flies Above The Noise</p> */}
                                 </div>
                             </div>
 
@@ -248,7 +248,7 @@ const TokenInfo = () => {
                             {/* Action Button */}
                             <div className='flex justify-center pt-4'>
                                 <AppButton
-                                    className='w-full max-w-xs bg-gradient-to-r from-orange-500 to-cyan-500 hover:from-orange-600 hover:to-cyan-600 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-black'
+                                    className='w-full max-w-xs text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-black'
                                     aria-label="View RIO Token Whitepaper"
                                     onClick={openDialog}
                                 >

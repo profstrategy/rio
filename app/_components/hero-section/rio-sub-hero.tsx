@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic';
 
-const AboutRio = dynamic(() => import('@/app/_components/hero-section/about'), { ssr: false })
+// const AboutRio = dynamic(() => import('@/app/_components/hero-section/about'), { ssr: false })
 const HowItWorks = dynamic(() => import('@/app/_components/hero-section/how-it-works'), { ssr: false })
 
 const RioSubHero = () => {
@@ -41,7 +41,7 @@ const RioSubHero = () => {
 
             <div className=''>
                 <div className={``}>
-                    <AboutRio />
+                    
                     <HowItWorks />
                 </div>
             </div>

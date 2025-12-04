@@ -15,9 +15,9 @@ import AppDialogBox from './alert-dialog'
 
 export const Logo = () => {
     return (
-        <div className='flex '>
-            {/* <Image src={logo} alt='logo' priority={true} height={50} width={50} quality={100} /> */}
-            <AppHeading className='lg:text-5xl font-extrabold text-sky-700'>RIO</AppHeading>
+        <div className='flex items-center justify-center w-[6.5rem]'>
+            <Image src={logo} alt='logo' priority={true} height={50} width={50} quality={100} />
+            <AppHeading className='lg:text-5xl font-extrabold text-sky-rio-dark'>RIO</AppHeading>
         </div>
     )
 }
@@ -34,8 +34,8 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialo
                             onClick={() => setActiveItem(item.id)}
                             className={`px-3 py-2 rounded-md transition-all md:text-[0.95rem] lg:text-[1rem] font-medium relative
               ${item.id === activeItem
-                                    ? 'text-white/60 font-semibold'
-                                    : 'text-white hover:text-white/60'
+                                    ? 'text-rio-fire-500/80'
+                                    : 'text-rio-fire-200 font-semibold hover:text-rio-fire-200'
                                 }`}
                         >
                             {item.item}
@@ -50,9 +50,9 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialo
                     </li>
                 ))}
 
-                {session ? <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={openDialog}>
+                {session ? <AppButton className="px-6 py-3 shadow-2xl shadow-rio-fire-bold/300 border-b-2 rounded-lg font-medium w-50 h-10" onClick={openDialog}>
                     View Whitepaper
-                </AppButton> : <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
+                </AppButton> : <AppButton className="px-6 py-3 shadow-2xs text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                     Connect X
                 </AppButton>}
             </ul>
@@ -130,9 +130,9 @@ const MobileNavMenu = ({
                                             setIsOpen(false);
                                         }}
                                         className={` w-5/6 text-center text-lg font-medium transition-colors border-b-2 text-white
-                    ${item.id === activeItem
-                                                ? 'bg-accent-white/10 text-accent-primary'
-                                                : 'text-gray-700 hover:text-gray-900'
+                 ${item.id === activeItem
+                                                ? 'text-rio-fire-200 font-semibold'
+                                                : 'text-rio-fire-200/80 hover:text-rio-fire-200'
                                             }`}
                                     >
                                         <a
@@ -152,9 +152,9 @@ const MobileNavMenu = ({
                                     transition={{ type: 'spring', stiffness: 500 }}
                                     className="mt-8"
                                 >
-                                    {session ? <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
+                                    {session ? <AppButton className="px-6 py-3 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                                         Connect X
-                                    </AppButton> : <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={openDialog}>
+                                    </AppButton> : <AppButton className="px-6 py-3 text-white rounded-lg font-medium w-50 h-10" onClick={openDialog}>
                                         View Whitepaper
                                     </AppButton>}
 
@@ -212,29 +212,27 @@ const Navbar = () => {
 
 
     return (
-        <header className={` sticky top-0 z-50 opacity-85 transition-shadow duration-300 h-16 grid m-auto `} style={{
-            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
-        }}>
-            <nav className=" flex items-center justify-between ">
-                <Logo />
-                <button
-                    className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
-                    onClick={() => setIsOpen(!isOpen)}
-                    aria-label={isOpen ? 'Close menu' : 'Open menu'}
-                    aria-controls='mobile-menu'
-                >
-                    {isOpen ? (
-                        <LiaTimesSolid className="w-6 h-6 text-white" />
-                    ) : (
-                        <FaBarsStaggered className="w-6 h-6 text-white" />
-                    )}
-                </button>
+        // <header className="">
+        <nav className="flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto absolute inset-x-0">
+            <Logo />
+            <button
+                className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                aria-controls='mobile-menu'
+            >
+                {isOpen ? (
+                    <LiaTimesSolid className="w-6 h-6 text-white" />
+                ) : (
+                    <FaBarsStaggered className="w-6 h-6 text-white" />
+                )}
+            </button>
 
-                <MobileNavMenu navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
+            <MobileNavMenu navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
 
-                <DesktopNavMenu navItems={navItems} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
-            </nav>
-        </header >
+            <DesktopNavMenu navItems={navItems} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
+        </nav>
+        // </header >
     )
 }
 

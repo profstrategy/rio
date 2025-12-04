@@ -90,7 +90,7 @@ const LeaderBoard = () => {
             <motion.div variants={itemVariants}>
                 <AppHeading
                     variant='h1'
-                    className=' text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-lg'
+                    className=' text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text'
                 >
                     Leaderboard
                 </AppHeading>
@@ -115,11 +115,11 @@ const LeaderBoard = () => {
 
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
-                    <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-orange-500 via-cyan-400 to-orange-500 animate-spin-slow">
+                    {/* <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-orange-500 via-cyan-400 to-orange-500 animate-spin-slow">
                         <div className="w-full h-full rounded-xl" style={{
                             background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
                         }} />
-                    </div>
+                    </div> */}
 
                     {/* Table Container */}
                     <div

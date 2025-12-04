@@ -12,13 +12,13 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
     }, []);
 
     if (!mounted) {
-        return <div className="min-h-[30rem] h-auto bg-gradient-to-br from-blue-900 via-purple-900 to-cyan-900" />;
+        return <div className="bg-gradient-to-br from-blue-900 via-purple-900 to-cyan-900" />;
     }
 
     return (
-        <div className="h-auto min-h-[30rem]">
+        <div>
             {/* Multi-layered Animated Background */}
-            <div className="absolute overflow-hidden inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-cyan-900" />
+            <div className="absolute overflow-hidden inset-0 bg-neutral-950" />
 
             {/* Tropical Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-tr from-orange-600/30 via-pink-500/20 to-cyan-400/30 animate-pulse"
