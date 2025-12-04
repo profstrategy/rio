@@ -59,7 +59,8 @@ const SocialLinks = () => {
                     <div
                         className='relative h-auto rounded-xl backdrop-blur-sm'
                         style={{
-                            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
+                             background: 'radial-gradient(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)',
+                            backdropFilter: 'blur(10px)',
                             padding: '1rem'
                         }}
                     >

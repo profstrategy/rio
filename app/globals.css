@@ -4,18 +4,21 @@
 
 :root {
   /* Primary Colors - Macaw Inspired */
-  --rio-fire-50: #fff4ed;
-  --rio-fire-100: #ffe4cc;
-  --rio-fire-200: #ffcf99;
-  --rio-fire-300: #ffb366;
-  --rio-fire-350: #FDB777;
-  --rio-fire-400: #ff8a47;
-  --rio-fire-500: #FF6B35;
+ --rio-fire-200: #FFD4A3;  /* Lighter, warmer peachy tone */
+--rio-fire-300: #FFBA6B;  /* Brighter, more saturated orange */
+--rio-fire-350: #FFA64D;  /* Enhanced mid-tone with better visibility */
+--rio-fire-400: #FF8A3D;  /* More vibrant core orange */
+--rio-fire-500: #FF6B2C;  /* Primary brand color - more energetic */
+
+--rio-fire-600: #F05A24;  /* Deeper, richer orange-red */
+--rio-fire-700: #D94A1C;  /* Enhanced contrast for text */
+--rio-fire-800: #C23B14;  /* Bolder dark orange */
+--rio-fire-900: #A62F0F;  /* Deep burnt orange for accents */
   /* Main macaw orange */
-  --rio-fire-600: #e55a2b;
+  /* --rio-fire-600: #e55a2b;
   --rio-fire-700: #cc4a21;
   --rio-fire-800: #b33b17;
-  --rio-fire-900: #99310d;
+  --rio-fire-900: #99310d; */
 
   /* Secondary Colors - Brazilian Sky */
   --rio-sky-50: #f0fbff;

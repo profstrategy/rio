@@ -1,8 +1,19 @@
 'use client'
-import { AppHeading } from '@/components/reusables/app-heading';
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion';
 import { LeaderboardEmptyState } from '@/components/reusables/empty-states';
+
+// const LeaderboardEmptyState = ({ message }: { message: string }) => (
+//     <div className="text-center py-8 text-white/60">
+//         <div className="text-4xl mb-4">🦜</div>
+//         <p>{message}</p>
+//     </div>
+// );
+
+const AppHeading = ({ children, variant, className }: any) => {
+    const Tag = variant || 'h2';
+    return <Tag className={className}>{children}</Tag>;
+};
 
 const LeaderBoard = () => {
 
@@ -90,7 +101,7 @@ const LeaderBoard = () => {
             <motion.div variants={itemVariants}>
                 <AppHeading
                     variant='h1'
-                    className=' text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text'
+                    className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text'
                 >
                     Leaderboard
                 </AppHeading>
@@ -101,7 +112,11 @@ const LeaderBoard = () => {
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className='w-full h-10 px-4 pr-10 rounded-lg bg-black/30 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300 backdrop-blur-sm'
+                            className='w-full h-10 px-4 rounded-lg bg-black/30 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 transition-all duration-300 backdrop-blur-sm'
+                            style={{
+                                '--focus-ring-color': '#FFD4A3',
+                                '--focus-border-color': '#FFBA6B'
+                            } as React.CSSProperties}
                             placeholder='Search Users...'
                             aria-label="Search users in leaderboard"
                         />
@@ -123,9 +138,9 @@ const LeaderBoard = () => {
 
                     {/* Table Container */}
                     <div
-                        className='relative text-white/90 rounded-xl p-4 md:max-h-[35rem] max-h-[20rem] overflow-y-auto custom-scrollbar mb-4'
+                        className='relative text-white/90 rounded-xl md:max-h-[35rem] max-h-[20rem] overflow-y-auto custom-scrollbar mb-4'
                         style={{
-                            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
+                            background: 'radial-gradient(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)',
                             backdropFilter: 'blur(10px)'
                         }}
                         role="region"
@@ -133,20 +148,29 @@ const LeaderBoard = () => {
                         tabIndex={0}
                     >
                         {/* Table Header */}
-                        <div className='flex justify-between items-center border-b border-white/20 pb-3 mb-4 sticky top-0 bg-inherit z-10'>
-                            <div className='w-2/12 text-center font-semibold text-orange-300' role="columnheader">
+                        <div className='flex justify-between items-center border-b pb-3 mb-4 sticky top-0 bg-inherit z-10'
+                            style={{
+                                borderColor: 'rgba(255, 212, 163, 0.3)'
+                            }}>
+                            <div className='w-2/12 text-center font-semibold text-lg' 
+                                style={{ color: '#FFD4A3' }}
+                                role="columnheader">
                                 Rank
                             </div>
-                            <div className='w-6/12 text-center font-semibold text-cyan-300' role="columnheader">
+                            <div className='w-6/12 text-center font-semibold text-lg'
+                                style={{ color: '#FFBA6B' }}
+                                role="columnheader">
                                 User
                             </div>
-                            <div className='w-4/12 text-center font-semibold text-pink-300' role="columnheader">
+                            <div className='w-4/12 text-center font-semibold text-lg'
+                                style={{ color: '#FFD4A3' }}
+                                role="columnheader">
                                 Points
                             </div>
                         </div>
 
                         {/* Table Body */}
-                        <div className="space-y-2" role="table" aria-label="User rankings">
+                        <div className="space-y-2" style={{ padding: '1rem' }} role="table" aria-label="User rankings">
                             {leaderboardData.length > 0 ? (
                                 leaderboardData.map((item, _) => (
                                     <div
@@ -185,13 +209,14 @@ const LeaderBoard = () => {
                                     </div>
                                 ))
                             ) : (
-                                <div className="text-center py-8 text-white/60" role="status" aria-live="polite">
-                                    <div className="text-4xl mb-4">🔍</div>
-                                    <p>No users found matching "{searchTerm}"</p>
-                                </div>
+                                // <div className="text-center py-8 text-white/60" role="status" aria-live="polite">
+                                //     <div className="text-4xl mb-4">🔍</div>
+                                //     <p>No users found matching "{searchTerm}"</p>
+                                // </div>
+                                <></>
                             )}
 
-                            {/* {leaderboardData && <LeaderboardEmptyState message='Coming soon' />} */}
+                            {leaderboardData && <LeaderboardEmptyState message='Coming soon' />}
                         </div>
                     </div>
                 </div>
@@ -233,7 +258,7 @@ const LeaderBoard = () => {
 
                 .custom-scrollbar {
                     scrollbar-width: thin;
-                    scrollbar-color: rgba(59, 130, 246, 0.5) rgba(0, 0, 0, 0.3);
+                    scrollbar-color: rgba(255, 186, 107, 0.6) rgba(0, 0, 0, 0.3);
                 }
 
                 .custom-scrollbar::-webkit-scrollbar {
@@ -246,17 +271,24 @@ const LeaderBoard = () => {
                 }
 
                 .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: linear-gradient(45deg, #f97316, #ec4899, #06b6d4);
+                    background: linear-gradient(45deg, #FF8A3D, #FF6B2C, #F05A24);
                     border-radius: 3px;
                 }
 
                 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: linear-gradient(45deg, #ea580c, #db2777, #0891b2);
+                    background: linear-gradient(45deg, #FFA64D, #FF8A3D, #D94A1C);
                 }
 
-                /* Focus styles for accessibility */
+                /* Enhanced focus styles with new colors */
+                input:focus-visible {
+                    outline: 2px solid #FFD4A3 !important;
+                    outline-offset: 2px;
+                    border-color: #FFBA6B !important;
+                    box-shadow: 0 0 0 3px rgba(255, 186, 107, 0.3) !important;
+                }
+
                 *:focus-visible {
-                    outline: 2px solid #06b6d4;
+                    outline: 2px solid #FF8A3D;
                     outline-offset: 2px;
                 }
 

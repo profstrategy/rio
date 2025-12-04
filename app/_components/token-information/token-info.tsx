@@ -124,7 +124,7 @@ const TokenInfo = () => {
             </div>
 
             <motion.div
-            variants={itemVariants}
+                variants={itemVariants}
             >
                 <AppHeading
                     variant='h1'
@@ -145,7 +145,8 @@ const TokenInfo = () => {
                     <div
                         className='relative h-auto rounded-xl backdrop-blur-sm'
                         style={{
-                            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
+                            background: 'radial-gradient(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)',
+                            backdropFilter: 'blur(10px)',
                             padding: '1rem',
                             marginTop: '4px'
                         }}
@@ -159,7 +160,7 @@ const TokenInfo = () => {
                                 </div>
                                 <div className="text-center">
                                     <h2 className="text-xl font-bold bg-gradient-to-r from-orange-400 to-cyan-400 bg-clip-text text-transparent">
-                                        RIO TOKEN
+                                        TOKEN
                                     </h2>
                                     {/* <p className="text-sm text-white/60">The Rare Bird That Flies Above The Noise</p> */}
                                 </div>
@@ -248,7 +249,7 @@ const TokenInfo = () => {
                             {/* Action Button */}
                             <div className='flex justify-center pt-4'>
                                 <AppButton
-                                    className='w-full max-w-xs text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-black'
+                                    className='w-full max-w-xs text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-black border-b-2'
                                     aria-label="View RIO Token Whitepaper"
                                     onClick={openDialog}
                                 >
