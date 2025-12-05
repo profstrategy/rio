@@ -172,6 +172,7 @@ const MobileNavMenu = ({
 const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [activeItem, setActiveItem] = React.useState('');
+    const [ scrollY, setScrollY] = React.useState(false);
     const { dialogProps, openDialog } = useAppDialog()
     const navItems = [
         { id: '/', item: 'Home' },
@@ -179,6 +180,18 @@ const Navbar = () => {
         { id: '#leaderboard', item: 'Leaderboard' },
         // { id: 'contact', item: 'Contact' },
     ]
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY > 0)
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, [])
+
 
     useEffect(() => {
         const handleSmoothScroll = (e: Event) => {
@@ -214,7 +227,7 @@ const Navbar = () => {
 
     return (
         <header className="">
-            <nav className="flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto absolute inset-x-0 container">
+            <nav className={`flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto inset-x-0 container fixed ${scrollY ? 'bg-neutral-700 drop-shadow-white-ash shadow-md border-b border-rio-sky-800/50' : 'bg-transparent'}`}>
                 <Logo />
                 <button
                     className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"

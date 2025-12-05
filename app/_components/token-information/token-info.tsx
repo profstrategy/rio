@@ -135,20 +135,21 @@ const TokenInfo = () => {
 
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
-                    {/* <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
+                    <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
                     <div className="w-full h-full rounded-xl" style={{
                         background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
                     }} />
-                </div> */}
+                </div>
 
                     {/* Content Container */}
                     <div
                         className='relative h-auto rounded-xl backdrop-blur-sm'
                         style={{
-                            background: 'radial-gradient(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)',
-                            backdropFilter: 'blur(10px)',
+                            background: 'radial-gradient(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
+                            backdropFilter: 'blur(18px)',
+                            border: '1px solid rgba(255,255,255,0.08)',
                             padding: '1rem',
-                            marginTop: '4px'
+                            marginTop: '1rem'
                         }}
                     >
                         <div className='flex flex-col gap-6 text-white'>

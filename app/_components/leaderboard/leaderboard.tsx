@@ -47,7 +47,7 @@ const LeaderBoard = () => {
     }, []);
 
     // Mock leaderboard data with proper ranking
-    const leaderboardData:any[] = [];
+    const leaderboardData: any[] = [];
 
     // const filteredData = leaderboardData.filter(item =>
     //     item.user.toLowerCase().includes(searchTerm.toLowerCase())
@@ -69,7 +69,7 @@ const LeaderBoard = () => {
             variants={containerVariants}
             className="container" role="main" aria-label="Leaderboard Section" id='leaderboard'
             style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
-            >
+        >
             {/* Background Rio Character - Nigel the Cockatoo */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
                 <div
@@ -115,10 +115,10 @@ const LeaderBoard = () => {
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className='w-full h-10 px-4 rounded-lg bg-black/30 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 transition-all duration-300 backdrop-blur-sm'
-                            style={{
-                                '--focus-ring-color': '#FFD4A3',
-                                '--focus-border-color': '#FFBA6B'
-                            } as React.CSSProperties}
+                            // style={{
+                            //     '--focus-ring-color': '#b8ebfe',
+                            //     '--focus-border-color': '#38bdf8'
+                            // } as React.CSSProperties}
                             placeholder='Search Users...'
                             aria-label="Search users in leaderboard"
                         />
@@ -132,18 +132,20 @@ const LeaderBoard = () => {
 
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
-                    {/* <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-orange-500 via-cyan-400 to-orange-500 animate-spin-slow">
-                        <div className="w-full h-full rounded-xl" style={{
-                            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
-                        }} />
-                    </div> */}
+                   <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
+                    <div className="w-full h-full rounded-xl" style={{
+                        background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
+                    }} />
+                </div>
 
                     {/* Table Container */}
                     <div
                         className='relative text-white/90 rounded-xl md:max-h-[35rem] max-h-[20rem] overflow-y-auto custom-scrollbar mb-4'
                         style={{
-                            background: 'radial-gradient(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)',
-                            backdropFilter: 'blur(10px)'
+                            background: 'radial-gradient(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
+                            backdropFilter: 'blur(18px)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                            marginTop: '1rem'
                         }}
                         role="region"
                         aria-label="Leaderboard table"
@@ -154,18 +156,18 @@ const LeaderBoard = () => {
                             style={{
                                 borderColor: 'rgba(255, 212, 163, 0.3)'
                             }}>
-                            <div className='w-2/12 text-center font-semibold text-lg' 
-                                style={{ color: '#FFD4A3' }}
+                            <div className='w-2/12 text-center font-semibold text-lg'
+                                style={{ color: '#b8ebfe' }}
                                 role="columnheader">
                                 Rank
                             </div>
                             <div className='w-6/12 text-center font-semibold text-lg'
-                                style={{ color: '#FFBA6B' }}
+                                style={{ color: '#7dd3fc' }}
                                 role="columnheader">
                                 User
                             </div>
                             <div className='w-4/12 text-center font-semibold text-lg'
-                                style={{ color: '#FFD4A3' }}
+                                style={{ color: '#b8ebfe' }}
                                 role="columnheader">
                                 Points
                             </div>
@@ -283,14 +285,14 @@ const LeaderBoard = () => {
 
                 /* Enhanced focus styles with new colors */
                 input:focus-visible {
-                    outline: 2px solid #FFD4A3 !important;
+                    outline: 2px solid #38bdf8 !important;
                     outline-offset: 2px;
-                    border-color: #FFBA6B !important;
+                    border-color: #b8ebfe !important;
                     box-shadow: 0 0 0 3px rgba(255, 186, 107, 0.3) !important;
                 }
 
                 *:focus-visible {
-                    outline: 2px solid #FF8A3D;
+                    outline: 2px solid #38bdf8;
                     outline-offset: 2px;
                 }
 

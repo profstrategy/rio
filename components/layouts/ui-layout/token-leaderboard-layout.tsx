@@ -21,10 +21,7 @@ const TokenLeaderBoardLayout = () => {
             </AppBackground>
 
             <style jsx>{
-                `.token-padding{
-                padding: 20rem 0 0 0
-                }
-
+                `
                 @media(max-width: 1024px){
                 .token-padding {
                     padding: 28rem 0 0 0
