@@ -17,7 +17,7 @@ export const Logo = () => {
     return (
         <div className='flex items-center justify-center w-[6.5rem]'>
             <Image src={logo} alt='logo' priority={true} height={50} width={50} quality={100} />
-            <AppHeading className='lg:text-5xl font-extrabold text-sky-rio-dark'>RIO</AppHeading>
+            <AppHeading className='lg:text-5xl font-extrabold text-rio-sky-800'>RIO</AppHeading>
         </div>
     )
 }
@@ -34,8 +34,8 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialo
                             onClick={() => setActiveItem(item.id)}
                             className={`px-3 py-2 rounded-md transition-all md:text-[0.95rem] lg:text-[1rem] font-medium relative
               ${item.id === activeItem
-                                    ? 'text-rio-fire-500/80'
-                                    : 'text-rio-fire-200 font-semibold hover:text-rio-fire-200'
+                                    ? 'text-rio-sky-200/80'
+                                    : 'text-white/70 bg-clip-text font-semibold hover:text-rio-sky-200/80'
                                 }`}
                         >
                             {item.item}
@@ -50,9 +50,9 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialo
                     </li>
                 ))}
 
-                {session ? <AppButton className="px-6 py-3 shadow-2xl shadow-rio-fire-bold/300 border-b-2 rounded-lg font-medium w-50 h-10" onClick={openDialog}>
+                {session ? <AppButton className="px-6 py-3 shadow-2xl text-xl text-white shadow-rio-fire-bold/300 border-b-2 rounded-lg font-bold w-50 h-10" onClick={openDialog}>
                     View Whitepaper
-                </AppButton> : <AppButton className="px-6 py-3 shadow-2xs text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
+                </AppButton> : <AppButton className="px-6 py-3 shadow-2xs text-xl text-white rounded-lg font-bold w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                     Connect X
                 </AppButton>}
             </ul>
@@ -131,8 +131,8 @@ const MobileNavMenu = ({
                                         }}
                                         className={` w-5/6 text-center text-lg font-medium transition-colors border-b-2 text-white
                  ${item.id === activeItem
-                                                ? 'text-rio-fire-200 font-semibold'
-                                                : 'text-rio-fire-200/80 hover:text-rio-fire-200'
+                                                ? 'text-rio-sky-200/80'
+                                                : 'text-white/70 bg-clip-text font-semibold hover:text-rio-sky-200/80'
                                             }`}
                                     >
                                         <a
@@ -152,10 +152,10 @@ const MobileNavMenu = ({
                                     transition={{ type: 'spring', stiffness: 500 }}
                                     className="mt-8"
                                 >
-                                    {session ? <AppButton className="px-6 py-3 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
-                                        Connect X
-                                    </AppButton> : <AppButton className="px-6 py-3 text-white rounded-lg font-medium w-50 h-10" onClick={openDialog}>
+                                    {session ? <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                                         View Whitepaper
+                                    </AppButton> : <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={openDialog}>
+                                        Connect X
                                     </AppButton>}
 
                                 </motion.li>

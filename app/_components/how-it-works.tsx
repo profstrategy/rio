@@ -4,30 +4,8 @@ import { motion } from 'framer-motion'
 import { GiEngagementRing, GiMountainClimbing } from 'react-icons/gi'
 import { MdArtTrack, MdConnectingAirports } from 'react-icons/md'
 import { BiArrowFromBottom } from 'react-icons/bi'
-
-const Card = ({ children, className, style }: any) => (
-    <div className={className} style={style}>{children}</div>
-);
-
-const CardHeader = ({ children, className }: any) => (
-    <div className={className}>{children}</div>
-);
-
-const CardContent = ({ children, className }: any) => (
-    <div className={className}>{children}</div>
-);
-
-const CardTitle = ({ children, className }: any) => (
-    <h3 className={className}>{children}</h3>
-);
-
-const CardDescription = ({ children, className }: any) => (
-    <p className={className}>{children}</p>
-);
-
-const AppHeading = ({ children, className }: any) => (
-    <h2 className={className}>{children}</h2>
-);
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { AppHeading } from '@/components/reusables/app-heading'
 
 const howItWorks = [
     {
@@ -36,7 +14,7 @@ const howItWorks = [
         title: 'Visit & Connect',
         body: 'Land on the website, see Rio branding and token info, then connect your Twitter account through secure login',
         icon: <MdConnectingAirports />,
-        color: 'from-[#FF8A3D] to-[#FF6B2C]'
+        color: 'from-sky-400 to-sky-600'
     },
     {
         id: 1,
@@ -44,7 +22,7 @@ const howItWorks = [
         title: 'Engage on Twitter',
         body: 'Tweet about $Rio, use hashtags like #RioOnBonk, retweet official posts, and interact with the community on Twitter',
         icon: <GiEngagementRing />,
-        color: 'from-[#FFA64D] to-[#F05A24]'
+        color: 'from-cyan-400 to-sky-600'
     },
     {
         id: 2,
@@ -52,7 +30,7 @@ const howItWorks = [
         title: 'Track Your Impact',
         body: 'View your personalized dashboard showing your Twitter engagement stats, contributions, and current leaderboard ranking',
         icon: <MdArtTrack />,
-        color: 'from-[#FF6B2C] to-[#D94A1C]'
+        color: 'from-sky-500 to-cyan-600'
     },
     {
         id: 3,
@@ -60,7 +38,7 @@ const howItWorks = [
         title: 'Compete & Climb',
         body: 'Check the leaderboard to see top community supporters, earn badges/rewards, and increase your rank through more Twitter activity',
         icon: <GiMountainClimbing />,
-        color: 'from-[#FFBA6B] to-[#FF8A3D]'
+        color: 'from-cyan-300 to-sky-500'
     }
 ]
 
@@ -135,20 +113,20 @@ const HowItWorks = () => {
                                     className="border rounded-xl overflow-hidden"
                                     style={{
                                         paddingInline: '.5rem',
-                                        borderColor: 'rgba(255, 186, 107, 0.15)'
+                                        borderColor: 'rgba(56, 189, 248, 0.2)'
                                     }}
                                 >
                                     <button
                                         onClick={() => toggleStep(item.id)}
                                         className="w-full p-4 text-left transition-all duration-300 flex items-center justify-between"
                                         style={{
-                                            backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                                            backgroundColor: 'rgba(14, 165, 233, 0.08)'
                                         }}
                                         onMouseEnter={(e) => {
-                                            e.currentTarget.style.backgroundColor = 'rgba(255, 138, 61, 0.1)';
+                                            e.currentTarget.style.backgroundColor = 'rgba(56, 189, 248, 0.15)';
                                         }}
                                         onMouseLeave={(e) => {
-                                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                                            e.currentTarget.style.backgroundColor = 'rgba(14, 165, 233, 0.08)';
                                         }}
                                         aria-expanded={expandedStep === item.id}
                                         aria-controls={`step-content-${item.id}`}
@@ -156,28 +134,25 @@ const HowItWorks = () => {
                                         <div className="flex items-center gap-3">
                                             <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center text-lg shadow-lg`}
                                                 style={{
-                                                    boxShadow: '0 4px 12px rgba(255, 107, 44, 0.3)'
+                                                    boxShadow: '0 4px 12px rgba(56, 189, 248, 0.4)'
                                                 }}>
                                                 {item.icon}
                                             </div>
                                             <div>
                                                 <CardDescription
-                                                    className="text-xs opacity-90 font-medium"
-                                                    style={{ color: '#FFA64D' }}
+                                                    className="text-xs opacity-90 font-medium text-sky-300"
                                                 >
                                                     {item.step}
                                                 </CardDescription>
                                                 <CardTitle
-                                                    className="text-sm font-semibold"
-                                                    style={{ color: '#FFBA6B' }}
+                                                    className="text-sm font-semibold text-sky-100"
                                                 >
                                                     {item.title}
                                                 </CardTitle>
                                             </div>
                                         </div>
                                         <div
-                                            className={`transform transition-transform duration-300 ${expandedStep === item.id ? 'rotate-180' : ''}`}
-                                            style={{ color: '#FFD4A3' }}
+                                            className={`transform transition-transform duration-300 text-sky-200 ${expandedStep === item.id ? 'rotate-180' : ''}`}
                                         >
                                             <BiArrowFromBottom size={20} />
                                         </div>
@@ -190,13 +165,12 @@ const HowItWorks = () => {
                                         <div
                                             className="bg-black/20 border-t"
                                             style={{
-                                                borderColor: 'rgba(255, 186, 107, 0.15)',
+                                                borderColor: 'rgba(56, 189, 248, 0.2)',
                                                 padding: '1rem'
                                             }}
                                         >
                                             <p
-                                                className="leading-relaxed text-sm"
-                                                style={{ color: '#FFD4A3' }}
+                                                className="leading-relaxed text-sm text-sky-50"
                                             >
                                                 {item.body}
                                             </p>
@@ -213,16 +187,11 @@ const HowItWorks = () => {
                                     key={item.id}
                                     className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-105"
                                 >
-                                    {/* Step Card Shimmer Border */}
-                                    {/* <div className={`absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
-                                                    <div className="w-full h-full rounded-xl bg-gradient-to-br from-slate-800/90 to-slate-900/90" />
-                                                </div> */}
-
                                     <Card
                                         className="relative h-full bg-gradient-to-br from-slate-800/50 to-slate-900/50 transition-all duration-300"
                                         style={{
                                             padding: '.5rem',
-                                            border: '1px solid rgba(255, 186, 107, 0.15)',
+                                            border: '1px solid rgba(56, 189, 248, 0.2)',
                                             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                                         }}
                                     >
@@ -231,21 +200,19 @@ const HowItWorks = () => {
                                                 <div
                                                     className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center text-xl transition-transform duration-300 group-hover:scale-110`}
                                                     style={{
-                                                        boxShadow: '0 6px 16px rgba(255, 107, 44, 0.4)'
+                                                        boxShadow: '0 6px 16px rgba(56, 189, 248, 0.5)'
                                                     }}
                                                 >
                                                     {item.icon}
                                                 </div>
                                                 <div>
                                                     <CardDescription
-                                                        className="font-medium text-md opacity-90"
-                                                        style={{ color: '#FFA64D' }}
+                                                        className="font-medium text-md opacity-90 text-sky-300"
                                                     >
                                                         {item.step}
                                                     </CardDescription>
                                                     <CardTitle
-                                                        className="text-sm font-semibold"
-                                                        style={{ color: '#FFBA6B' }}
+                                                        className="text-sm font-semibold text-sky-100"
                                                     >
                                                         {item.title}
                                                     </CardTitle>
@@ -255,8 +222,7 @@ const HowItWorks = () => {
 
                                         <CardContent className="pt-0">
                                             <p
-                                                className="leading-relaxed text-sm"
-                                                style={{ color: '#FFD4A3' }}
+                                                className="leading-relaxed text-sm text-sky-50"
                                             >
                                                 {item.body}
                                             </p>

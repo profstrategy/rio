@@ -173,7 +173,7 @@ body {
   overflow-x: hidden;
   max-width: 100vw;
   position: relative;
-  color: var(--rio-fire-200);
+  color: var(--rio-sky-200);
 }
 
 @theme inline {
@@ -181,9 +181,14 @@ body {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-sky-rio-base: var(--rio-sky-500);
-  --color-sky-rio-sec: var(--rio-sky-700);
-  --color-sky-rio-dark: var(--rio-sky-800);
+  --color-rio-sky-50: var(--rio-sky-50);
+  --color-rio-sky-100: var(--rio-sky-100);
+  --color-rio-sky-200: var(--rio-sky-200);
+  --color-rio-sky-300: var(--rio-sky-300);
+  --color-rio-sky-400: var(--rio-gray-400);
+  --color-rio-sky-500: var(--rio-sky-500);
+  --color-rio-sky-700: var(--rio-sky-700);
+  --color-rio-sky-800: var(--rio-sky-800);
   --color-fire-rio-sec: var(--rio-fire-500);
   --color-fire-rio-sec-300: var(--rio-fire-300);
   --color--rio-fire-350: var(--rio-fire-350);

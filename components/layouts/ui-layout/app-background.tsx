@@ -2,7 +2,7 @@ import React from 'react'
 
 const AppBackground = ({ children }:{ children: React.ReactNode }) => {
     return (
-        <div className="min-h-[35rem] h-auto bg-gradient-to-br from-orange-400 to-orange-800 opacity-80 relative overflow-hidden">
+        <div className="min-h-[35rem] h-auto bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
             {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden">
                 {/* Floating Particles */}

@@ -12,27 +12,30 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
     }, []);
 
     if (!mounted) {
-        return <div className="bg-gradient-to-br from-blue-900 via-purple-900 to-cyan-900" />;
+        return <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" />;
     }
 
     return (
         <div>
-            {/* Multi-layered Animated Background */}
-            <div className="absolute overflow-hidden inset-0 bg-neutral-950" />
+            {/* Deep Base Layer for Better Contrast */}
+            <div className="absolute overflow-hidden inset-0 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950" />
 
-            {/* Tropical Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-orange-600/30 via-pink-500/20 to-cyan-400/30 animate-pulse"
+            {/* Enhanced Dark Gradient Overlay with Rio Sky Colors */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-sky-950 to-indigo-950 animate-pulse"
                 style={{ animationDuration: '4s' }} />
 
-            {/* Dynamic Macaw Color Waves */}
+            {/* Stronger Color Accent Layer */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-sky-900/60 via-transparent to-cyan-900/60" />
+
+            {/* Dynamic Rio Color Waves with Darker Tones */}
             <div className="absolute inset-0">
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-orange-500/40 via-transparent to-cyan-500/40 animate-pulse"
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-sky-700/30 via-transparent to-cyan-700/30 animate-pulse"
                     style={{
                         clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)',
                         animationDuration: '3s',
                         animationDelay: '0.5s'
                     }} />
-                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-pink-500/30 via-transparent to-yellow-500/30 animate-pulse"
+                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-indigo-700/25 via-transparent to-sky-700/25 animate-pulse"
                     style={{
                         clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)',
                         animationDuration: '3.5s',
@@ -40,7 +43,7 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
                     }} />
             </div>
 
-            {/* Floating Feather Particles */}
+            {/* Floating Particles with Rio Sky Colors */}
             <div className="absolute inset-0 overflow-hidden">
                 {Array.from({ length: 50 }, (_, i) => (
                     <div
@@ -53,15 +56,15 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
                             animationDuration: `${3 + Math.random() * 4}s`
                         }}
                     >
-                        <div className="w-3 h-3 bg-gradient-to-br from-orange-400 to-pink-500 rounded-full shadow-lg opacity-80" />
+                        <div className="w-3 h-3 bg-gradient-to-br from-sky-400 to-cyan-500 rounded-full shadow-lg opacity-60" />
                     </div>
                 ))}
 
-                {/* Tropical Sparkles */}
+                {/* Subtle Sparkles */}
                 {Array.from({ length: 30 }, (_, i) => (
                     <div
                         key={`sparkle-${i}`}
-                        className="absolute w-2 h-2 bg-yellow-300 rounded-full opacity-70 animate-ping"
+                        className="absolute w-2 h-2 bg-sky-300 rounded-full opacity-50 animate-ping"
                         style={{
                             left: `${Math.random() * 100}%`,
                             top: `${Math.random() * 100}%`,
@@ -72,14 +75,14 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
                 ))}
             </div>
 
-            {/* Animated Grid with Rio Colors */}
-            <div className="absolute inset-0 opacity-15">
+            {/* Animated Grid with Rio Sky Colors */}
+            <div className="absolute inset-0 opacity-10">
                 <div
                     className="w-full h-full animate-pulse"
                     style={{
                         backgroundImage: `
-                            linear-gradient(rgba(255,165,0,0.4) 2px, transparent 2px),
-                            linear-gradient(90deg, rgba(0,191,255,0.4) 2px, transparent 2px)
+                            linear-gradient(rgba(0,180,219,0.3) 2px, transparent 2px),
+                            linear-gradient(90deg, rgba(14,165,233,0.3) 2px, transparent 2px)
                         `,
                         backgroundSize: '60px 60px',
                         animationDuration: '6s'
@@ -87,30 +90,33 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
                 />
             </div>
 
-            {/* Large Animated Glow Effects */}
-            <div className="absolute top-10 left-10 w-96 h-96 bg-gradient-radial from-orange-400/30 via-pink-400/20 to-transparent rounded-full blur-3xl animate-pulse"
+            {/* Subtle Glow Effects with Rio Sky Colors */}
+            <div className="absolute top-10 left-10 w-96 h-96 bg-gradient-radial from-sky-600/20 via-sky-800/10 to-transparent rounded-full blur-3xl animate-pulse"
                 style={{ animationDuration: '4s' }} />
-            <div className="absolute bottom-10 right-10 w-80 h-80 bg-gradient-radial from-cyan-400/30 via-blue-400/20 to-transparent rounded-full blur-2xl animate-pulse"
+            <div className="absolute bottom-10 right-10 w-80 h-80 bg-gradient-radial from-cyan-600/20 via-indigo-800/10 to-transparent rounded-full blur-2xl animate-pulse"
                 style={{ animationDuration: '3s', animationDelay: '1s' }} />
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-radial from-yellow-400/25 via-orange-400/15 to-transparent rounded-full blur-xl animate-pulse"
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-radial from-sky-500/15 via-sky-800/10 to-transparent rounded-full blur-xl animate-pulse"
                 style={{ animationDuration: '5s', animationDelay: '2s' }} />
 
-            {/* Hero Image with Enhanced Blend */}
+            {/* Hero Image with Darker Blend */}
             <div className="absolute inset-0">
                 <Image
                     src={heroImage}
                     alt="hero-image"
                     fill
                     priority
-                    className="w-full h-full object-cover opacity-60 mix-blend-soft-light contrast-125 saturate-125"
+                    className="w-full h-full object-cover opacity-40 mix-blend-soft-light contrast-110 saturate-110"
                 />
             </div>
 
-            {/* Cartoon-style Color Overlay for Sharpness */}
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-cyan-500/20 mix-blend-overlay" />
+            {/* Dark Overlay for Better Text Contrast */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-950/40 via-transparent to-indigo-950/40 mix-blend-multiply" />
 
-            {/* Sharp Highlight Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-yellow-200/10 mix-blend-screen" />
+            {/* Subtle Rio Sky Accent Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-sky-700/15 via-transparent to-cyan-700/15 mix-blend-overlay" />
+
+            {/* Subtle Highlight for Depth */}
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/3 to-sky-100/5 mix-blend-screen" />
 
             {/* Shimmer Effect Overlay */}
             <div className="absolute inset-0 animate-shimmer pointer-events-none" />

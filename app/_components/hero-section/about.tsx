@@ -7,11 +7,11 @@ const About = () => {
         <>
             <AppHeading
                 variant='h1'
-                className=" bg-clip-text text-rio-fire-500 font-bold text-left "
+                className="text-white drop-shadow-lg bg-clip-text font-bold text-left "
             >
                 The Meme That Flew Over The Dogs
             </AppHeading>
-            <p className="text-rio-fire-500/50 text-xl leading-relaxed text-left ">
+            <p className="text-white/60 text-xl leading-relaxed text-left ">
                 The meme meta is overcrowded with dogs. $RIO is not just another mutt in the pack, it's the rare bird that flies above the noise.
             </p>
         </>
