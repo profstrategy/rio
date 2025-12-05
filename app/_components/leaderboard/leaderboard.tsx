@@ -2,18 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion';
 import { LeaderboardEmptyState } from '@/components/reusables/empty-states';
-
-// const LeaderboardEmptyState = ({ message }: { message: string }) => (
-//     <div className="text-center py-8 text-white/60">
-//         <div className="text-4xl mb-4">🦜</div>
-//         <p>{message}</p>
-//     </div>
-// );
-
-const AppHeading = ({ children, variant, className }: any) => {
-    const Tag = variant || 'h2';
-    return <Tag className={className}>{children}</Tag>;
-};
+import { AppHeading } from '@/components/reusables/app-heading';
 
 const LeaderBoard = () => {
 

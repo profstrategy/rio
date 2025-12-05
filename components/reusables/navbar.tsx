@@ -12,6 +12,7 @@ import { FaBarsStaggered } from 'react-icons/fa6'
 import AppButton from '../ui/app-button'
 import { useAppDialog } from '@/hooks/use-app-dialog'
 import AppDialogBox from './alert-dialog'
+import Link from 'next/link'
 
 export const Logo = () => {
     return (
@@ -29,7 +30,7 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialo
             <ul className="md:flex items-center justify-center lg:gap-8 md:gap-6 hidden">
                 {navItems?.map((item) => (
                     <li key={item.id} className="relative">
-                        <a
+                        <Link
                             href={item.id}
                             onClick={() => setActiveItem(item.id)}
                             className={`px-3 py-2 rounded-md transition-all md:text-[0.95rem] lg:text-[1rem] font-medium relative
@@ -46,7 +47,7 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialo
                                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                                 />
                             )}
-                        </a>
+                        </Link>
                     </li>
                 ))}
 
@@ -135,12 +136,12 @@ const MobileNavMenu = ({
                                                 : 'text-white/70 bg-clip-text font-semibold hover:text-rio-sky-200/80'
                                             }`}
                                     >
-                                        <a
+                                        <Link
 
                                             href={`${item.id}`}
                                         >
                                             {item.item}
-                                        </a>
+                                        </Link>
                                     </motion.li>
                                 ))}
 
@@ -176,9 +177,9 @@ const Navbar = () => {
     const { dialogProps, openDialog } = useAppDialog()
     const navItems = [
         { id: '/', item: 'Home' },
+        {id: '#how-it-works', item: 'How It Works' },
         { id: '#token', item: 'Token' },
-        { id: '#leaderboard', item: 'Leaderboard' },
-        // { id: 'contact', item: 'Contact' },
+        { id: '#leaderboard', item: 'Leaderboard' }
     ]
 
     useEffect(() => {

@@ -92,6 +92,7 @@ const HowItWorks = () => {
             variants={containerVariants}
             className='relative bg-black border-0 backdrop-blur-lg container'
             style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
+            id='how-it-works'
         >
             <motion.div
                 variants={itemVariants}
