@@ -1,14 +1,11 @@
 'use client'
-// import { MdOutlineBlurCircular } from 'react-icons/md';
 import { motion } from 'framer-motion';
-// import { SiVirustotal } from 'react-icons/si';
-// import { HiStatusOnline } from 'react-icons/hi';
+import Image from 'next/image';
 import { AppHeading } from '@/components/reusables/app-heading';
 import AppButton from '@/components/ui/app-button';
 import React, { useState, useEffect } from 'react'
 import AppDialogBox from '@/components/reusables/alert-dialog';
 import { useAppDialog } from '@/hooks/use-app-dialog';
-import { LeaderboardEmptyState } from '@/components/reusables/empty-states';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -161,90 +158,22 @@ const TokenInfo = () => {
                                 </div>
                                 <div className="text-center">
                                     <h2 className="text-xl font-bold bg-gradient-to-r from-orange-400 to-cyan-400 bg-clip-text text-transparent">
-                                        TOKEN
+                                        TOKENOMICS
                                     </h2>
                                     {/* <p className="text-sm text-white/60">The Rare Bird That Flies Above The Noise</p> */}
                                 </div>
                             </div>
 
                             {/* Token Stats */}
-                            <div className="flex flex-col gap-4">
-                                <LeaderboardEmptyState message='Coming Soon' />
-                                {/* Circulating Supply */}
-                                {/* <div
-                                    className='flex justify-between items-center rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300 hover:scale-[1.02]'
-                                    role="group"
-                                    aria-label="Circulating Supply Information"
-                                    style={{
-                                        paddingInline: '1rem'
-                                    }}
-                                >
-                                    <div className="flex items-center gap-3"
-                                    >
-                                        <div className="w-8 h-8 bg-cyan-400/20 rounded-full flex items-center justify-center">
-                                            <span className="text-cyan-400 text-sm"><MdOutlineBlurCircular /></span>
-                                        </div>
-                                        <AppHeading variant='h4' className="text-cyan-300 font-semibold">
-                                            Circulating Supply
-                                        </AppHeading>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                                            {formatNumber(animatedSupply)}
-                                        </p>
-                                        <p className="text-xs text-white/50">RIO Tokens</p>
-                                    </div>
-                                </div> */}
-
-                                {/* Total Supply */}
-                                {/* <div
-                                    className='flex justify-between items-center p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-400/20 hover:border-purple-400/40 transition-all duration-300 hover:scale-[1.02]'
-                                    role="group"
-                                    aria-label="Total Supply Information"
-                                    style={{
-                                        paddingInline: '1rem'
-                                    }}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-purple-400/20 rounded-full flex items-center justify-center">
-                                            <span className="text-purple-400 text-sm"><SiVirustotal /></span>
-                                        </div>
-                                        <AppHeading variant='h4' className="text-purple-300 font-semibold">
-                                            Total Supply
-                                        </AppHeading>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                                            {formatNumber(animatedTotal)}
-                                        </p>
-                                        <p className="text-xs text-white/50">RIO Tokens</p>
-                                    </div>
-                                </div> */}
-
-                                {/* Market Cap Placeholder */}
-                                {/* <div
-                                    className='flex justify-between items-center p-4 rounded-lg bg-gradient-to-r from-orange-500/10 to-yellow-500/10 border border-orange-400/20 hover:border-orange-400/40 transition-all duration-300 hover:scale-[1.02]'
-                                    role="group"
-                                    aria-label="Market Information"
-                                    style={{
-                                        paddingInline: '1rem'
-                                    }}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-orange-400/20 rounded-full flex items-center justify-center">
-                                            <span className="text-orange-400 text-sm"><HiStatusOnline /></span>
-                                        </div>
-                                        <AppHeading variant='h4' className="text-orange-300 font-semibold">
-                                            Market Status
-                                        </AppHeading>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-xl font-bold bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
-                                            SOARING 🚀
-                                        </p>
-                                        <p className="text-xs text-white/50">Above The Noise</p>
-                                    </div>
-                                </div> */}
+                            <div className="relative w-full h-50">
+                                <Image
+                                alt='tokenomics'
+                                fill
+                                src={'/tokenomics.jpg'}
+                                priority
+                                quality={100}
+                                className='object-contain max-w-full'
+                                 />
                             </div>
 
                             {/* Action Button */}
