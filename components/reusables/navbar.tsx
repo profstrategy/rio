@@ -23,7 +23,7 @@ export const Logo = () => {
     )
 }
 
-const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialogProps }: DesktopNavLinksProps) => {
+const DesktopNavMenu = ({ navItems, activeItem, handleNavClick, openDialog, dialogProps }: DesktopNavLinksProps) => {
     const session = useSession()
     return (
         <>
@@ -32,7 +32,7 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialo
                     <li key={item.id} className="relative">
                         <Link
                             href={item.id}
-                            onClick={() => setActiveItem(item.id)}
+                            onClick={(e) => handleNavClick(e, item.id)}
                             className={`px-3 py-2 rounded-md transition-all md:text-[0.95rem] lg:text-[1rem] font-medium relative
               ${item.id === activeItem
                                     ? 'text-rio-sky-200/80'
@@ -67,9 +67,10 @@ const MobileNavMenu = ({
     isOpen,
     navItems,
     activeItem,
-    setActiveItem,
+    handleNavClick,
     setIsOpen,
-    openDialog, dialogProps
+    openDialog, 
+    dialogProps
 }: MobileNavMenuProps) => {
     const session = useSession()
 
@@ -96,16 +97,6 @@ const MobileNavMenu = ({
                                 background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
                             }}
                         >
-                            {/* <div className="flex justify-end p-4">
-                            <button
-                                onClick={() => setIsOpen(false)}
-                                className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-                                aria-label="Close menu"
-                            >
-                                <LiaTimesSolid className="w-6 h-6 text-gray-700" />
-                            </button>
-                        </div> */}
-
                             <motion.ul
                                 className="flex flex-col items-center w-full gap-8 border-2 h-full justify-center"
                                 initial="closed"
@@ -126,10 +117,6 @@ const MobileNavMenu = ({
                                             closed: { x: 50, opacity: 0 },
                                         }}
                                         transition={{ type: 'spring', stiffness: 500 }}
-                                        onClick={() => {
-                                            setActiveItem(item.id);
-                                            setIsOpen(false);
-                                        }}
                                         className={` w-5/6 text-center text-lg font-medium transition-colors border-b-2 text-white
                  ${item.id === activeItem
                                                 ? 'text-rio-sky-200/80'
@@ -137,8 +124,11 @@ const MobileNavMenu = ({
                                             }`}
                                     >
                                         <Link
-
-                                            href={`${item.id}`}
+                                            href={item.id}
+                                            onClick={(e) => {
+                                                handleNavClick(e, item.id);
+                                                setIsOpen(false);
+                                            }}
                                         >
                                             {item.item}
                                         </Link>
@@ -153,9 +143,9 @@ const MobileNavMenu = ({
                                     transition={{ type: 'spring', stiffness: 500 }}
                                     className="mt-8"
                                 >
-                                    {session ? <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
+                                    {session ? <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={openDialog}>
                                         View Whitepaper
-                                    </AppButton> : <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={openDialog}>
+                                    </AppButton> : <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                                         Connect X
                                     </AppButton>}
 
@@ -172,82 +162,108 @@ const MobileNavMenu = ({
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
-    const [activeItem, setActiveItem] = React.useState('');
-    const [ scrollY, setScrollY] = React.useState(false);
+    const [activeItem, setActiveItem] = React.useState('/');
+    const [scrollY, setScrollY] = React.useState(false);
     const { dialogProps, openDialog } = useAppDialog()
+    
     const navItems = [
         { id: '/', item: 'Home' },
-        {id: '#how-it-works', item: 'How It Works' },
-        { id: '#token', item: 'Token' },
-        { id: '#leaderboard', item: 'Leaderboard' }
+        { id: '#how-it-works', item: 'How It Works' },
+         { id: '#leaderboard', item: 'Leaderboard' },
+        { id: '#tokenomics', item: 'Tokenomics' },
     ]
 
+    // Handle smooth scrolling and active state
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        e.preventDefault();
+        
+        if (href === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setActiveItem('/');
+            window.history.pushState(null, '', '/');
+            return;
+        }
+        
+        if (href.startsWith('#')) {
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                setActiveItem(href);
+                window.history.pushState(null, '', href);
+            }
+        }
+    };
+
+    // Update active item on scroll
     useEffect(() => {
         const handleScroll = () => {
-            setScrollY(window.scrollY > 0)
+            setScrollY(window.scrollY > 0);
+            
+            const sections = ['/', 'how-it-works', 'tokenomics', 'leaderboard'];
+            const scrollPosition = window.scrollY + 150;
+            
+            for (const section of sections) {
+                const element = document.getElementById(section);
+                if (element) {
+                    const { offsetTop, offsetHeight } = element;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                        setActiveItem(`#${section}`);
+                        window.history.replaceState(null, '', `#${section}`);
+                        return;
+                    }
+                }
+            }
+            
+            if (window.scrollY < 100) {
+                setActiveItem('/');
+                window.history.replaceState(null, '', '/');
+            }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
-        }
-    }, [])
-
-
-    useEffect(() => {
-        const handleSmoothScroll = (e: Event) => {
-            e.preventDefault();
-            const anchor = e.target as HTMLAnchorElement;
-            const href = anchor.getAttribute('href');
-            if (href) {
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
-        };
-
-        // Add event listeners
-        const anchors = document.querySelectorAll('a[href^="#"]');
-        anchors.forEach(anchor => {
-            anchor.addEventListener('click', handleSmoothScroll);
-        });
-
-        // Cleanup function to remove event listeners
-        return () => {
-            anchors.forEach(anchor => {
-                anchor.removeEventListener('click', handleSmoothScroll);
-            });
         };
     }, []);
 
-    // bg-black/50 backdrop-blur-md border-b border-rio-fire-900/50
-
     return (
-        <header className="">
-            <nav className={`flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto inset-x-0 container fixed ${scrollY ? 'bg-neutral-700 drop-shadow-white-ash shadow-md border-b border-rio-sky-800/50' : 'bg-transparent'}`}>
-                <Logo />
-                <button
-                    className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
-                    onClick={() => setIsOpen(!isOpen)}
-                    aria-label={isOpen ? 'Close menu' : 'Open menu'}
-                    aria-controls='mobile-menu'
-                >
-                    {isOpen ? (
-                        <LiaTimesSolid className="w-6 h-6 text-white" />
-                    ) : (
-                        <FaBarsStaggered className="w-6 h-6 text-white" />
-                    )}
-                </button>
+        <nav className={`flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto inset-x-0 container fixed ${scrollY ? 'bg-neutral-700 drop-shadow-white-ash shadow-md border-b border-rio-sky-800/50' : 'bg-transparent'}`}>
+            <Logo />
+            <button
+                className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                aria-controls='mobile-menu'
+            >
+                {isOpen ? (
+                    <LiaTimesSolid className="w-6 h-6 text-white" />
+                ) : (
+                    <FaBarsStaggered className="w-6 h-6 text-white" />
+                )}
+            </button>
 
-                <MobileNavMenu navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
+            <MobileNavMenu 
+                navItems={navItems} 
+                isOpen={isOpen} 
+                setIsOpen={setIsOpen} 
+                activeItem={activeItem} 
+                handleNavClick={handleNavClick}
+                openDialog={openDialog} 
+                dialogProps={dialogProps} 
+            />
 
-                <DesktopNavMenu navItems={navItems} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
-            </nav>
-        </header >
+            <DesktopNavMenu 
+                navItems={navItems} 
+                activeItem={activeItem} 
+                handleNavClick={handleNavClick}
+                openDialog={openDialog} 
+                dialogProps={dialogProps} 
+            />
+        </nav>
     )
 }
 

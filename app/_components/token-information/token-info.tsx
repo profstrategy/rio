@@ -1,11 +1,12 @@
 'use client'
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { AppHeading } from '@/components/reusables/app-heading';
 import AppButton from '@/components/ui/app-button';
 import React, { useState, useEffect } from 'react'
 import AppDialogBox from '@/components/reusables/alert-dialog';
 import { useAppDialog } from '@/hooks/use-app-dialog';
+import { LightBoxImage } from '@/components/ui/light-box-image';
+import TokenCard from './token-card';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -32,48 +33,12 @@ const itemVariants: any = {
 
 const TokenInfo = () => {
     const [mounted, setMounted] = useState(false);
-    // const [animatedSupply, setAnimatedSupply] = useState(0);
-    // const [animatedTotal, setAnimatedTotal] = useState(0);
-
     const { openDialog, dialogProps } = useAppDialog()
 
-    // const targetCirculating = 4675474;
-    // const targetTotal = 4675474685;
 
     useEffect(() => {
         setMounted(true);
-
-        // Animate numbers on mount
-        // const animateNumbers = () => {
-        //     const duration = 2000; // 2 seconds
-        //     const steps = 60;
-        //     const stepDuration = duration / steps;
-
-        //     let currentStep = 0;
-        //     const timer = setInterval(() => {
-        //         currentStep++;
-        //         const progress = currentStep / steps;
-
-        //         setAnimatedSupply(Math.floor(targetCirculating * progress));
-        //         setAnimatedTotal(Math.floor(targetTotal * progress));
-
-        //         if (currentStep >= steps) {
-        //             clearInterval(timer);
-        //             setAnimatedSupply(targetCirculating);
-        //             setAnimatedTotal(targetTotal);
-        //         }
-        //     }, stepDuration);
-
-        //     return () => clearInterval(timer);
-        // };
-
-        // const cleanup = animateNumbers();
-        // return cleanup;
     }, []);
-
-    // const formatNumber = (num: number) => {
-    //     return num.toLocaleString();
-    // };
 
     if (!mounted) {
         return (
@@ -89,7 +54,7 @@ const TokenInfo = () => {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
             variants={containerVariants}
-            className='h-auto relative w-full col-span-2 container' role="complementary" aria-label="Token Information Section" id='token' style={{ marginBottom: '1rem', paddingTop: '2rem', paddingBottom: '2rem' }}>
+            className='h-auto relative w-full col-span-2 container' role="complementary" aria-label="Token Information Section" id='tokenomics' style={{ marginBottom: '1rem', paddingTop: '2rem', paddingBottom: '2rem' }}>
             {/* Background Rio Character - Blu the Macaw */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
                 <div
@@ -133,10 +98,10 @@ const TokenInfo = () => {
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
                     <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
-                    <div className="w-full h-full rounded-xl" style={{
-                        background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
-                    }} />
-                </div>
+                        <div className="w-full h-full rounded-xl" style={{
+                            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
+                        }} />
+                    </div>
 
                     {/* Content Container */}
                     <div
@@ -153,27 +118,21 @@ const TokenInfo = () => {
 
                             {/* Token Symbol and Icon */}
                             <div className="flex items-center justify-center gap-4 mb-4">
-                                <div className="w-20 h-16 lg:h-20 md:h-16  bg-gradient-to-br from-orange-400 to-cyan-400 rounded-full flex items-center justify-center text-xl font-bold text-white shadow-lg animate-pulse">
+                                <div className="w-20 h-16 lg:h-20 md:h-16 bg-gradient-to-br from-orange-400 to-cyan-400 rounded-full flex items-center justify-center text-xl font-bold text-white shadow-lg animate-pulse">
                                     $RIO
                                 </div>
                                 <div className="text-center">
                                     <h2 className="text-xl font-bold bg-gradient-to-r from-orange-400 to-cyan-400 bg-clip-text text-transparent">
                                         TOKENOMICS
                                     </h2>
-                                    {/* <p className="text-sm text-white/60">The Rare Bird That Flies Above The Noise</p> */}
                                 </div>
                             </div>
 
-                            {/* Token Stats */}
-                            <div className="relative w-full h-50">
-                                <Image
-                                alt='tokenomics'
-                                fill
-                                src={'/tokenomics.jpg'}
-                                priority
-                                quality={100}
-                                className='object-contain max-w-full'
-                                 />
+                            <div className='grid grid-cols-[1fr_1fr] gap-4'>
+                                <div className="w-full relative aspect-[16/9] sm:aspect-[2/1] md:aspect-[5/2] max-h-[300px]">
+                                    <LightBoxImage />
+                                </div>
+                                <TokenCard />
                             </div>
 
                             {/* Action Button */}
@@ -198,8 +157,7 @@ const TokenInfo = () => {
                                 </p>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>                </div>
             </motion.div>
 
             {/* Custom Styles */}
@@ -242,81 +200,6 @@ const TokenInfo = () => {
                     outline-offset: 2px;
                 }
 
-                /* High contrast mode support */
-                @media (prefers-contrast: high) {
-                    .text-white\\/90,
-                    .text-white\\/70,
-                    .text-white\\/60,
-                    .text-white\\/50 {
-                        color: white !important;
-                    }
-                    .border-white\\/10,
-                    .border-white\\/20 {
-                        border-color: white !important;
-                    }
-                }
-
-                /* Reduced motion support */
-                @media (prefers-reduced-motion: reduce) {
-                    .animate-float,
-                    .animate-spin-slow,
-                    .animate-pulse {
-                        animation: none !important;
-                    }
-                    
-                    .transition-all {
-                        transition: none !important;
-                    }
-                    
-                    .hover\\:scale-105,
-                    .hover\\:scale-\\[1\\.02\\] {
-                        transform: none !important;
-                    }
-                }
-
-                /* Mobile responsiveness */
-                @media (max-width: 768px) {
-                    .col-span-2 {
-                        padding: 0.5rem;
-                    }
-                    
-                    .text-2xl {
-                        font-size: 1.5rem;
-                    }
-                    
-                    .max-w-xs {
-                        max-width: 100%;
-                    }
-                    
-                    .gap-4 {
-                        gap: 0.75rem;
-                    }
-                    
-                    .p-6 {
-                        padding: 1rem;
-                    }
-                }
-
-                @media (max-width: 480px) {
-                    .w-16 {
-                        width: 3rem;
-                        height: 3rem;
-                    }
-                    
-                    .text-xl {
-                        font-size: 1.125rem;
-                    }
-                    
-                    .py-4 {
-                        padding-top: 0.75rem;
-                        padding-bottom: 0.75rem;
-                    }
-                }
-
-                /* Custom gradient utilities */
-                .bg-gradient-radial {
-                    background: radial-gradient(circle, var(--tw-gradient-stops));
-                }
             `}</style>
         </motion.main>
     )

@@ -576,7 +576,7 @@ body {
 .container {
   max-width: 1440px;
   margin: auto;
-  padding: 0 150px;
+  padding: 0 100px;
   overflow-x: hidden;
   /* Added overflow protection */
 }
@@ -586,7 +586,7 @@ body {
   .container {
     max-width: 100%;
     /* FIXED: Was 900px causing overflow */
-    padding: 0 2rem;
+    padding: 0 1rem;
     overflow-x: hidden;
   }
 }

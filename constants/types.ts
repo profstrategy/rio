@@ -6,7 +6,7 @@ export interface MobileNavMenuProps {
   isOpen: boolean;
   navItems: NavItems[];
   activeItem: string;
-  setActiveItem: (id: string) => void;
+  handleNavClick: (e: React.MouseEvent<HTMLAnchorElement>, id: string) => void;
   setIsOpen: (isOpen: boolean) => void;
   openDialog: () => void;
   dialogProps: {
@@ -22,7 +22,7 @@ export interface MobileNavMenuProps {
 export interface DesktopNavLinksProps {
   navItems: NavItems[];
   activeItem: string;
-  setActiveItem: (id: string) => void;
+  handleNavClick: (e: React.MouseEvent<HTMLAnchorElement>, id: string) => void;
   openDialog: () => void;
   dialogProps: {
     open: boolean,

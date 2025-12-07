@@ -37,11 +37,11 @@ const HeroContent = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-100px' }}
-      variants={containerVariants} className="z-10 grid md:grid-cols-2 text-center relative md:min-h-[32rem] min-h-[28rem] container"
+      variants={containerVariants} className="z-10 grid md:grid-cols-2 text-center relative md:min-h-[32rem] min-h-[30rem] container"
     >
       <motion.div variants={itemVariants} className='flex flex-col items-start justify-center gap-8'>
           <About />
-        <AppButton className='md:w-80 w-60 rounded-xl border-b-2' onClick={() => router.push(globalRoutes.externalPage.twitter)}><h3 className='text-2xl font-bold'>JOIN COMMUNITY</h3></AppButton>
+        <AppButton className='md:w-80 w-60 rounded-xl border-b-2' onClick={() => router.push(globalRoutes.externalPage.telegram)}><h3 className='text-2xl font-bold'>JOIN COMMUNITY</h3></AppButton>
       </motion.div>
     <div className="relative w-full h-full md:flex items-center justify-end hidden">
   <Image

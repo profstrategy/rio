@@ -91,7 +91,7 @@ const LeaderBoard = () => {
 
             <motion.div variants={itemVariants}>
                 <AppHeading
-                    variant='h1'
+                    variant='h2'
                     className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text mar-b'
                 >
                     Leaderboard
@@ -104,10 +104,9 @@ const LeaderBoard = () => {
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className='w-full h-10 px-4 rounded-lg bg-black/30 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 transition-all duration-300 backdrop-blur-sm'
-                            // style={{
-                            //     '--focus-ring-color': '#b8ebfe',
-                            //     '--focus-border-color': '#38bdf8'
-                            // } as React.CSSProperties}
+                            style={{
+                                paddingInline: '1rem'
+                            } as React.CSSProperties}
                             placeholder='Search Users...'
                             aria-label="Search users in leaderboard"
                         />
