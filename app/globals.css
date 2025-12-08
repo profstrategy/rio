@@ -4,17 +4,21 @@
 
 :root {
   /* Primary Colors - Macaw Inspired */
-  --rio-fire-50: #fff4ed;
-  --rio-fire-100: #ffe4cc;
-  --rio-fire-200: #ffcf99;
-  --rio-fire-300: #ffb366;
-  --rio-fire-400: #ff8a47;
-  --rio-fire-500: #FF6B35;
+ --rio-fire-200: #FFD4A3;  /* Lighter, warmer peachy tone */
+--rio-fire-300: #FFBA6B;  /* Brighter, more saturated orange */
+--rio-fire-350: #FFA64D;  /* Enhanced mid-tone with better visibility */
+--rio-fire-400: #FF8A3D;  /* More vibrant core orange */
+--rio-fire-500: #FF6B2C;  /* Primary brand color - more energetic */
+
+--rio-fire-600: #F05A24;  /* Deeper, richer orange-red */
+--rio-fire-700: #D94A1C;  /* Enhanced contrast for text */
+--rio-fire-800: #C23B14;  /* Bolder dark orange */
+--rio-fire-900: #A62F0F;  /* Deep burnt orange for accents */
   /* Main macaw orange */
-  --rio-fire-600: #e55a2b;
+  /* --rio-fire-600: #e55a2b;
   --rio-fire-700: #cc4a21;
   --rio-fire-800: #b33b17;
-  --rio-fire-900: #99310d;
+  --rio-fire-900: #99310d; */
 
   /* Secondary Colors - Brazilian Sky */
   --rio-sky-50: #f0fbff;
@@ -169,6 +173,7 @@ body {
   overflow-x: hidden;
   max-width: 100vw;
   position: relative;
+  color: var(--rio-sky-200);
 }
 
 @theme inline {
@@ -176,11 +181,22 @@ body {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-sky-rio-base: var(--rio-sky-500);
+  --color-rio-sky-50: var(--rio-sky-50);
+  --color-rio-sky-100: var(--rio-sky-100);
+  --color-rio-sky-200: var(--rio-sky-200);
+  --color-rio-sky-300: var(--rio-sky-300);
+  --color-rio-sky-400: var(--rio-gray-400);
+  --color-rio-sky-500: var(--rio-sky-500);
+  --color-rio-sky-700: var(--rio-sky-700);
+  --color-rio-sky-800: var(--rio-sky-800);
   --color-fire-rio-sec: var(--rio-fire-500);
   --color-fire-rio-sec-300: var(--rio-fire-300);
-  --color-flight-rio-500: var(--rio-flight-500)
-;
+  --color--rio-fire-350: var(--rio-fire-350);
+  --color-rio-fire-200: var(--rio-fire-200);
+  --color-rio-fire-500: var(--rio-fire-500);
+  --color-flight-rio-500: var(--rio-flight-500);
+  --color-rio-fire-600: var(--rio-fire-600);
+  --color-rio-fire-bold: var(--rio-fire-800);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -213,7 +229,13 @@ body {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px)}
+  --radius-xl: calc(var(--radius) + 4px)
+}
+
+/* white space */
+.mar-b {
+  margin-bottom: 8px;
+}
 
 /* ========================================
    📝 TYPOGRAPHY CLASSES
@@ -554,15 +576,33 @@ body {
 .container {
   max-width: 1440px;
   margin: auto;
-  padding: 0 2rem;
-  overflow-x: hidden; /* Added overflow protection */
+  padding: 0 100px;
+  overflow-x: hidden;
+  /* Added overflow protection */
 }
 
 /* CRITICAL FIX: Mobile container was 900px! */
 @media (max-width: 768px) {
   .container {
-    max-width: 100%; /* FIXED: Was 900px causing overflow */
+    max-width: 100%;
+    /* FIXED: Was 900px causing overflow */
     padding: 0 1rem;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    max-width: 100%;
+    padding: 0 40px;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    max-width: 100%;
+    padding: 0 20px;
     overflow-x: hidden;
   }
 }
@@ -574,14 +614,14 @@ body {
   }
 }
 
-.container-reverse {
+/* .container-reverse {
   position: relative;
   left: -10;
 }
 
 .token-background {
   padding: 2rem 0;
-}
+} */
 
 @keyframes float {
 
@@ -668,6 +708,7 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

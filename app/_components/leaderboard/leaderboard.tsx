@@ -1,8 +1,8 @@
 'use client'
-import { AppHeading } from '@/components/reusables/app-heading';
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion';
 import { LeaderboardEmptyState } from '@/components/reusables/empty-states';
+import { AppHeading } from '@/components/reusables/app-heading';
 
 const LeaderBoard = () => {
 
@@ -36,7 +36,7 @@ const LeaderBoard = () => {
     }, []);
 
     // Mock leaderboard data with proper ranking
-    const leaderboardData:string[] = [];
+    const leaderboardData: any[] = [];
 
     // const filteredData = leaderboardData.filter(item =>
     //     item.user.toLowerCase().includes(searchTerm.toLowerCase())
@@ -44,8 +44,8 @@ const LeaderBoard = () => {
 
     if (!mounted) {
         return (
-            <main className="col-span-3 rounded-xl flex flex-col gap-4">
-                <div className="h-16 bg-gradient-to-r from-slate-800 to-slate-700 rounded-lg animate-pulse" />
+            <main className="col-span-3 rounded-xl flex flex-col gap-4 md:hidden">
+                <div className="radial-gradient(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)" />
             </main>
         );
     }
@@ -56,7 +56,9 @@ const LeaderBoard = () => {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
             variants={containerVariants}
-            className="col-span-3 rounded-xl flex flex-col gap-4 relative" role="main" aria-label="Leaderboard Section" id='leaderboard'>
+            className="container" role="main" aria-label="Leaderboard Section" id='leaderboard'
+            style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
+        >
             {/* Background Rio Character - Nigel the Cockatoo */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
                 <div
@@ -89,8 +91,8 @@ const LeaderBoard = () => {
 
             <motion.div variants={itemVariants}>
                 <AppHeading
-                    variant='h1'
-                    className=' text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-lg'
+                    variant='h2'
+                    className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text mar-b'
                 >
                     Leaderboard
                 </AppHeading>
@@ -101,7 +103,10 @@ const LeaderBoard = () => {
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className='w-full h-10 px-4 pr-10 rounded-lg bg-black/30 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300 backdrop-blur-sm'
+                            className='w-full h-10 px-4 rounded-lg bg-black/30 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 transition-all duration-300 backdrop-blur-sm'
+                            style={{
+                                paddingInline: '1rem'
+                            } as React.CSSProperties}
                             placeholder='Search Users...'
                             aria-label="Search users in leaderboard"
                         />
@@ -115,39 +120,50 @@ const LeaderBoard = () => {
 
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
-                    <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-orange-500 via-cyan-400 to-orange-500 animate-spin-slow">
-                        <div className="w-full h-full rounded-xl" style={{
-                            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
-                        }} />
-                    </div>
+                   <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
+                    <div className="w-full h-full rounded-xl" style={{
+                        background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
+                    }} />
+                </div>
 
                     {/* Table Container */}
                     <div
-                        className='relative text-white/90 rounded-xl p-4 md:max-h-[35rem] max-h-[20rem] overflow-y-auto custom-scrollbar mb-4'
+                        className='relative text-white/90 rounded-xl md:max-h-[35rem] max-h-[20rem] overflow-y-auto custom-scrollbar mb-4'
                         style={{
-                            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
-                            backdropFilter: 'blur(10px)'
+                            background: 'radial-gradient(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
+                            backdropFilter: 'blur(18px)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                            marginTop: '1rem'
                         }}
                         role="region"
                         aria-label="Leaderboard table"
                         tabIndex={0}
                     >
                         {/* Table Header */}
-                        {/* <div className='flex justify-between items-center border-b border-white/20 pb-3 mb-4 sticky top-0 bg-inherit z-10'>
-                            <div className='w-2/12 text-center font-semibold text-orange-300' role="columnheader">
+                        <div className='flex justify-between items-center border-b pb-3 mb-4 sticky top-0 bg-inherit z-10'
+                            style={{
+                                borderColor: 'rgba(255, 212, 163, 0.3)'
+                            }}>
+                            <div className='w-2/12 text-center font-semibold text-lg'
+                                style={{ color: '#b8ebfe' }}
+                                role="columnheader">
                                 Rank
                             </div>
-                            <div className='w-6/12 text-center font-semibold text-cyan-300' role="columnheader">
+                            <div className='w-6/12 text-center font-semibold text-lg'
+                                style={{ color: '#7dd3fc' }}
+                                role="columnheader">
                                 User
                             </div>
-                            <div className='w-4/12 text-center font-semibold text-pink-300' role="columnheader">
+                            <div className='w-4/12 text-center font-semibold text-lg'
+                                style={{ color: '#b8ebfe' }}
+                                role="columnheader">
                                 Points
                             </div>
-                        </div> */}
+                        </div>
 
                         {/* Table Body */}
-                        <div className="space-y-2" role="table" aria-label="User rankings">
-                            {/* {leaderboardData.length > 0 ? (
+                        <div className="space-y-2" style={{ padding: '1rem' }} role="table" aria-label="User rankings">
+                            {leaderboardData.length > 0 ? (
                                 leaderboardData.map((item, _) => (
                                     <div
                                         key={item.rank}
@@ -185,11 +201,12 @@ const LeaderBoard = () => {
                                     </div>
                                 ))
                             ) : (
-                                <div className="text-center py-8 text-white/60" role="status" aria-live="polite">
-                                    <div className="text-4xl mb-4">🔍</div>
-                                    <p>No users found matching "{searchTerm}"</p>
-                                </div>
-                            )} */}
+                                // <div className="text-center py-8 text-white/60" role="status" aria-live="polite">
+                                //     <div className="text-4xl mb-4">🔍</div>
+                                //     <p>No users found matching "{searchTerm}"</p>
+                                // </div>
+                                <></>
+                            )}
 
                             {leaderboardData && <LeaderboardEmptyState message='Coming soon' />}
                         </div>
@@ -233,7 +250,7 @@ const LeaderBoard = () => {
 
                 .custom-scrollbar {
                     scrollbar-width: thin;
-                    scrollbar-color: rgba(59, 130, 246, 0.5) rgba(0, 0, 0, 0.3);
+                    scrollbar-color: rgba(255, 186, 107, 0.6) rgba(0, 0, 0, 0.3);
                 }
 
                 .custom-scrollbar::-webkit-scrollbar {
@@ -246,17 +263,24 @@ const LeaderBoard = () => {
                 }
 
                 .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: linear-gradient(45deg, #f97316, #ec4899, #06b6d4);
+                    background: linear-gradient(45deg, #FF8A3D, #FF6B2C, #F05A24);
                     border-radius: 3px;
                 }
 
                 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: linear-gradient(45deg, #ea580c, #db2777, #0891b2);
+                    background: linear-gradient(45deg, #FFA64D, #FF8A3D, #D94A1C);
                 }
 
-                /* Focus styles for accessibility */
+                /* Enhanced focus styles with new colors */
+                input:focus-visible {
+                    outline: 2px solid #38bdf8 !important;
+                    outline-offset: 2px;
+                    border-color: #b8ebfe !important;
+                    box-shadow: 0 0 0 3px rgba(255, 186, 107, 0.3) !important;
+                }
+
                 *:focus-visible {
-                    outline: 2px solid #06b6d4;
+                    outline: 2px solid #38bdf8;
                     outline-offset: 2px;
                 }
 

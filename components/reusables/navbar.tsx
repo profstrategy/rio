@@ -1,5 +1,4 @@
 'use client'
-import { logo } from '@/public'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { AppHeading } from './app-heading'
@@ -11,31 +10,31 @@ import { LiaTimesSolid } from 'react-icons/lia'
 import { FaBarsStaggered } from 'react-icons/fa6'
 import AppButton from '../ui/app-button'
 import { useAppDialog } from '@/hooks/use-app-dialog'
-import AppDialogBox from './alert-dialog'
+import Link from 'next/link'
 
 export const Logo = () => {
     return (
-        <div className='flex items-center justify-baseline container-reverse'>
-            <Image src={logo} alt='logo' priority={true} height={50} width={50} quality={100} />
-            <AppHeading className='lg:text-5xl font-extrabold text-sky-700'>RIO</AppHeading>
+        <div className='flex items-center justify-center md:w-24 w-20'>
+            <Image src={'/rio-logo.png'} alt='logo' priority={true} height={50} width={50} quality={100} />
+            <AppHeading className='lg:text-5xl font-extrabold text-rio-sky-800'>RIO</AppHeading>
         </div>
     )
 }
 
-const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialogProps }: DesktopNavLinksProps) => {
-    const session = useSession()
+const DesktopNavMenu = ({ navItems, activeItem, handleNavClick }: DesktopNavLinksProps) => {
+    // const session = useSession()
     return (
         <>
             <ul className="md:flex items-center justify-center lg:gap-8 md:gap-6 hidden">
                 {navItems?.map((item) => (
                     <li key={item.id} className="relative">
-                        <a
+                        <Link
                             href={item.id}
-                            onClick={() => setActiveItem(item.id)}
+                            onClick={(e) => handleNavClick(e, item.id)}
                             className={`px-3 py-2 rounded-md transition-all md:text-[0.95rem] lg:text-[1rem] font-medium relative
               ${item.id === activeItem
-                                    ? 'text-white/60 font-semibold'
-                                    : 'text-white hover:text-white/60'
+                                    ? 'text-rio-sky-200/80'
+                                    : 'text-white/70 bg-clip-text font-semibold hover:text-rio-sky-200/80'
                                 }`}
                         >
                             {item.item}
@@ -46,17 +45,14 @@ const DesktopNavMenu = ({ navItems, activeItem, setActiveItem, openDialog, dialo
                                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                                 />
                             )}
-                        </a>
+                        </Link>
                     </li>
                 ))}
 
-                {session ? <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={openDialog}>
-                    View Whitepaper
-                </AppButton> : <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
+                <AppButton className="px-6 py-3 shadow-2xs text-xl text-white rounded-lg font-bold w-50 h-10 border-b-2" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                     Connect X
-                </AppButton>}
+                </AppButton>
             </ul>
-            {dialogProps.open && <AppDialogBox {...dialogProps} />}
         </>
     )
 }
@@ -66,11 +62,10 @@ const MobileNavMenu = ({
     isOpen,
     navItems,
     activeItem,
-    setActiveItem,
+    handleNavClick,
     setIsOpen,
-    openDialog, dialogProps
 }: MobileNavMenuProps) => {
-    const session = useSession()
+    // const session = useSession()
 
     return (
         <>
@@ -81,7 +76,7 @@ const MobileNavMenu = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed inset-0 z-50 md:hidden top-16 backdrop-blur-3xl"
+                        className="fixed inset-0 z-50 lg:hidden top-16 backdrop-blur-3xl"
                         onClick={() => setIsOpen(false)}
                     >
                         <motion.div
@@ -95,16 +90,6 @@ const MobileNavMenu = ({
                                 background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
                             }}
                         >
-                            {/* <div className="flex justify-end p-4">
-                            <button
-                                onClick={() => setIsOpen(false)}
-                                className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-                                aria-label="Close menu"
-                            >
-                                <LiaTimesSolid className="w-6 h-6 text-gray-700" />
-                            </button>
-                        </div> */}
-
                             <motion.ul
                                 className="flex flex-col items-center w-full gap-8 border-2 h-full justify-center"
                                 initial="closed"
@@ -125,22 +110,21 @@ const MobileNavMenu = ({
                                             closed: { x: 50, opacity: 0 },
                                         }}
                                         transition={{ type: 'spring', stiffness: 500 }}
-                                        onClick={() => {
-                                            setActiveItem(item.id);
-                                            setIsOpen(false);
-                                        }}
                                         className={` w-5/6 text-center text-lg font-medium transition-colors border-b-2 text-white
-                    ${item.id === activeItem
-                                                ? 'bg-accent-white/10 text-accent-primary'
-                                                : 'text-gray-700 hover:text-gray-900'
+                 ${item.id === activeItem
+                                                ? 'text-rio-sky-200/80'
+                                                : 'text-white/70 bg-clip-text font-semibold hover:text-rio-sky-200/80'
                                             }`}
                                     >
-                                        <a
-
-                                            href={`${item.id}`}
+                                        <Link
+                                            href={item.id}
+                                            onClick={(e) => {
+                                                handleNavClick(e, item.id);
+                                                setIsOpen(false);
+                                            }}
                                         >
                                             {item.item}
-                                        </a>
+                                        </Link>
                                     </motion.li>
                                 ))}
 
@@ -152,11 +136,9 @@ const MobileNavMenu = ({
                                     transition={{ type: 'spring', stiffness: 500 }}
                                     className="mt-8"
                                 >
-                                    {session ? <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
+                                    <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                                         Connect X
-                                    </AppButton> : <AppButton className="px-6 py-3 bg-gradient-to-br from-teal-700 via-teal-500 to-red-700 border border-teal-400/30 text-white rounded-lg font-medium w-50 h-10" onClick={openDialog}>
-                                        View Whitepaper
-                                    </AppButton>}
+                                    </AppButton>
 
                                 </motion.li>
                             </motion.ul>
@@ -164,77 +146,114 @@ const MobileNavMenu = ({
                     </motion.div>
                 )}
             </AnimatePresence>
-            {dialogProps.open && <AppDialogBox {...dialogProps} />}
         </>
     );
 };
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
-    const [activeItem, setActiveItem] = React.useState('');
+    const [activeItem, setActiveItem] = React.useState('/');
+    const [scrollY, setScrollY] = React.useState(false);
     const { dialogProps, openDialog } = useAppDialog()
+
     const navItems = [
         { id: '/', item: 'Home' },
-        { id: '#token', item: 'Token' },
+        { id: '#how-it-works', item: 'How It Works' },
         { id: '#leaderboard', item: 'Leaderboard' },
-        // { id: 'contact', item: 'Contact' },
+        { id: '#tokenomics', item: 'Tokenomics' },
     ]
 
+    // Handle smooth scrolling and active state
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        e.preventDefault();
+
+        if (href === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setActiveItem('/');
+            window.history.pushState(null, '', '/');
+            return;
+        }
+
+        if (href.startsWith('#')) {
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                setActiveItem(href);
+                window.history.pushState(null, '', href);
+            }
+        }
+    };
+
+    // Update active item on scroll
     useEffect(() => {
-        const handleSmoothScroll = (e: Event) => {
-            e.preventDefault();
-            const anchor = e.target as HTMLAnchorElement;
-            const href = anchor.getAttribute('href');
-            if (href) {
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        const handleScroll = () => {
+            setScrollY(window.scrollY > 0);
+
+            const sections = ['/', 'how-it-works', 'tokenomics', 'leaderboard'];
+            const scrollPosition = window.scrollY + 150;
+
+            for (const section of sections) {
+                const element = document.getElementById(section);
+                if (element) {
+                    const { offsetTop, offsetHeight } = element;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                        setActiveItem(`#${section}`);
+                        window.history.replaceState(null, '', `#${section}`);
+                        return;
+                    }
                 }
+            }
+
+            if (window.scrollY < 100) {
+                setActiveItem('/');
+                window.history.replaceState(null, '', '/');
             }
         };
 
-        // Add event listeners
-        const anchors = document.querySelectorAll('a[href^="#"]');
-        anchors.forEach(anchor => {
-            anchor.addEventListener('click', handleSmoothScroll);
-        });
-
-        // Cleanup function to remove event listeners
+        window.addEventListener('scroll', handleScroll);
         return () => {
-            anchors.forEach(anchor => {
-                anchor.removeEventListener('click', handleSmoothScroll);
-            });
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
 
-
     return (
-        <header className={` sticky top-0 z-50 opacity-85 transition-shadow duration-300 h-16 grid m-auto `} style={{
-            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)',
-        }}>
-            <nav className=" flex items-center justify-between container">
-                <Logo />
-                <button
-                    className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
-                    onClick={() => setIsOpen(!isOpen)}
-                    aria-label={isOpen ? 'Close menu' : 'Open menu'}
-                    aria-controls='mobile-menu'
-                >
-                    {isOpen ? (
-                        <LiaTimesSolid className="w-6 h-6 text-white" />
-                    ) : (
-                        <FaBarsStaggered className="w-6 h-6 text-white" />
-                    )}
-                </button>
+        <nav className={`flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto inset-x-0 container fixed ${scrollY ? 'bg-neutral-700 drop-shadow-white-ash shadow-md border-b border-rio-sky-800/50' : 'bg-transparent'}`}>
+            <Logo />
+            <button
+                className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                aria-controls='mobile-menu'
+            >
+                {isOpen ? (
+                    <LiaTimesSolid className="w-6 h-6 text-white" />
+                ) : (
+                    <FaBarsStaggered className="w-6 h-6 text-white" />
+                )}
+            </button>
 
-                <MobileNavMenu navItems={navItems} isOpen={isOpen} setIsOpen={setIsOpen} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
+            <MobileNavMenu
+                navItems={navItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                activeItem={activeItem}
+                handleNavClick={handleNavClick}
+                openDialog={openDialog}
+                dialogProps={dialogProps}
+            />
 
-                <DesktopNavMenu navItems={navItems} activeItem={activeItem} setActiveItem={setActiveItem} openDialog={openDialog} dialogProps={dialogProps} />
-            </nav>
-        </header >
+            <DesktopNavMenu
+                navItems={navItems}
+                activeItem={activeItem}
+                handleNavClick={handleNavClick}
+                openDialog={openDialog}
+                dialogProps={dialogProps}
+            />
+        </nav>
     )
 }
 

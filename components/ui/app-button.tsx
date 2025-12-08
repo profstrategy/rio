@@ -69,8 +69,8 @@ const AppButton: React.FC<ButtonProps> = ({
 
   const variantClasses =
     variant === 'secondary'
-      ? `bg-fire-rio-sec text-white border-[0.5px] border-none hover:bg-fire-rio-sec-300 hover:text-white/60 ${disabled ? 'bg-opacity-70' : ''}`
-      : `bg-sky-rio-base text-white hover:bg-flight-rio-500 ${disabled ? 'bg-opacity-70' : ''}`;
+      ? `bg-fire-sky-500 text-white/90 border-[0.5px] border-none hover:bg-fire-rio-sky-500/50 hover:text-white/60 ${disabled ? 'bg-opacity-70' : ''}`
+      : `bg-rio-sky-800 text-white/90 hover:bg-rio-sky-500/50 ${disabled ? 'bg-opacity-70' : ''}`;
 
   const renderContent = () => {
     // if (loading) return <LoadingIcon />;
