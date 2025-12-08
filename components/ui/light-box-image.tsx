@@ -13,12 +13,13 @@ const [lightboxOpen, setLightboxOpen] = useState(false);
 return (
 <>
 <div 
-  className="w-full relative aspect-[16/9] sm:aspect-[2/1] md:aspect-[5/2] max-h-[300px] cursor-pointer"
+  className="w-full relative aspect-[16/9] sm:aspect-[2/1] md:aspect-[2/5] lg:block md:flex md:justify-center max-h-[300px] cursor-pointer"
   onClick={() => setLightboxOpen(true)}
 >
   <Image
     alt='tokenomics'
-    fill
+    height={300}
+    width={450}
     sizes='(max-width: 640px) 95vw, (max-width: 768px) 85vw, 60vw'
     src={'/tokenomics.webp'}
     priority

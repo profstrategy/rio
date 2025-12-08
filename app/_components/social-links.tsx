@@ -37,12 +37,12 @@ const SocialLinks = () => {
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
             variants={containerVariants}
-            className='container' role="complementary" aria-label="Contact Information Section" 
-            style={{paddingTop: '2rem', paddingBottom: '2rem'}}
-            >
+            className='container' role="complementary" aria-label="Contact Information Section"
+            style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
+        >
 
             <motion.div variants={itemVariants}>
-               <AppHeading
+                <AppHeading
                     variant='h2'
                     className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text mar-b'
                 >
@@ -52,7 +52,7 @@ const SocialLinks = () => {
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
                     <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
-                        <div className="w-full h-full rounded-xl"  style={{
+                        <div className="w-full h-full rounded-xl" style={{
                             background: 'radial-gradient(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
                             backdropFilter: 'blur(18px)',
                             border: '1px solid rgba(255,255,255,0.08)'
@@ -62,7 +62,7 @@ const SocialLinks = () => {
                     {/* Content Container */}
                     <div
                         className='relative h-auto rounded-xl backdrop-blur-sm'
-                       style={{
+                        style={{
                             background: 'radial-gradient(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
                             backdropFilter: 'blur(18px)',
                             border: '1px solid rgba(255,255,255,0.08)',
@@ -83,10 +83,10 @@ const SocialLinks = () => {
                                     }}
                                 >
                                     <Link href={globalRoutes.externalPage.telegram} target='_blank'>
-                                    <BsTelegram className='w-8 h-8' />
+                                        <BsTelegram className='w-8 h-8' />
                                     </Link>
                                     <Link href={globalRoutes.externalPage.twitter} target='_blank'>
-                                    <BsTwitterX className='w-8 h-8' />
+                                        <BsTwitterX className='w-8 h-8' />
                                     </Link>
                                     {/* <BsDiscord className='w-8 h-8' />
                                     <BsSlack className='w-8 h-8' /> */}

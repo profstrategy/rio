@@ -1,5 +1,4 @@
 'use client'
-import { logo } from '@/public'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { AppHeading } from './app-heading'
@@ -11,20 +10,19 @@ import { LiaTimesSolid } from 'react-icons/lia'
 import { FaBarsStaggered } from 'react-icons/fa6'
 import AppButton from '../ui/app-button'
 import { useAppDialog } from '@/hooks/use-app-dialog'
-import AppDialogBox from './alert-dialog'
 import Link from 'next/link'
 
 export const Logo = () => {
     return (
-        <div className='flex items-center justify-center w-[6.5rem]'>
-            <Image src={logo} alt='logo' priority={true} height={50} width={50} quality={100} />
+        <div className='flex items-center justify-center md:w-24 w-20'>
+            <Image src={'/rio-logo.png'} alt='logo' priority={true} height={50} width={50} quality={100} />
             <AppHeading className='lg:text-5xl font-extrabold text-rio-sky-800'>RIO</AppHeading>
         </div>
     )
 }
 
-const DesktopNavMenu = ({ navItems, activeItem, handleNavClick, openDialog, dialogProps }: DesktopNavLinksProps) => {
-    const session = useSession()
+const DesktopNavMenu = ({ navItems, activeItem, handleNavClick }: DesktopNavLinksProps) => {
+    // const session = useSession()
     return (
         <>
             <ul className="md:flex items-center justify-center lg:gap-8 md:gap-6 hidden">
@@ -51,13 +49,10 @@ const DesktopNavMenu = ({ navItems, activeItem, handleNavClick, openDialog, dial
                     </li>
                 ))}
 
-                {session ? <AppButton className="px-6 py-3 shadow-2xl text-xl text-white shadow-rio-fire-bold/300 border-b-2 rounded-lg font-bold w-50 h-10" onClick={openDialog}>
-                    View Whitepaper
-                </AppButton> : <AppButton className="px-6 py-3 shadow-2xs text-xl text-white rounded-lg font-bold w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
+                <AppButton className="px-6 py-3 shadow-2xs text-xl text-white rounded-lg font-bold w-50 h-10 border-b-2" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                     Connect X
-                </AppButton>}
+                </AppButton>
             </ul>
-            {dialogProps.open && <AppDialogBox {...dialogProps} />}
         </>
     )
 }
@@ -69,10 +64,8 @@ const MobileNavMenu = ({
     activeItem,
     handleNavClick,
     setIsOpen,
-    openDialog, 
-    dialogProps
 }: MobileNavMenuProps) => {
-    const session = useSession()
+    // const session = useSession()
 
     return (
         <>
@@ -83,7 +76,7 @@ const MobileNavMenu = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed inset-0 z-50 md:hidden top-16 backdrop-blur-3xl"
+                        className="fixed inset-0 z-50 lg:hidden top-16 backdrop-blur-3xl"
                         onClick={() => setIsOpen(false)}
                     >
                         <motion.div
@@ -143,11 +136,9 @@ const MobileNavMenu = ({
                                     transition={{ type: 'spring', stiffness: 500 }}
                                     className="mt-8"
                                 >
-                                    {session ? <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={openDialog}>
-                                        View Whitepaper
-                                    </AppButton> : <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
+                                    <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
                                         Connect X
-                                    </AppButton>}
+                                    </AppButton>
 
                                 </motion.li>
                             </motion.ul>
@@ -155,7 +146,6 @@ const MobileNavMenu = ({
                     </motion.div>
                 )}
             </AnimatePresence>
-            {dialogProps.open && <AppDialogBox {...dialogProps} />}
         </>
     );
 };
@@ -165,25 +155,25 @@ const Navbar = () => {
     const [activeItem, setActiveItem] = React.useState('/');
     const [scrollY, setScrollY] = React.useState(false);
     const { dialogProps, openDialog } = useAppDialog()
-    
+
     const navItems = [
         { id: '/', item: 'Home' },
         { id: '#how-it-works', item: 'How It Works' },
-         { id: '#leaderboard', item: 'Leaderboard' },
+        { id: '#leaderboard', item: 'Leaderboard' },
         { id: '#tokenomics', item: 'Tokenomics' },
     ]
 
     // Handle smooth scrolling and active state
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
-        
+
         if (href === '/') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setActiveItem('/');
             window.history.pushState(null, '', '/');
             return;
         }
-        
+
         if (href.startsWith('#')) {
             const target = document.querySelector(href);
             if (target) {
@@ -191,7 +181,7 @@ const Navbar = () => {
                     behavior: 'smooth',
                     block: 'start'
                 });
-                
+
                 setActiveItem(href);
                 window.history.pushState(null, '', href);
             }
@@ -202,10 +192,10 @@ const Navbar = () => {
     useEffect(() => {
         const handleScroll = () => {
             setScrollY(window.scrollY > 0);
-            
+
             const sections = ['/', 'how-it-works', 'tokenomics', 'leaderboard'];
             const scrollPosition = window.scrollY + 150;
-            
+
             for (const section of sections) {
                 const element = document.getElementById(section);
                 if (element) {
@@ -217,7 +207,7 @@ const Navbar = () => {
                     }
                 }
             }
-            
+
             if (window.scrollY < 100) {
                 setActiveItem('/');
                 window.history.replaceState(null, '', '/');
@@ -246,22 +236,22 @@ const Navbar = () => {
                 )}
             </button>
 
-            <MobileNavMenu 
-                navItems={navItems} 
-                isOpen={isOpen} 
-                setIsOpen={setIsOpen} 
-                activeItem={activeItem} 
+            <MobileNavMenu
+                navItems={navItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                activeItem={activeItem}
                 handleNavClick={handleNavClick}
-                openDialog={openDialog} 
-                dialogProps={dialogProps} 
+                openDialog={openDialog}
+                dialogProps={dialogProps}
             />
 
-            <DesktopNavMenu 
-                navItems={navItems} 
-                activeItem={activeItem} 
+            <DesktopNavMenu
+                navItems={navItems}
+                activeItem={activeItem}
                 handleNavClick={handleNavClick}
-                openDialog={openDialog} 
-                dialogProps={dialogProps} 
+                openDialog={openDialog}
+                dialogProps={dialogProps}
             />
         </nav>
     )

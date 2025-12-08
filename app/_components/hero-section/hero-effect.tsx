@@ -1,5 +1,4 @@
 'use client';
-import { heroImage } from '@/public';
 import React, { useState, useEffect, ReactNode } from 'react';
 import Image from 'next/image';
 
@@ -101,7 +100,7 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
             {/* Hero Image with Darker Blend */}
             <div className="absolute inset-0">
                 <Image
-                    src={heroImage}
+                    src={'/rio_art.png'}
                     alt="hero-image"
                     fill
                     priority

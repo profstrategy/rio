@@ -54,7 +54,7 @@ const TokenInfo = () => {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
             variants={containerVariants}
-            className='h-auto relative w-full col-span-2 container' role="complementary" aria-label="Token Information Section" id='tokenomics' style={{ marginBottom: '1rem', paddingTop: '2rem', paddingBottom: '2rem' }}>
+            className=' h-auto relative w-full col-span-2 container' role="complementary" aria-label="Token Information Section" id='tokenomics' style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
             {/* Background Rio Character - Blu the Macaw */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
                 <div
@@ -128,24 +128,11 @@ const TokenInfo = () => {
                                 </div>
                             </div>
 
-                            <div className='grid grid-cols-[1fr_1fr] gap-4'>
-                                <div className="w-full relative aspect-[16/9] sm:aspect-[2/1] md:aspect-[5/2] max-h-[300px]">
+                            <div className='grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-0 justify-center items-center'>
+                                <div className="w-full relative max-h-[300px]">
                                     <LightBoxImage />
                                 </div>
                                 <TokenCard />
-                            </div>
-
-                            {/* Action Button */}
-                            <div className='flex justify-center pt-4'>
-                                <AppButton
-                                    className='w-full max-w-xs text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-rio-fire-500/50 focus:ring-offset-2 focus:ring-offset-rio-fire-200 border-b-2'
-                                    aria-label="View RIO Token Whitepaper"
-                                    onClick={openDialog}
-                                >
-                                    <span className="flex items-center justify-center gap-2">
-                                        📄 View Whitepaper
-                                    </span>
-                                </AppButton>
                             </div>
 
                             {dialogProps.open && <AppDialogBox {...dialogProps} />}

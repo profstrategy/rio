@@ -33,3 +33,16 @@ export interface DesktopNavLinksProps {
     description: string
   }
 }
+
+export interface TokenCardProps {
+  id: number;
+  title: string;
+  value: string;
+  description?: string;
+}
+export interface RoadmapItemProps {
+  id: number;
+  title: string;
+  heading: string;
+  details: string[];
+}

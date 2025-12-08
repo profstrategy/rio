@@ -44,7 +44,7 @@ const LeaderBoard = () => {
 
     if (!mounted) {
         return (
-            <main className="col-span-3 rounded-xl flex flex-col gap-4">
+            <main className="col-span-3 rounded-xl flex flex-col gap-4 md:hidden">
                 <div className="radial-gradient(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)" />
             </main>
         );

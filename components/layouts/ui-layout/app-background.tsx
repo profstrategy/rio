@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 const AppBackground = ({ children }:{ children: React.ReactNode }) => {
     return (
@@ -75,6 +76,17 @@ const AppBackground = ({ children }:{ children: React.ReactNode }) => {
                         }}
                     />
                 </div>
+
+                {/* Hero Image with Darker Blend */}
+                            <div className="absolute lg:inset-7 md:-inset-20 inset-40 flex justify-center items-center">
+                                <Image
+                                    src={'/rio_art.png'}
+                                    alt="hero-image"
+                                    fill
+                                    priority
+                                    className=" w-full h-full object-cover opacity-40 mix-blend-soft-light contrast-110 saturate-110"
+                                />
+                            </div>
 
                 {/* Subtle Glow Effects with Rio Sky Colors */}
                 <div className="absolute top-10 left-10 w-96 h-96 bg-gradient-radial from-sky-600/20 via-sky-800/10 to-transparent rounded-full blur-3xl animate-pulse"

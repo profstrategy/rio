@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { GiEngagementRing, GiMountainClimbing } from 'react-icons/gi'
@@ -7,43 +6,9 @@ import { BiArrowFromBottom } from 'react-icons/bi'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { AppHeading } from '@/components/reusables/app-heading'
 
-const howItWorks = [
-    {
-        id: 0,
-        step: 'Step 1',
-        title: 'Visit & Connect',
-        body: 'Land on the website, see Rio branding and token info, then connect your Twitter account through secure login',
-        icon: <MdConnectingAirports />,
-        color: 'from-sky-400 to-sky-600'
-    },
-    {
-        id: 1,
-        step: 'Step 2',
-        title: 'Engage on Twitter',
-        body: 'Tweet about $Rio, use hashtags like #RioOnBonk, retweet official posts, and interact with the community on Twitter',
-        icon: <GiEngagementRing />,
-        color: 'from-cyan-400 to-sky-600'
-    },
-    {
-        id: 2,
-        step: 'Step 3',
-        title: 'Track Your Impact',
-        body: 'View your personalized dashboard showing your Twitter engagement stats, contributions, and current leaderboard ranking',
-        icon: <MdArtTrack />,
-        color: 'from-sky-500 to-cyan-600'
-    },
-    {
-        id: 3,
-        step: 'Step 4',
-        title: 'Compete & Climb',
-        body: 'Check the leaderboard to see top community supporters, earn badges/rewards, and increase your rank through more Twitter activity',
-        icon: <GiMountainClimbing />,
-        color: 'from-cyan-300 to-sky-500'
-    }
-]
 
 const HowItWorks = () => {
-    const [isMobile, setIsMobile] = useState(false);
+ const [isMobile, setIsMobile] = useState(false);
     const [expandedStep, setExpandedStep] = useState(null);
 
     useEffect(() => {
@@ -61,16 +26,6 @@ const HowItWorks = () => {
         setExpandedStep(expandedStep === stepId ? null : stepId);
     };
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15,
-            },
-        },
-    };
-
     const itemVariants: any = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -84,19 +39,48 @@ const HowItWorks = () => {
     };
 
 
-    return (
-        <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            variants={containerVariants}
-            className='relative bg-black border-0 backdrop-blur-lg container'
-            style={{ paddingTop: '2rem', paddingBottom: '2rem', marginBottom: '1rem' }}
-            id='how-it-works'
-        >
-            <motion.div
+    const howItWorks = [
+        {
+            id: 0,
+            step: 'Step 1',
+            title: 'Visit & Connect',
+            body: 'Land on the website, see Rio branding and token info, then connect your Twitter account through secure login',
+            icon: <MdConnectingAirports />,
+            color: 'from-sky-400 to-sky-600'
+        },
+        {
+            id: 1,
+            step: 'Step 2',
+            title: 'Engage on Twitter',
+            body: 'Tweet about $Rio, use hashtags like #RioOnBonk, retweet official posts, and interact with the community on Twitter',
+            icon: <GiEngagementRing />,
+            color: 'from-cyan-400 to-sky-600'
+        },
+        {
+            id: 2,
+            step: 'Step 3',
+            title: 'Track Your Impact',
+            body: 'View your personalized dashboard showing your Twitter engagement stats, contributions, and current leaderboard ranking',
+            icon: <MdArtTrack />,
+            color: 'from-sky-500 to-cyan-600'
+        },
+        {
+            id: 3,
+            step: 'Step 4',
+            title: 'Compete & Climb',
+            body: 'Check the leaderboard to see top community supporters, earn badges/rewards, and increase your rank through more Twitter activity',
+            icon: <GiMountainClimbing />,
+            color: 'from-cyan-300 to-sky-500'
+        }
+    ]
+
+  return (
+     <motion.div
                 variants={itemVariants}
-                className="relative" >
+                 id='how-it-works'
+                className="relative"
+                style={{ marginBottom: '1.5rem' }} 
+                >
                 <AppHeading
                     variant='h2'
                     className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text relative z-10'
@@ -235,8 +219,7 @@ const HowItWorks = () => {
                     )}
                 </div>
             </motion.div>
-        </motion.div>
-    )
+  )
 }
 
 export default HowItWorks

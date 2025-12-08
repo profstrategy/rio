@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation';
 import { globalRoutes } from '@/constants/routes';
 import Image from 'next/image';
-import { logo } from '@/public';
 import About from './about';
 
 const containerVariants = {
@@ -46,7 +45,7 @@ const HeroContent = () => {
     <div className="relative w-full h-full md:flex items-center justify-end hidden">
   <Image
     alt="hero-image"
-    src={logo}
+    src={'/rio-logo.png'}
     fill
     className="object-contain max-w-full"
     quality={100}

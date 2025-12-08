@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic';
 
 // const AboutRio = dynamic(() => import('@/app/_components/hero-section/about'), { ssr: false })
-const HowItWorks = dynamic(() => import('@/app/_components/how-it-works'), { ssr: false })
+const HowItWorks = dynamic(() => import('@/components/layouts/ui-layout/dark-theme-layout'), { ssr: false })
 
 const RioSubHero = () => {
     const [mounted, setMounted] = useState(false);
