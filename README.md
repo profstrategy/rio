@@ -266,10 +266,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🌐 Links
 
-- **Website:** [Coming Soon]
-- **Twitter:** [@RioOnBonk](https://twitter.com/RioOnBonk)
-- **Telegram:** [Join Community]
-- **Discord:** [Join Server]
+- **Website:** [rio-on-bonk] (https://www.rioonbonk.io/)
+- **Twitter:** [@RioOnBonk](https://x.com/rioonbonk1)
+- **Telegram:** [Join Community](https://t.me/rioonbonk)
 
 ## 👥 Team
 
@@ -278,8 +277,7 @@ Built with ❤️ by the $RIO community
 ## 📞 Support
 
 For technical support or partnership inquiries:
-- Email: support@rioonbonk.com
-- Twitter DM: [@RioOnBonk](https://twitter.com/RioOnBonk)
+- Twitter DM: [@RioOnBonk](https://x.com/rioonbonk1)
 
 ---
 
