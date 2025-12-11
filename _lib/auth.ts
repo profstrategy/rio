@@ -5,13 +5,14 @@ import { prisma } from "@/lib/prisma"
 
 
 export const authOptions:NextAuthOptions = {
-    // adapter: PrismaAdapter(prisma),
+    adapter: PrismaAdapter(prisma),
     providers: [
         Twitter({
             clientId: process.env.TWITTER_CLIENT_ID!,
             clientSecret: process.env.TWITTER_CLIENT_SECRET!,
             version: '2.0',
         }),
+        
     ],
 
     callbacks: {

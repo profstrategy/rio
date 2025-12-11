@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  twitterId       String   @id @default(auto()) @map("_id") @db.ObjectId
+  username        String
+  displayName     String?
+  profileImage    String?
+  engagementScore Int      @default(0)
+  totalTweets     Int      @default(0)
+  totalRetweets   Int      @default(0)
+  totalLikes      Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  tweets          Tweet[]
+  engagement      Engagement[]
+  badge            Badge @default(NORMAL)
+
+  @@index([username])
+  @@index([engagementScore])
+}
+
+model Tweet {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  tweetId   String   @unique
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [twitterId ], onDelete: Cascade)
+  content   String
+  likes     Int      @default(0)
+  retweets  Int      @default(0)
+  replies   Int      @default(0)
+  createdAt DateTime @default(now())
+  weeklyScore   Int @default(0)
+  monthlyScore  Int @default(0)
+  lastActive    DateTime @default(now())
+  badges        String[] @default([])
+  
+  @@index([weeklyScore])
+  @@index([monthlyScore])
+  @@index([userId])
+  @@index([createdAt]) 
+}
+
+model Engagement {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @db.ObjectId
+  user          User     @relation(fields: [userId], references: [twitterId ], onDelete: Cascade)
+  date          DateTime @default(now())
+  tweetsCount   Int      @default(0)
+  retweetsCount Int      @default(0)
+  likesCount    Int      @default(0)
+  
+  @@index([userId])
+  @@index([date])
+}
+
+  enum Badge {
+    ULTIMATE
+    MASTER
+    VETERAN
+    LEADER
+    NORMAL
+  }
