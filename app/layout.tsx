@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import NextAuthProvider from "@/providers/session-provider";
+import ReactQueryProvider from "@/providers/query-client-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   variable: "--font-geist-mono",
@@ -25,14 +27,14 @@ export const metadata: Metadata = {
     "SocialFI"
   ],
   authors: [{ name: "Rio on bonk", url: "https://www.rioonbonk.io/" }],
-   icons: {
+  icons: {
     icon: '/rio-logo.png',
     apple: '/apple-logo.png',
   },
   openGraph: {
-     title: "$RIO-The meme that flew over the dogs",
-  description: "RIO is the colorful, rhythmic, hyper-community token taking flight on BONK. Inspired by the energy of carnival culture and the spirit of fearless adventure, RIO brings fun, movement, and creativity back to solana with a brand for virality, community, and culture.",
-   images: [
+    title: "$RIO-The meme that flew over the dogs",
+    description: "RIO is the colorful, rhythmic, hyper-community token taking flight on BONK. Inspired by the energy of carnival culture and the spirit of fearless adventure, RIO brings fun, movement, and creativity back to solana with a brand for virality, community, and culture.",
+    images: [
       {
         url: '/rio-wallpapper.jpg',
         width: 800,
@@ -72,9 +74,12 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} antialiased`}
       >
-        <NextAuthProvider>
-          {children}
-        </NextAuthProvider>
+        <ReactQueryProvider>
+          <NextAuthProvider>
+            <Toaster position="top-center" richColors />
+            {children}
+          </NextAuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

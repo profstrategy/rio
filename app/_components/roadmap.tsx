@@ -71,7 +71,7 @@ const RoadMap = () => {
                 variant="h2"
                 className="text-3xl font-bold text-transparent bg-gradient-to-r from-white/80 to-white/40 bg-clip-text tracking-wide"
             >
-                ROADMAP
+                Roadmap
             </AppHeading>
 
             <div className="grid md:grid-cols-2 gap-4 ">
