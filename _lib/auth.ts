@@ -43,12 +43,23 @@ export const authOptions: NextAuthOptions = {
           },
         })
 
+        // Fetch associated account for access token session persistence
+        const userAccount = await prisma.account.findFirst({
+          where: {
+            userId: user.id
+          }, 
+          select: {
+            access_token: true
+          }
+        })
+
         // Add to session
         session.user = {
           ...session.user,
           id: user.id,
           twitterId: dbUser?.twitterId,
           username: dbUser?.username,
+          accessToken: userAccount?.access_token,
           name: dbUser?.displayName || session.user.name, 
           engagementScore: dbUser?.engagementScore || 0,
         }

@@ -6,6 +6,7 @@ declare module "next-auth" {
       id: string
       twitterId?: string
       username?: string
+      accessToken?: string
       engagementScore?: number
     } & DefaultSession["user"]
   }

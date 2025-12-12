@@ -11,9 +11,8 @@ import { FaBarsStaggered } from 'react-icons/fa6'
 import AppButton from '../ui/app-button'
 import { useAppDialog } from '@/hooks/use-app-dialog'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter} from 'next/navigation'
 import { Spinner } from '../ui/spinner'
-import { toast } from 'sonner'
 import { useTwitterOAuth } from '@/hooks/use-twitter-oauth'
 
 export const Logo = () => {
@@ -70,16 +69,7 @@ const MobileNavMenu = ({
     handleNavClick,
     setIsOpen,
 }: MobileNavMenuProps) => {
-    const session = useSession()
-    const router = useRouter();
-    const handleConnectTwitter = () => {
-        signIn('twitter', { callbackUrl: '/' })
-    }
-
-    const handleDashboard = () => {
-        return router.push('/')
-    }
-
+  const { session, handleConnectTwitter, handleDashboard } = useTwitterOAuth()
     return (
         <>
             <AnimatePresence>
