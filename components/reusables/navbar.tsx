@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppHeading } from './app-heading'
 import { DesktopNavLinksProps, MobileNavMenuProps } from '@/constants/types'
 import { AnimatePresence } from 'framer-motion'
@@ -11,7 +11,10 @@ import { FaBarsStaggered } from 'react-icons/fa6'
 import AppButton from '../ui/app-button'
 import { useAppDialog } from '@/hooks/use-app-dialog'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Spinner } from '../ui/spinner'
+import { toast } from 'sonner'
+import { useTwitterOAuth } from '@/hooks/use-twitter-oauth'
 
 export const Logo = () => {
     return (
@@ -23,15 +26,8 @@ export const Logo = () => {
 }
 
 const DesktopNavMenu = ({ navItems, activeItem, handleNavClick }: DesktopNavLinksProps) => {
-    const session = useSession()
-    const router = useRouter();
-    const handleConnectTwitter = () => {
-        signIn('twitter', { callbackUrl: '/' })
-    }
+   const { session, handleConnectTwitter, handleDashboard } = useTwitterOAuth()
 
-    const handleDashboard = () => {
-        return router.push('/')
-    }
     return (
         <>
             <ul className="md:flex items-center justify-center lg:gap-8 md:gap-6 hidden">
@@ -58,8 +54,8 @@ const DesktopNavMenu = ({ navItems, activeItem, handleNavClick }: DesktopNavLink
                     </li>
                 ))}
 
-                <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10 border-b-2" onClick={session ? () => handleDashboard() : () => handleConnectTwitter()}>
-                    {session ? `Dashboard` : `Connect X`}
+                <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10 border-b-2" onClick={session.status === 'authenticated' ? handleDashboard : handleConnectTwitter}>
+                    {session.status === 'loading' ? <Spinner /> : session.status === 'authenticated' ? `Dashboard` : `Connect X`}
                 </AppButton>
             </ul>
         </>
