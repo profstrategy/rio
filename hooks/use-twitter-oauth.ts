@@ -29,7 +29,7 @@ export const useTwitterOAuth = () => {
     }
 
     const handleDashboard = () => {
-        router.push('/')
+        router.push('/user-activity/dashboard')
     }
 
     return { handleConnectTwitter, handleDashboard, session };
