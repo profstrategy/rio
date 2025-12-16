@@ -54,3 +54,18 @@ export interface PaginatedResponse<T> {
   results: T[];
 }
 
+export interface MetricCardProps {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+  trend?: string;
+  delay?: number;
+}
+
+export interface DashboardCardProps {
+  title: string;
+  height?: string;
+  children: React.ReactNode;
+  delay?: number;
+}
+
