@@ -8,7 +8,8 @@ const DashboardCard = ({ title, children, delay = 0, height = 'h-full' }:Dashboa
       background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(184, 235, 254, 0.1) 100%)',
       border: '1px solid rgba(56, 189, 248, 0.3)',
       backdropFilter: 'blur(10px)',
-      animation: `fadeInUp 0.6s ease-out ${delay}s both`
+      animation: `fadeInUp 0.6s ease-out ${delay}s both`,
+      padding: '1rem'
     }}
   >
     <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-5"

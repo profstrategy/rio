@@ -4,12 +4,13 @@ import { TrendingUp } from "lucide-react";
 const MetricCard = ({ icon: Icon, label, value, trend, delay = 0 }: MetricCardProps) => {
     return (
         <div
-            className="relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            className="relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             style={{
                 background: 'linear-gradient(135deg, rgba(184, 235, 254, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%)',
                 border: '1px solid rgba(56, 189, 248, 0.2)',
                 backdropFilter: 'blur(10px)',
-                animation: `fadeInUp 0.6s ease-out ${delay}s both`
+                animation: `fadeInUp 0.6s ease-out ${delay}s both`,
+                padding: '1rem'
             }}
         >
             <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10"
@@ -40,10 +41,10 @@ const MetricCard = ({ icon: Icon, label, value, trend, delay = 0 }: MetricCardPr
                 </div>
 
                 <div className="space-y-2">
-                    <p className="text-3xl font-bold" style={{ color: '#0284c7' }}>
+                    <p className="text-3xl font-bold text-white/70" >
                         {value}
                     </p>
-                    <p className="text-sm font-medium" style={{ color: '#64748b' }}>
+                    <p className="text-sm font-medium text-white/70">
                         {label}
                     </p>
                 </div>

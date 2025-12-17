@@ -69,3 +69,12 @@ export interface DashboardCardProps {
   delay?: number;
 }
 
+export interface TwitterProfile {
+  data: {
+    id: string
+    username: string
+    name: string
+    profile_image_url: string
+  }
+}
+

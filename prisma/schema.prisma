@@ -7,44 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  email           String?   @unique
-  emailVerified   DateTime?
-  image           String?
-  
-  // Rio-specific fields
-  twitterId       String?   @unique
-  username        String?
-  displayName     String?
-  engagementScore Int       @default(0)
-  totalTweets     Int       @default(0)
-  totalRetweets   Int       @default(0)
-  totalLikes      Int       @default(0)
-  weeklyScore     Int       @default(0)
-  monthlyScore    Int       @default(0)
-  lastActive      DateTime  @default(now())
-  badges          String[]  @default([])
-  badge           Badge     @default(NORMAL)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-
-  // Relations
-  accounts   Account[]
-  sessions   Session[]
-  tweets     Tweet[]
-  engagement Engagement[]
-
-
-  @@index([username])
-  @@index([engagementScore])
-  @@index([weeklyScore])
-  @@index([monthlyScore])
-}
-
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  id                String  @id @default(cuid()) @map("_id") @db.ObjectId
   userId            String  @db.ObjectId
   type              String
   provider          String
@@ -64,13 +28,51 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(cuid()) @map("_id") @db.ObjectId
   sessionToken String   @unique
   userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@index([userId])
+}
+
+model User {
+  id              String    @id @default(cuid()) @map("_id") @db.ObjectId
+  name            String?
+  email           String?   @unique
+  emailVerified   DateTime?
+  image           String?
+  
+  // Twitter OAuth fields
+  twitterId       String?   @unique
+  username        String?
+  displayName     String?
+
+  // Engagement metrics
+  engagementScore Int       @default(0)
+  totalTweets     Int       @default(0)
+  totalRetweets   Int       @default(0)
+  totalLikes      Int       @default(0)
+   totalHashtags   Int      @default(0)
+  weeklyScore     Int       @default(0)
+  monthlyScore    Int       @default(0)
+ badge           Badge     @default(NORMAL)
+
+    lastSyncedAt    DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  accounts   Account[]
+  sessions   Session[]
+  recentActivities Activity[]
+
+
+  @@index([username])
+  @@index([engagementScore])
+  @@index([weeklyScore])
+  @@index([monthlyScore])
 }
 
 model VerificationToken {
@@ -82,33 +84,44 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Tweet {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  tweetId      String   
-  userId       String   @db.ObjectId
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  content      String
-  likes        Int      @default(0)
-  retweets     Int      @default(0)
-  replies      Int      @default(0)
-  createdAt    DateTime @default(now())
+// Activity model for tracking user Twitter engagement
+model Activity {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
+  // Tweet data
+  tweetId     String  
+  type        ActivityType
+  text        String
+  
+  // Metrics
+  likes       Int      @default(0)
+  retweets    Int      @default(0)
+  replies     Int      @default(0)
+  quotes      Int      @default(0)
+  
+  // Metadata
+  isRioRelated Boolean @default(true)
+  hashtags     String[] 
+  mentions     String[]
+  
+  // Timestamps
+  postedAt    DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+   @@index([userId, type, postedAt])
+  @@index([isRioRelated, userId])
   @@index([tweetId])
-  @@index([userId])
-  @@index([createdAt])
 }
 
-model Engagement {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String   @db.ObjectId
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  date          DateTime @default(now())
-  tweetsCount   Int      @default(0)
-  retweetsCount Int      @default(0)
-  likesCount    Int      @default(0)
-  
-  @@index([userId])
-  @@index([date])
+enum ActivityType {
+  TWEET
+  RETWEET
+  REPLY
+  LIKE
+  QUOTE
 }
 
 enum Badge {
