@@ -1,0 +1,35 @@
+import { Tweet } from "@/network/types";
+import { getSession } from "next-auth/react";
+
+const base_url = process.env.BASE_URL;
+const keywords = ['$rio', '$rioonbonk', '#rio', '#rioonbonk'];
+
+
+export async function IsRioRelated(tweet: Tweet): Promise<boolean> {
+    const text = tweet.text.toLowerCase();
+    const hasKeyword = keywords.some(keyword => text.includes(keyword));
+
+    const hasHashTag = tweet.entities?.hashtags?.some(h => ['rio', 'rioonbonk'].includes(h.tag.toLowerCase()));
+
+    return hasKeyword || hasHashTag;
+}
+
+export async function apiRequest(endpoint: string, params?: Record<string, any>, method: string = 'GET'): Promise<any> {
+    const queryString = new URLSearchParams(params).toString();
+    const url = `${base_url}/${endpoint}?${queryString}`;
+    const session = await getSession();
+
+    const response = await fetch(url, {
+        method: method,
+        headers: {
+            'Authorization': `Bearer ${session?.user.accessToken}`,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if(!response.ok) {
+        throw new Error(`API request failed with status ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+}

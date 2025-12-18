@@ -6,47 +6,10 @@ import prisma from "@/lib/prisma"
 import { JWT } from "next-auth/jwt"
 import { TwitterProfile } from "@/constants/types"
 
-// Type extensions for session
-declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string
-      twitterId: string
-      username: string
-      name?: string | null
-      email?: string | null
-      image?: string | null
-      accessToken: string
-      engagementScore: number
-      totalTweets?: number
-      totalRetweets?: number
-      totalLikes?: number
-    }
-    error?: string
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    accessToken?: string
-    refreshToken?: string
-    accessTokenExpires?: number
-    error?: string
-    twitterId?: string
-    username?: string
-  }
-}
-
-/**
- * Refresh the Twitter access token using the refresh token
- * IMPORTANT: Twitter OAuth 2.0 returns BOTH new access AND refresh tokens
- * The old refresh token becomes invalid after use (single-use tokens)
- */
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
     const url = "https://api.twitter.com/2/oauth2/token"
     
-    // For confidential clients (with client secret), use Basic Auth
     const basicAuth = Buffer.from(
       `${process.env.TWITTER_CLIENT_ID}:${process.env.TWITTER_CLIENT_SECRET}`
     ).toString("base64")
@@ -243,24 +206,13 @@ export const authOptions: NextAuthOptions = {
   },
 
   session: {
-    strategy: "jwt", // MUST use JWT to store access tokens
+    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
 
   pages: {
     signIn: "/",
     error: "/auth/error",
-  },
-
-  events: {
-    async signIn({ user, account, isNewUser }) {
-      // Trigger initial dashboard sync for new users
-      if (isNewUser && account?.provider === "twitter") {
-        console.log(`New Twitter user signed up: ${user.id}`)
-        // You can trigger an API call to sync their dashboard here
-        // Example: await fetch('/api/dashboard/sync', { method: 'POST', body: JSON.stringify({ userId: user.id }) })
-      }
-    },
   },
 
   debug: process.env.NODE_ENV === "development",

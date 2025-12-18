@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma"
 import { JWT } from "next-auth/jwt"
 
-export async function refreshAccessToken(token: JWT): Promise<JWT> {
+export async function refreshAccessToken(token: JWT): Promise<string> {
   try {
     const url = "https://api.twitter.com/2/oauth2/token"
 
@@ -52,13 +52,10 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
       console.error("Failed to update tokens in database:", dbError)
     }
 
-    return newToken
+    return token.accessToken ?? ''
   } catch (error) {
     console.error("Error refreshing access token:", error)
     
-    return {
-      ...token,
-      error: "RefreshAccessTokenError",
-    }
+    return  token.error ?? ''
   }
 }

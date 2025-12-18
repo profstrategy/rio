@@ -38,7 +38,7 @@ const Overview = () => {
                   Dashboard
                 </AppHeading>
                 <p className="text-sm mt-1" style={{ color: '#b8ebfe' }}>
-                  {session?.data?.user.name || 'User'}'s Activity Overview
+                  {session?.data?.user.username || 'User'}'s Activity Overview
                 </p>
               </div>
             </div>
