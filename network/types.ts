@@ -1,8 +1,15 @@
 export interface Tweet {
+  id: string;
+  text: string;
+
+  entities?: {
+    hashtags?: {
+      tag: string;
+    }[];
+  };
+
+  referenced_tweets?: {
     id: string;
-    text: string;
-    entities: {
-        hashtags: { tag: string }[];
-        // mentions?: { username: string }[];
-    };
+    type: 'retweeted' | 'quoted' | 'replied_to';
+  }[];
 }

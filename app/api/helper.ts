@@ -14,7 +14,7 @@ export async function IsRioRelated(tweet: Tweet): Promise<boolean> {
     return hasKeyword || hasHashTag;
 }
 
-export async function apiRequest(endpoint: string, params?: Record<string, any>, method: string = 'GET'): Promise<any> {
+export async function apiRequest(endpoint: string, params: Record<string, any> = {}, method: string = 'GET'): Promise<any> {
     const queryString = new URLSearchParams(params).toString();
     const url = `${base_url}/${endpoint}?${queryString}`;
     const session = await getSession();
@@ -27,8 +27,9 @@ export async function apiRequest(endpoint: string, params?: Record<string, any>,
         },
     });
 
-    if(!response.ok) {
-        throw new Error(`API request failed with status ${response.status} ${response.statusText}`);
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(`Twitter API Error: ${response.status} - ${JSON.stringify(error)}`)
     }
 
     return response.json();
