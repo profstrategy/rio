@@ -54,7 +54,7 @@ model User {
   totalTweets     Int       @default(0)
   totalRetweets   Int       @default(0)
   totalLikes      Int       @default(0)
-   totalHashtags   Int      @default(0)
+   totalReplies   Int      @default(0)
   weeklyScore     Int       @default(0)
   monthlyScore    Int       @default(0)
  badge           Badge     @default(NORMAL)
@@ -111,9 +111,9 @@ model Activity {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   
-   @@index([userId, type, postedAt])
+   @@index([type, postedAt])
   @@index([isRioRelated, userId])
-  @@index([tweetId])
+  @@unique([tweetId, userId])
 }
 
 enum ActivityType {

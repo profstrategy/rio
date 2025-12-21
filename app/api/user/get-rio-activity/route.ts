@@ -7,7 +7,7 @@ export async function searchRioUserActivityPaginated(
   username: string,
   window: ActivityWindow,
   maxPages: 10
-): Promise<{ tweets: Tweet[]; count: number }> {
+): Promise<{ searchResults: Tweet[]; count: number }> {
 
   const startTime = getStartTime(window);
   const allTweets: Tweet[] = [];
@@ -27,7 +27,7 @@ export async function searchRioUserActivityPaginated(
     }
 
     const response = await apiRequest(
-      '/tweets/search/recent',
+      '/searchResults/search/recent',
       params
     )
 
@@ -38,7 +38,7 @@ export async function searchRioUserActivityPaginated(
     page++
   } while (newToken && page < maxPages)
   return {
-    tweets: allTweets,
+    searchResults: allTweets,
     count: allTweets.length,
   };
 }

@@ -34,14 +34,11 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
     }
 
     console.log("✅ Token refreshed successfully")
-
-    // CRITICAL: Both access_token AND refresh_token are replaced
-    // The old refresh_token is now invalid after this call
     const newToken = {
       ...token,
       accessToken: refreshedTokens.access_token,
       accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
-      refreshToken: refreshedTokens.refresh_token, // Must use new refresh token
+      refreshToken: refreshedTokens.refresh_token, 
     }
 
     // Update the refresh token in database
