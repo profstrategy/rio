@@ -5,13 +5,20 @@ const base_url = process.env.BASE_URL;
 const keywords = ['$rio', '$rioonbonk', '#rio', '#rioonbonk'];
 
 
-export async function IsRioRelated(tweet: Tweet): Promise<boolean> {
-    const text = tweet.text.toLowerCase();
-    const hasKeyword = keywords.some(keyword => text.includes(keyword));
+export function IsRioRelated(tweet: Tweet): boolean {
+  const text = tweet.text?.toLowerCase() ?? '';
 
-    const hasHashTag = tweet.entities?.hashtags?.some(h => ['rio', 'rioonbonk'].includes(h.tag.toLowerCase()));
+  const hasKeyword = keywords.some(keyword =>
+    text.includes(keyword.toLowerCase())
+  );
 
-    return hasKeyword || hasHashTag;
+  const hasHashTag =
+    Array.isArray(tweet.entities?.hashtags) &&
+    tweet.entities.hashtags.some(h =>
+      ['rio', 'rioonbonk'].includes(h.tag.toLowerCase())
+    );
+
+  return hasKeyword || hasHashTag;
 }
 
 export async function apiRequest(endpoint: string, params: Record<string, any> = {}, method: string = 'GET'): Promise<any> {

@@ -1,20 +1,37 @@
 import { Tweet } from "@/network/types";
 import { apiRequest, IsRioRelated } from "../../helper";
 
-export async function getUserTweets(userId: string, maxResults: number = 100): Promise<Tweet> {
-    try {
-        const params = {
-            max_results: maxResults,
-            "tweet.fields": "public_metrics,created_at,entities,referenced_tweets",
-            "user.fields": "name,username"
-        };
-        const tweets = await apiRequest(`users/${userId}/tweets`, params);
+export async function getRioTweetsPaginated(
+  userId: string,
+  maxPages = 10,
+  maxResults = 100
+): Promise<{ tweets: Tweet[]; count: number }> {
 
-        const riotweets = (tweets.data || []).filter((tweet: Tweet) => IsRioRelated(tweet));
-        return riotweets;
-    } catch (error) {
-        console.error("Error fetching user tweets:", error);
-        throw error;
-    }
+  let nextToken: string | undefined;
+  let pages = 0;
+  const rioTweets: Tweet[] = [];
 
+  do {
+    const params: Record<string, any> = {
+      'tweet.fields': 'public_metrics,created_at,referenced_tweets,entities',
+      max_results: maxResults,
+    };
+
+    if (nextToken) params.next_token = nextToken;
+
+    const response = await apiRequest(`/users/${userId}/tweets`, params);
+
+    if (!response.data?.length) break;
+
+    rioTweets.push(...response.data.filter(IsRioRelated));
+
+    nextToken = response.meta?.next_token;
+    pages++;
+
+  } while (nextToken && pages < maxPages);
+
+  return {
+    tweets: rioTweets,
+    count: rioTweets.length,
+  };
 }
