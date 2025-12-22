@@ -50,7 +50,7 @@ export interface RoadmapItemProps {
 export interface MetricCardProps {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
-  value: string;
+  value: number;
   trend?: string;
   delay?: number;
 }

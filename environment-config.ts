@@ -1,9 +1,9 @@
 const getEnv = () => {
     const dev = {
-        appUrl: process.env.NEXT_PUBLIC_APP_URL_DEV || 'http://localhost:3000',
+        appUrl: process.env.NEXT_API_URL,
     }
     const prod = {
-        appUrl: process.env.NEXT_PUBLIC_APP_URL_PROD
+        appUrl: process.env.NEXT_API_URL
     }
     switch (process.env.NODE_ENV) {
         case 'development':

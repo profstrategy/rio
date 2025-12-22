@@ -47,15 +47,19 @@ export interface UserActivityDashboardResponse {
       totalReplies: number,
       totalQuotes: number,
       totalLikes: number,
-      totalEngagement: () => void,
-      yappingScore: number
+      totalEngagement?: () => void,
     },
+    yappingScore: number
     activities: {
       tweets: string,
       retweets: string,
       replies: string,
       quotes: string,
       likes: string
+    },
+    searchData: {
+      searchResults: Tweet[],
+      count: number
     }
   }
 }

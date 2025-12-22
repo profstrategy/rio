@@ -126,8 +126,8 @@ export async function GET(req: NextRequest) {
     // Upsert activities (skip duplicates)
     // Better error handling for batch operations
     await Promise.allSettled(
-      activityRecords.map((activity: any) =>
-        prisma.activity.upsert({
+      activityRecords.map((activity: any) => {
+        const updatedRecords = prisma.activity.upsert({
           where: {
             tweetId_userId: {
               tweetId: activity.tweetId,
@@ -142,7 +142,8 @@ export async function GET(req: NextRequest) {
             quotes: activity.quotes,
           },
         })
-      )
+        return updatedRecords
+      })
     )
 
     // 11. Return dashboard data
@@ -155,8 +156,8 @@ export async function GET(req: NextRequest) {
         },
         metrics: {
           ...metrics,
-          yappingScore,
         },
+        yappingScore: yappingScore,
         activities: {
           tweets: activities.originalTweets.slice(0, 10),
           retweets: activities.retweets.slice(0, 10),

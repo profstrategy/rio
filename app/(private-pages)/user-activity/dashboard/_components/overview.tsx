@@ -1,36 +1,34 @@
 'use client';
 import { AppHeading } from "@/components/reusables/app-heading";
-import DashboardCard from "@/components/reusables/dashboard-card";
-import MetricCard from "@/components/reusables/metric-card";
 import NavigateButton from "@/components/reusables/navigate-button";
 import AppButton from "@/components/ui/app-button";
-import { Heart, MessageCircle, Repeat2 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { BsTwitterX } from "react-icons/bs";
 import Metrics from "./metrics";
 import Contents from "./contents";
 
 const Overview = () => {
   const session = useSession()
 
+  const parentDivStyle = {
+    background: 'radial-gradient(ellipse at top right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
+    minHeight: '100vh',
+    paddingTop: '4rem',
+    paddingBottom: '1rem',
+  }
+  const headerDivStyle = {
+    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(184, 235, 254, 0.05) 100%)',
+    border: '1px solid rgba(56, 189, 248, 0.2)',
+    backdropFilter: 'blur(20px)',
+    animation: 'fadeInUp 0.4s ease-out',
+    padding: '1rem',
+  }
   return (
     <div className=""
-      style={{
-        background: 'radial-gradient(ellipse at top right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
-        minHeight: '100vh',
-        paddingTop: '4rem',
-        paddingBottom: '1rem',
-      }}>
+      style={parentDivStyle}>
       <div className="container mx-auto flex flex-col gap-6 my-2">
         {/* Header */}
         <div className=" rounded-2xl"
-          style={{
-            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(184, 235, 254, 0.05) 100%)',
-            border: '1px solid rgba(56, 189, 248, 0.2)',
-            backdropFilter: 'blur(20px)',
-            animation: 'fadeInUp 0.4s ease-out',
-            padding: '1rem',
-          }}>
+          style={headerDivStyle}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div>
@@ -65,6 +63,7 @@ const Overview = () => {
 
         {/* Metrics Grid */}
         <Metrics />
+        
         {/* Main Content Grid */}
         <Contents />
       </div>
