@@ -47,13 +47,6 @@ export interface RoadmapItemProps {
   details: string[];
 }
 
-export interface PaginatedResponse<T> {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: T[];
-}
-
 export interface MetricCardProps {
   icon: React.ComponentType<{ className?: string }>;
   label: string;

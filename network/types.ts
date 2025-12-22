@@ -26,3 +26,36 @@ export interface SearchResponse {
 }
 
 export type ActivityWindow = '24h' | '3d' | '7d';
+
+export interface PaginatedResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}
+
+export interface UserActivityDashboardResponse {
+  success: boolean,
+  data: {
+    user: {
+      username: string,
+      displayName: string
+    },
+    metrics: {
+      totalTweets: number,
+      totalRetweets: number,
+      totalReplies: number,
+      totalQuotes: number,
+      totalLikes: number,
+      totalEngagement: () => void,
+      yappingScore: number
+    },
+    activities: {
+      tweets: string,
+      retweets: string,
+      replies: string,
+      quotes: string,
+      likes: string
+    }
+  }
+}

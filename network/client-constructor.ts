@@ -8,7 +8,7 @@ import {
 import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import { getSession } from 'next-auth/react';
 import { API_URL } from '@/environment-config';
-import { PaginatedResponse } from '@/constants/types';
+import { PaginatedResponse } from '@/network/types';
 // import { useErrorHandling } from '@/hooks/handle-error';
 // import { PaginatedResponse } from './types';
 
