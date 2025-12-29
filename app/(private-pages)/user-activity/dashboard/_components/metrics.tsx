@@ -1,17 +1,13 @@
 import MetricCard from '@/components/reusables/metric-card'
+import { MetricsResponseData } from '@/network/types'
 import { Heart, MessageCircle, Repeat2 } from 'lucide-react'
 import React from 'react'
 import { BsTwitterX } from 'react-icons/bs'
 
-interface MetricsResponseData {
-  totalTweets: number,
-  totalRetweets: number,
-  totalReplies: number,
-  totalQuotes: number,
-  totalLikes: number,
+interface MetricsProps {
+  data?: MetricsResponseData
 }
-const Metrics = (data:MetricsResponseData) => {
-  const { totalTweets, totalRetweets, totalReplies, totalLikes, totalQuotes } = data
+const Metrics = (data:MetricsProps) => {
   return (
     <div>
       {/* Metrics Grid */}
@@ -19,28 +15,28 @@ const Metrics = (data:MetricsResponseData) => {
         <MetricCard
           icon={BsTwitterX}
           label="Total Tweets"
-          value={totalTweets}
+          value={data.data?.totalTweets ?? 0}
           trend="+12.5%"
           delay={0.1}
         />
         <MetricCard
           icon={Repeat2}
           label="Total Retweets"
-          value={totalRetweets}
+          value={data.data?.totalRetweets}
           trend="+18.3%"
           delay={0.2}
         />
         <MetricCard
           icon={Heart}
           label="Total Likes"
-          value={totalLikes}
+          value={data.data?.totalLikes}
           trend="+24.7%"
           delay={0.3}
         />
         <MetricCard
           icon={MessageCircle}
           label="Total Replies"
-          value={totalReplies}
+          value={data.data?.totalReplies}
           trend="+9.2%"
           delay={0.4}
         />

@@ -1,3 +1,4 @@
+'use client'
 import {
   useQuery,
   useMutation,
@@ -7,8 +8,8 @@ import {
 } from '@tanstack/react-query';
 import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import { getSession } from 'next-auth/react';
-import { API_URL } from '@/environment-config';
 import { PaginatedResponse } from '@/network/types';
+import { API_URL } from '@/environment-config';
 // import { useErrorHandling } from '@/hooks/handle-error';
 // import { PaginatedResponse } from './types';
 

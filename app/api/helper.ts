@@ -21,15 +21,14 @@ export function IsRioRelated(tweet: Tweet): boolean {
   return hasKeyword || hasHashTag;
 }
 
-export async function apiRequest(endpoint: string, params: Record<string, any> = {}, method: string = 'GET'): Promise<any> {
+export async function apiRequest(endpoint: string, params: Record<string, any> = {}, method: string = 'GET', accessToken: string): Promise<any> {
     const queryString = new URLSearchParams(params).toString();
     const url = `${base_url}/${endpoint}?${queryString}`;
-    const session = await getSession();
 
     const response = await fetch(url, {
         method: method,
         headers: {
-            'Authorization': `Bearer ${session?.user.accessToken}`,
+            'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
         },
     });

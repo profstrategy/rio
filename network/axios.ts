@@ -9,6 +9,14 @@ const axiosInstance = axios.create({
     }
 })
 
+// axiosInstance.interceptors.request.use((config) => {
+//   // If URL starts with /, don't prepend baseURL
+//   if (config.url?.startsWith('/')) {
+//     config.baseURL = '';
+//   }
+//   return config;
+// });
+
 // request interceptor
 axiosInstance.interceptors.request.use(
     async (config: InternalAxiosRequestConfig) => {

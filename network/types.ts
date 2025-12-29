@@ -63,3 +63,11 @@ export interface UserActivityDashboardResponse {
     }
   }
 }
+
+export interface MetricsResponseData {
+  totalTweets: number,
+  totalRetweets: number,
+  totalReplies: number,
+  totalQuotes: number,
+  totalLikes: number,
+}

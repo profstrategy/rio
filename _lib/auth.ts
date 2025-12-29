@@ -1,19 +1,20 @@
 // _lib/auth.ts
 import NextAuth, { NextAuthOptions, Account } from "next-auth"
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 import TwitterProvider from "next-auth/providers/twitter"
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import prisma from "@/lib/prisma"
 import { JWT } from "next-auth/jwt"
 import { TwitterProfile } from "@/constants/types"
+import clientPromise from "@/lib/mongodb"
 
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
     const url = "https://api.twitter.com/2/oauth2/token"
-    
+
     const basicAuth = Buffer.from(
       `${process.env.TWITTER_CLIENT_ID}:${process.env.TWITTER_CLIENT_SECRET}`
     ).toString("base64")
-    
+
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -38,7 +39,7 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
       ...token,
       accessToken: refreshedTokens.access_token,
       accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
-      refreshToken: refreshedTokens.refresh_token, 
+      refreshToken: refreshedTokens.refresh_token,
     }
 
     // Update the refresh token in database
@@ -61,7 +62,7 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
     return newToken
   } catch (error) {
     console.error("Error refreshing access token:", error)
-    
+
     return {
       ...token,
       error: "RefreshAccessTokenError",
@@ -70,8 +71,8 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
-  
+  adapter: MongoDBAdapter(clientPromise),
+
   providers: [
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID!,
@@ -82,7 +83,7 @@ export const authOptions: NextAuthOptions = {
           // IMPORTANT: All scopes needed for $RIO tracking
           scope: [
             "tweet.read",
-            "users.read", 
+            "users.read",
             "follows.read",
             "like.read",
             "offline.access", // Critical for refresh tokens
@@ -108,26 +109,46 @@ export const authOptions: NextAuthOptions = {
         try {
           // Extract Twitter data from profile
           const twitterData = profile as TwitterProfile
-          
-          await prisma.user.update({
+
+          await new Promise(resolve => setTimeout(resolve, 300))
+
+          await prisma.user.upsert({
             where: { id: user.id },
-            data: {
-              // twitterId: twitterData?.data?.id,
+            update: {
+              twitterId: twitterData?.data?.id,
               username: twitterData?.data?.username,
               displayName: twitterData?.data?.name,
-              // Initialize engagement metrics
+              lastSyncedAt: new Date(),
+            },
+            create: {
+              id: user.id,
+              name: twitterData?.data?.name,
+              email: user.email || null,
+              image: twitterData?.data?.profile_image_url,
+              twitterId: twitterData?.data?.id,
+              username: twitterData?.data?.username,
+              displayName: twitterData?.data?.name,
               engagementScore: 0,
               totalTweets: 0,
               totalRetweets: 0,
               totalLikes: 0,
+              totalReplies: 0,
+              weeklyScore: 0,
+              monthlyScore: 0,
+              badge: 'NORMAL',
               lastSyncedAt: new Date(),
             },
+          })
+          console.log("✅ User upserted successfully:", {
+            userId: user.id,
+            twitterId: twitterData?.data?.id,
+            username: twitterData?.data?.username
           })
         } catch (error) {
           console.error("Error updating user Twitter data:", error)
         }
       }
-      
+
       return true
     },
 
@@ -136,14 +157,14 @@ export const authOptions: NextAuthOptions = {
       if (account && user) {
         // Extract Twitter username from profile
         const twitterData = profile as TwitterProfile
-        
+
         // Store tokens and user data in JWT
         return {
           ...token,
           accessToken: account.access_token,
           refreshToken: account.refresh_token,
-          accessTokenExpires: account.expires_at 
-            ? account.expires_at * 1000 
+          accessTokenExpires: account.expires_at
+            ? account.expires_at * 1000
             : Date.now() + 7200 * 1000, // Default 2 hours
           // twitterId: twitterData?.data?.id,
           username: twitterData?.data?.username,
@@ -197,7 +218,7 @@ export const authOptions: NextAuthOptions = {
           session.error = token.error as string
         }
       }
-      
+
       return session
     },
   },

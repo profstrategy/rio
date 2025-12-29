@@ -23,7 +23,7 @@ export const Logo = () => {
 }
 
 const DesktopNavMenu = ({ navItems, activeItem, handleNavClick }: DesktopNavLinksProps) => {
-   const { session, handleConnectTwitter, handleDashboard } = useTwitterOAuth()
+   const { session, handleConnectTwitter, handleDashboard, handleSignOut } = useTwitterOAuth()
 
     return (
         <>
@@ -53,6 +53,10 @@ const DesktopNavMenu = ({ navItems, activeItem, handleNavClick }: DesktopNavLink
 
                 <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10 border-b-2" onClick={session.status === 'authenticated' ? handleDashboard : handleConnectTwitter}>
                     {session.status === 'loading' ? <Spinner /> : session.status === 'authenticated' ? `Dashboard` : `Connect X`}
+                </AppButton>
+
+                <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10 border-b-2" onClick={handleSignOut}>
+                    signout
                 </AppButton>
             </ul>
         </>

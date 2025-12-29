@@ -5,8 +5,14 @@ import AppButton from "@/components/ui/app-button";
 import { useSession } from "next-auth/react";
 import Metrics from "./metrics";
 import Contents from "./contents";
+import { UserActivityDashboardResponse } from "@/network/types";
 
-const Overview = () => {
+interface OverviewProps {
+  overview?: UserActivityDashboardResponse
+}
+
+
+const Overview = (data:OverviewProps) => {
   const session = useSession()
 
   const parentDivStyle = {
@@ -60,9 +66,8 @@ const Overview = () => {
             </div>
           </div>
         </div>
-
         {/* Metrics Grid */}
-        <Metrics />
+        <Metrics data={data.overview?.data.metrics} />
         
         {/* Main Content Grid */}
         <Contents />

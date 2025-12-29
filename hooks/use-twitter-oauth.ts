@@ -1,5 +1,5 @@
 'use client'
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -28,9 +28,13 @@ export const useTwitterOAuth = () => {
         signIn('twitter', { callbackUrl: '/?twitterConnected=1' })
     }
 
+    const handleSignOut = () => {
+        signOut({ callbackUrl: '/', redirect: true })
+    }
+
     const handleDashboard = () => {
         router.push('/user-activity/dashboard')
     }
 
-    return { handleConnectTwitter, handleDashboard, session };
+    return { handleConnectTwitter, handleDashboard, handleSignOut, session };
 }

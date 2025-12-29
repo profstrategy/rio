@@ -24,9 +24,11 @@ export async function GET(req: NextRequest) {
       )
     }
 
-    const { accessToken, twitterId, username } = session.user
+    const { accessToken, twitterId, username, id } = session.user
 
-    if (!accessToken || !twitterId) {
+    const userIdentifier = twitterId || username || id
+
+    if (!accessToken || !userIdentifier) {
       return NextResponse.json(
         { error: 'Twitter connection required' },
         { status: 400 }
@@ -35,10 +37,10 @@ export async function GET(req: NextRequest) {
 
     // 4. Fetch user activities in parallel
     const [retweets, likes, tweets, searchResults] = await Promise.allSettled([
-      getRioRetweetsPaginated(twitterId),
-      getUserLikes(twitterId),
-      getRioTweetsPaginated(twitterId),
-      searchRioUserActivityPaginated(username, '24h', 10),
+      getRioRetweetsPaginated(twitterId || id, 10, 100, accessToken),
+      getUserLikes(twitterId || id, 100, accessToken),
+      getRioTweetsPaginated(twitterId || id, 10, 100, accessToken),
+      searchRioUserActivityPaginated(username, '24h', 10, accessToken),
     ])
 
     // 5. Process results

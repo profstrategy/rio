@@ -3,8 +3,9 @@ import { apiRequest, IsRioRelated } from "../../helper";
 
 export async function getRioRetweetsPaginated(
   userId: string,
-  maxPages = 10,
-  maxResults = 100
+  maxPages: number,
+  maxResults: number,
+  accessToken: string
 ): Promise<{ retweets: Tweet[]; count: number }> {
 
   let nextToken: string | undefined;
@@ -20,7 +21,7 @@ export async function getRioRetweetsPaginated(
 
     if (nextToken) params.next_token = nextToken;
 
-    const response = await apiRequest(`/users/${userId}/tweets`, params);
+    const response = await apiRequest(`/users/${userId}/tweets`, params, 'GET', accessToken);
 
     if (!response.data?.length) break;
 

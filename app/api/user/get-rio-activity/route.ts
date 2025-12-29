@@ -6,7 +6,8 @@ import { getStartTime } from "@/_lib/utils";
 export async function searchRioUserActivityPaginated(
   username: string,
   window: ActivityWindow,
-  maxPages: 10
+  maxPages: number,
+  accessToken: string
 ): Promise<{ searchResults: Tweet[]; count: number }> {
 
   const startTime = getStartTime(window);
@@ -28,7 +29,9 @@ export async function searchRioUserActivityPaginated(
 
     const response = await apiRequest(
       '/searchResults/search/recent',
-      params
+      params,
+      'GET',
+      accessToken
     )
 
     if (response?.data?.length) {
