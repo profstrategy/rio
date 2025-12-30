@@ -8,13 +8,18 @@ export async function getUserLikes(userId: string, maxResults: number, accessTok
             'max_results': maxResults,
         }
 
-        const likes = await apiRequest(`/users/${userId}/liked_tweets`, params, 'GET', accessToken);
+        const result = await apiRequest(`/users/${userId}/liked_tweets`, params, 'GET', accessToken);
 
-        return likes.data || []
+        if (result.error === 'rate_limited') {
+            console.warn('User likes rate limited - returning empty array');
+            return [];
+        }
+
+        return result.data || []
     } catch (error) {
         console.error("Error fetching user likes:", error);
         NextResponse.json({ error: 'failed to fetch likes' }, { status: 500 })
-        throw error;
+        return []
     }
 
 }

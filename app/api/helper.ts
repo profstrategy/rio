@@ -21,22 +21,59 @@ export function IsRioRelated(tweet: Tweet): boolean {
   return hasKeyword || hasHashTag;
 }
 
-export async function apiRequest(endpoint: string, params: Record<string, any> = {}, method: string = 'GET', accessToken: string): Promise<any> {
-    const queryString = new URLSearchParams(params).toString();
-    const url = `${base_url}/${endpoint}?${queryString}`;
+// app/api/helper.ts
+export async function apiRequest(
+  endpoint: string, 
+  params: Record<string, any> = {}, 
+  method: string = 'GET', 
+  accessToken: string
+): Promise<any> {
+  const queryString = new URLSearchParams(params).toString();
+  const url = `${base_url}/${endpoint}${queryString ? `?${queryString}` : ''}`;
 
+  try {
     const response = await fetch(url, {
-        method: method,
-        headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-        },
+      method: method,
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      signal: AbortSignal.timeout(15000), // 15 second timeout
+      credentials: 'include'
     });
 
+    // ✅ Handle rate limiting gracefully - don't throw, return empty
+    if (response.status === 429) {
+      console.warn(`⚠️ Rate limited on ${endpoint} - returning empty data`);
+      
+      // Return empty data structure instead of throwing
+      return { 
+        data: null, 
+        error: 'rate_limited',
+        message: 'Twitter API rate limit reached'
+      };
+    }
+
+    // Handle other errors
     if (!response.ok) {
-      const error = await response.json()
-      throw new Error(`Twitter API Error: ${response.status} - ${JSON.stringify(error)}`)
+      const error = await response.json();
+      throw new Error(`Twitter API Error: ${response.status} - ${JSON.stringify(error)}`);
     }
 
     return response.json();
+    
+  } catch (error: any) {
+    // Handle timeout
+    if (error.name === 'TimeoutError' || error.name === 'AbortError') {
+      console.error(`⏱️ Timeout on ${endpoint}`);
+      return { 
+        data: null, 
+        error: 'timeout',
+        message: 'Request timed out'
+      };
+    }
+    
+    // Re-throw other errors
+    throw error;
+  }
 }

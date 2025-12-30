@@ -7,7 +7,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import axios, { AxiosRequestConfig, AxiosError } from 'axios';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { PaginatedResponse } from '@/network/types';
 import { API_URL } from '@/environment-config';
 // import { useErrorHandling } from '@/hooks/handle-error';
@@ -18,7 +18,7 @@ type QueryConfig<TQueryKey, TData> = {
   apiRoute: string;
   options?: Omit<AxiosRequestConfig, 'url' | 'method'> & {
     enabled?: boolean;
-    retry?: number;
+    retry?: () => void;
     staleTime?: number;
     refetchOnWindowFocus?: boolean;
     refetchOnMount?: boolean;
@@ -42,7 +42,7 @@ type MutationConfig<TVariables, TData> = {
 };
 
 const axiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: '/api/user/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -54,6 +54,7 @@ export function useAppQuery<
   TQueryKey extends Array<unknown> = unknown[],
 >(config: QueryConfig<TQueryKey, TData>): UseQueryResult<TData, TError> {
   const { queryKey, apiRoute, options } = config;
+  const { data: session, status } = useSession()
 
   const query = useQuery<TData, TError>({
     queryKey,
@@ -76,9 +77,22 @@ export function useAppQuery<
       return response.data;
     },
 
-    retry: 3,
+     retry: (failureCount, error: any) => {
+      // Don't retry on auth errors or rate limits
+      if (
+        error.message?.includes('401') || 
+        error.message?.includes('Unauthorized') ||
+        error.message?.includes('429') ||
+        error.message?.includes('Rate limit')
+      ) {
+        return false
+      }
+      return failureCount < 1
+    },
+    enabled: status === 'authenticated' && !!session?.user,
+    retryDelay: 3000,
+    gcTime: 10 * 60 * 1000,
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
-    enabled: options?.enabled !== false, // Allow enabled option
   });
 
   return query
