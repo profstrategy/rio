@@ -23,6 +23,7 @@
     "dotenv": "^17.2.3",
     "framer-motion": "^12.23.12",
     "init": "^0.1.2",
+    "ioredis": "^5.8.2",
     "lucide-react": "^0.542.0",
     "mongodb": "^5.9.2",
     "next": "15.4.8",

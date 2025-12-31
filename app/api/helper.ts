@@ -1,5 +1,4 @@
 import { Tweet } from "@/network/types";
-import { getSession } from "next-auth/react";
 
 const base_url = process.env.BASE_URL;
 const keywords = ['$rio', '$rioonbonk', '#rio', '#rioonbonk'];
@@ -38,15 +37,13 @@ export async function apiRequest(
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
-      signal: AbortSignal.timeout(15000), // 15 second timeout
+      signal: AbortSignal.timeout(15000),
       credentials: 'include'
     });
 
-    // ✅ Handle rate limiting gracefully - don't throw, return empty
+    // ✅ Handle rate limiting FIRST (before other checks)
     if (response.status === 429) {
-      console.warn(`⚠️ Rate limited on ${endpoint} - returning empty data`);
-      
-      // Return empty data structure instead of throwing
+      console.warn(`⚠️ Rate limited on /${endpoint}`);
       return { 
         data: null, 
         error: 'rate_limited',
@@ -54,18 +51,28 @@ export async function apiRequest(
       };
     }
 
-    // Handle other errors
+    // ✅ Handle other errors
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(`Twitter API Error: ${response.status} - ${JSON.stringify(error)}`);
+      // Try to parse error, but handle cases where body is empty/invalid
+      let errorDetails = `HTTP ${response.status}`;
+      try {
+        const errorBody = await response.json();
+        errorDetails = JSON.stringify(errorBody);
+      } catch (parseError) {
+        // If JSON parsing fails, use status text
+        errorDetails = response.statusText || errorDetails;
+      }
+      
+      throw new Error(`Twitter API Error: ${response.status} - ${errorDetails}`);
     }
 
-    return response.json();
+    // ✅ Parse successful response
+    return await response.json();
     
   } catch (error: any) {
     // Handle timeout
     if (error.name === 'TimeoutError' || error.name === 'AbortError') {
-      console.error(`⏱️ Timeout on ${endpoint}`);
+      console.error(`⏱️ Timeout on /${endpoint}`);
       return { 
         data: null, 
         error: 'timeout',

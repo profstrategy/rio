@@ -6,6 +6,7 @@ import { getUserLikes } from "../get-rio-likes/route"
 import { searchRioUserActivityPaginated } from "../get-rio-activity/route"
 import { getRioTweetsPaginated } from "../get-rio-tweets/route"
 import { getRioRetweetsPaginated } from "../get-rio-retweets/route"
+import { testRedis } from "@/lib/test-redis"
 
 export async function GET(req: NextRequest) {
   try {
@@ -22,6 +23,11 @@ export async function GET(req: NextRequest) {
         { error: 'Token expired. Please sign in again.' },
         { status: 401 }
       )
+    }
+
+    // In your GET handler
+    if (process.env.NODE_ENV === 'development') {
+      await testRedis()
     }
 
     const { accessToken, twitterId, username, id } = session.user
