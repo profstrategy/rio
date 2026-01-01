@@ -1,6 +1,6 @@
 import MetricCard from '@/components/reusables/metric-card'
 import { MetricsResponseData } from '@/network/types'
-import { Heart, MessageCircle, Repeat2 } from 'lucide-react'
+import { Heart, MessageCircle, QuoteIcon, Repeat2 } from 'lucide-react'
 import React from 'react'
 import { BsTwitterX } from 'react-icons/bs'
 
@@ -40,6 +40,13 @@ const Metrics = (data:MetricsProps) => {
           trend="+9.2%"
           delay={0.4}
         />
+         {/* <MetricCard
+          icon={QuoteIcon}
+          label="Total Quotes"
+          value={data.data?.totalQuotes}
+          trend="+9.2%"
+          delay={0.4}
+        /> */}
       </div>
 
     </div>

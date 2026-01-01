@@ -5,6 +5,8 @@ export interface Tweet {
   entities?: {
     hashtags?: {
       tag: string;
+    }[], cashtags?: {
+      tag: string
     }[];
   };
 
@@ -35,34 +37,50 @@ export interface PaginatedResponse<T> {
 }
 
 export interface UserActivityDashboardResponse {
-  success: boolean,
+  success: boolean
+  mock?: boolean
   data: {
     user: {
-      username: string,
+      username: string
       displayName: string
-    },
+    }
+
     metrics: {
-      totalTweets: number,
-      totalRetweets: number,
-      totalReplies: number,
-      totalQuotes: number,
-      totalLikes: number,
-      totalEngagement?: () => void,
-    },
+      totalTweets: number
+      totalRetweets: number
+      totalReplies: number
+      totalQuotes: number
+      totalLikes: number
+      totalEngagement: number
+    }
+
+    count: number
+
     yappingScore: number
+
     activities: {
-      tweets: string,
-      retweets: string,
-      replies: string,
-      quotes: string,
-      likes: string
-    },
-    searchData: {
-      searchResults: Tweet[],
-      count: number
+      items: DashboardActivity[]
+      pageInfo: {
+        nextCursor: string | null
+        hasNextPage: boolean
+      }
     }
   }
 }
+
+
+export interface DashboardActivity {
+  id: string
+  tweetId: string
+  type: 'TWEET' | 'RETWEET' | 'REPLY' | 'QUOTE'
+  text: string
+  likes: number
+  retweets: number
+  replies: number
+  quotes: number
+  postedAt: string
+}
+
 
 export interface MetricsResponseData {
   totalTweets: number,
@@ -70,4 +88,20 @@ export interface MetricsResponseData {
   totalReplies: number,
   totalQuotes: number,
   totalLikes: number,
+  totalEngagements?: number
+}
+
+export enum ActivityType {
+  tweet = 'TWEET',
+  retweeted = 'RETWEET',
+  replied_to = 'REPLY',
+  quoted = 'QUOTE'
+}
+
+export interface ActivityResponseData {
+  items: DashboardActivity[]
+  pageInfo: {
+    nextCursor: string | null
+    hasNextPage: boolean
+  }
 }

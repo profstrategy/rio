@@ -4,157 +4,236 @@ import { getServerSession } from "next-auth"
 import { NextRequest, NextResponse } from "next/server"
 import { getUserLikes } from "../get-rio-likes/route"
 import { searchRioUserActivityPaginated } from "../get-rio-activity/route"
-import { getRioTweetsPaginated } from "../get-rio-tweets/route"
-import { getRioRetweetsPaginated } from "../get-rio-retweets/route"
 import { testRedis } from "@/lib/test-redis"
+import { ActivityType, Prisma } from "@prisma/client"
+
+function normalizeTweetToActivity(
+  tweet: any,
+  userId: string
+): Prisma.ActivityUncheckedCreateInput {
+  const ref = tweet.referenced_tweets?.[0]
+
+  let type: ActivityType = ActivityType.TWEET
+  if (ref) {
+    if (ref.type === "retweeted") type = ActivityType.RETWEET
+    else if (ref.type === "replied_to") type = ActivityType.REPLY
+    else if (ref.type === "quoted") type = ActivityType.QUOTE
+  }
+
+  return {
+    userId: userId,
+    tweetId: tweet.id,
+    type,
+    text: tweet.text?.slice(0, 500) ?? "",
+    likes: tweet.public_metrics?.like_count ?? 0,
+    retweets: tweet.public_metrics?.retweet_count ?? 0,
+    replies: tweet.public_metrics?.reply_count ?? 0,
+    quotes: tweet.public_metrics?.quote_count ?? 0,
+    hashtags: tweet.entities?.hashtags?.map((h: any) => h.tag) ?? [],
+    mentions: tweet.entities?.mentions?.map((m: any) => m.username) ?? [],
+    postedAt: new Date(tweet.created_at),
+    isRioRelated: true,
+  }
+}
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const testMode = searchParams.get('mock') === 'true'
+
   try {
-    // 1. Verify session
+    // 1. Session
     const session = await getServerSession(authOptions)
 
-    if (!session || !session.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+   // MOCK DATA MODE - Use while rate limited
+if (testMode) {
+  const now = new Date()
+
+  return NextResponse.json({
+    success: true,
+    mock: true,
+    data: {
+      user: {
+        username: session?.user.username ?? 'testuser',
+        displayName: session?.user.name ?? 'Test User',
+      },
+
+      metrics: {
+        totalTweets: 3,
+        totalLikes: 45,
+        totalRetweets: 12,
+        totalReplies: 6,
+        totalQuotes: 4,
+        totalEngagement: 67,
+      },
+
+      count: 6,
+
+      yappingScore: 395,
+
+      activities: {
+        items: [
+          {
+            id: 'mock-1',
+            tweetId: '123456789',
+            type: 'TWEET',
+            text: '#RIO is coming 🚀',
+            likes: 15,
+            retweets: 5,
+            replies: 2,
+            quotes: 1,
+            postedAt: now.toISOString(),
+          },
+          {
+            id: 'mock-2',
+            tweetId: '123456788',
+            type: 'RETWEET',
+            text: 'RT @rio: Big things ahead',
+            likes: 10,
+            retweets: 4,
+            replies: 1,
+            quotes: 0,
+            postedAt: new Date(now.getTime() - 60 * 60 * 1000).toISOString(),
+          },
+          {
+            id: 'mock-3',
+            tweetId: '123456787',
+            type: 'REPLY',
+            text: 'This is huge 🔥',
+            likes: 8,
+            retweets: 2,
+            replies: 3,
+            quotes: 1,
+            postedAt: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(),
+          },
+        ],
+
+        pageInfo: {
+          nextCursor: 'mock-3',
+          hasNextPage: true,
+        },
+      },
+    },
+  })
+}
+
+
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // 2. Check for refresh token error
     if (session.error === "RefreshAccessTokenError") {
       return NextResponse.json(
-        { error: 'Token expired. Please sign in again.' },
+        { error: "Token expired. Please sign in again." },
         { status: 401 }
       )
     }
 
-    // In your GET handler
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       await testRedis()
     }
 
     const { accessToken, twitterId, username, id } = session.user
-
-    const userIdentifier = twitterId || username || id
-
-    if (!accessToken || !userIdentifier) {
+    if (!accessToken || !username) {
       return NextResponse.json(
-        { error: 'Twitter connection required' },
+        { error: "Twitter connection required" },
         { status: 400 }
       )
     }
 
-    // 4. Fetch user activities in parallel
-    const [retweets, likes, tweets, searchResults] = await Promise.allSettled([
-      getRioRetweetsPaginated(twitterId || id, 10, 100, accessToken),
+    // 2. Fetch ingestion sources (ONLY)
+    const [likesResult, searchResult] = await Promise.allSettled([
       getUserLikes(twitterId || id, 100, accessToken),
-      getRioTweetsPaginated(twitterId || id, 10, 100, accessToken),
-      searchRioUserActivityPaginated(username, '24h', 10, accessToken),
+      searchRioUserActivityPaginated(username, "24h", 10, accessToken),
     ])
 
-    // 5. Process results
-    const userTweets = tweets.status === 'fulfilled' ? tweets.value.tweets : []
-    const userRetweets = retweets.status === 'fulfilled' ? retweets.value.retweets : []
-    const userLikes = likes.status === 'fulfilled' ? likes.value : []
-    const searchData = searchResults.status === 'fulfilled' ? searchResults.value : null
+    const userLikes = likesResult.status === "fulfilled" ? likesResult.value : []
+    const searchData =
+      searchResult.status === "fulfilled"
+        ? searchResult.value.searchResults
+        : []
 
-    // 6. Classify tweets by type
-    const activities = {
-      originalTweets: userTweets.filter((t: any) =>
-        !t.referenced_tweets?.length
-      ),
-      retweets: userRetweets,
-      replies: userTweets.filter((t: any) =>
-        t.referenced_tweets?.some((ref: any) => ref.type === 'replied_to')
-      ),
-      quotes: userTweets.filter((t: any) =>
-        t.referenced_tweets?.some((ref: any) => ref.type === 'quoted')
-      ),
-      likes: userLikes,
+    // 3. Normalize & upsert activities (idempotent)
+    const activityInputs = searchData.map(tweet =>
+      normalizeTweetToActivity(tweet, session.user.id)
+    )
+
+    if (activityInputs.length > 0) {
+      await prisma.$transaction(
+        activityInputs.map(activity =>
+          prisma.activity.upsert({
+            where: {
+              tweetId_userId: {
+                tweetId: activity.tweetId,
+                userId: activity.userId,
+              },
+            },
+            create: activity,
+            update: {
+              text: activity.text,
+              likes: activity.likes,
+              retweets: activity.retweets,
+              replies: activity.replies,
+              quotes: activity.quotes,
+            },
+          })
+        )
+      )
     }
 
-    // 7. Calculate metrics
-    const metrics = {
-      totalTweets: activities.originalTweets.length,
-      totalRetweets: activities.retweets.length,
-      totalReplies: activities.replies.length,
-      totalQuotes: activities.quotes.length,
-      totalLikes: activities.likes.length,
-      totalEngagement: userTweets.reduce((sum: number, t: any) =>
-        sum + (t.public_metrics?.like_count || 0) +
-        (t.public_metrics?.retweet_count || 0) +
-        (t.public_metrics?.reply_count || 0), 0
-      ),
-    }
+    // 4. Aggregate metrics FROM DATABASE
+    const activityAgg = await prisma.activity.aggregate({
+      where: {
+        userId: session.user.id,
+        isRioRelated: true,
+      },
+      _count: {
+        _all: true,
+      },
+      _sum: {
+        likes: true,
+        retweets: true,
+        replies: true,
+        quotes: true,
+      },
+    })
 
-    // 8. Calculate yapping score
+    const totalTweets = await prisma.activity.count({
+      where: {
+        userId: session.user.id,
+        type: ActivityType.TWEET,
+        isRioRelated: true,
+      },
+    })
+
+    const totalEngagement =
+      (activityAgg._sum.likes ?? 0) +
+      (activityAgg._sum.retweets ?? 0) +
+      (activityAgg._sum.replies ?? 0) +
+      (activityAgg._sum.quotes ?? 0)
+
+    // 5. Yapping score (FIXED & CONSISTENT)
     const yappingScore =
-      metrics.totalTweets * 10 +
-      metrics.totalRetweets * 5 +
-      metrics.totalReplies * 8 +
-      metrics.totalQuotes * 7 +
-      metrics.totalLikes * 10 +
-      metrics.totalEngagement * 15
+      totalTweets * 10 +
+      (activityAgg._sum.retweets ?? 0) * 5 +
+      (activityAgg._sum.replies ?? 0) * 8 +
+      (activityAgg._sum.quotes ?? 0) * 7 +
+      userLikes.length * 10 +
+      totalEngagement * 2 +
+      userLikes.length * 10
 
-    // 9. Update database
+    // 6. Update user snapshot
     await prisma.user.update({
       where: { id: session.user.id },
       data: {
+        totalTweets,
+        totalLikes: userLikes.length,
         engagementScore: yappingScore,
-        totalTweets: metrics.totalTweets,
-        totalRetweets: metrics.totalRetweets,
-        totalReplies: metrics.totalReplies,
-        totalLikes: metrics.totalLikes,
         lastSyncedAt: new Date(),
       },
     })
 
-    // 10. Store activities in database (for historical tracking)
-    // ✅ Combine all tweets for activity tracking
-    const allTweetActivities = [
-      ...userTweets.map((t: any) => ({ ...t, activityType: 'TWEET' })),
-      ...activities.retweets.map((t: any) => ({ ...t, activityType: 'RETWEET' })),
-    ]
-
-    const activityRecords = allTweetActivities.slice(0, 50).map((tweet: any) => ({
-      userId: session.user.id,
-      tweetId: tweet.id,
-      type: tweet.activityType || (tweet.referenced_tweets?.length
-        ? (tweet.referenced_tweets[0].type === 'retweeted' ? 'RETWEET' :
-          tweet.referenced_tweets[0].type === 'replied_to' ? 'REPLY' :
-            tweet.referenced_tweets[0].type === 'quoted' ? 'QUOTE' : 'TWEET')
-        : 'TWEET'),
-      text: tweet.text?.substring(0, 500) || '', // Limit text length
-      likes: tweet.public_metrics?.like_count || 0,
-      retweets: tweet.public_metrics?.retweet_count || 0,
-      replies: tweet.public_metrics?.reply_count || 0,
-      quotes: tweet.public_metrics?.quote_count || 0,
-      hashtags: tweet.entities?.hashtags?.map((h: any) => h.tag) || [],
-      mentions: tweet.entities?.mentions?.map((m: any) => m.username) || [],
-      postedAt: new Date(tweet.created_at),
-    }))
-
-    // Upsert activities (skip duplicates)
-    // Better error handling for batch operations
-    await Promise.allSettled(
-      activityRecords.map((activity: any) => {
-        const updatedRecords = prisma.activity.upsert({
-          where: {
-            tweetId_userId: {
-              tweetId: activity.tweetId,
-              userId: activity.userId
-            }
-          },
-          create: activity,
-          update: {
-            likes: activity.likes,
-            retweets: activity.retweets,
-            replies: activity.replies,
-            quotes: activity.quotes,
-          },
-        })
-        return updatedRecords
-      })
-    )
-
-    // 11. Return dashboard data
+    // 7. Response (DB-backed, stable)
     return NextResponse.json({
       success: true,
       data: {
@@ -163,27 +242,26 @@ export async function GET(req: NextRequest) {
           displayName: session.user.name,
         },
         metrics: {
-          ...metrics,
+          totalTweets,
+          totalLikes: userLikes.length,
+          totalRetweets: activityAgg._sum.retweets ?? 0,
+          totalReplies: activityAgg._sum.replies ?? 0,
+          totalQuotes: activityAgg._sum.quotes ?? 0,
+          totalEngagement,
         },
-        yappingScore: yappingScore,
-        activities: {
-          tweets: activities.originalTweets.slice(0, 10),
-          retweets: activities.retweets.slice(0, 10),
-          replies: activities.replies.slice(0, 10),
-          quotes: activities.quotes.slice(0, 10),
-          likes: activities.likes.slice(0, 10),
-        },
-        searchData,
+        count: activityAgg._count._all,
+        yappingScore,
       },
     })
-
   } catch (error: any) {
-    console.error('Dashboard API Error:', error)
-
+    console.error("Dashboard API Error:", error)
     return NextResponse.json(
       {
-        error: 'Failed to fetch dashboard data',
-        details: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+        error: "Failed to fetch dashboard data",
+        details:
+          process.env.NODE_ENV === "development"
+            ? error.message
+            : "Internal server error",
       },
       { status: 500 }
     )

@@ -70,7 +70,7 @@ const Overview = (data:OverviewProps) => {
         <Metrics data={data.overview?.data.metrics} />
         
         {/* Main Content Grid */}
-        <Contents />
+        <Contents data={data.overview?.data.activities} />
       </div>
       <style>{`
         @keyframes fadeInUp {
