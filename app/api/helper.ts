@@ -132,3 +132,48 @@ export async function apiRequest(
     throw error;
   }
 }
+
+export function encodeCursor(activity: { postedAt: Date, id:string }){
+  return Buffer.from((
+    JSON.stringify({ postedAt: activity.postedAt.toISOString(), id: activity.id })
+  )).toString('base64')
+}
+
+export function decodeCursor(cursor:string){
+  const decoded = JSON.parse(Buffer.from(cursor).toString('utf-8'))
+
+  return {
+    postedAt: new Date(decoded.postedAt),
+    id: decoded.id
+  }
+}
+
+
+import { ActivityType } from "@prisma/client"
+
+const ACTIVITY_TYPES: ActivityType[] = [
+  ActivityType.TWEET,
+  ActivityType.RETWEET,
+  ActivityType.REPLY,
+  ActivityType.QUOTE,
+]
+
+export function generateMockActivities(count = 200) {
+  const now = Date.now()
+
+  return Array.from({ length: count }).map((_, i) => {
+    const type = ACTIVITY_TYPES[i % ACTIVITY_TYPES.length]
+
+    return {
+      id: `mock-${i + 1}`,
+      tweetId: `${1000000000 + i}`,
+      type,
+      text: `[MOCK ${type}] Activity item ${i + 1}`,
+      likes: Math.floor(Math.random() * 100),
+      retweets: Math.floor(Math.random() * 50),
+      replies: Math.floor(Math.random() * 30),
+      quotes: Math.floor(Math.random() * 20),
+      postedAt: new Date(now - i * 60_000).toISOString(), // 1-min gaps
+    }
+  })
+}

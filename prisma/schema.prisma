@@ -114,6 +114,7 @@ model Activity {
    @@index([type, postedAt])
   @@index([isRioRelated, userId])
   @@unique([tweetId, userId])
+  @@index([userId, isRioRelated, type, postedAt, id])
 }
 
 enum ActivityType {

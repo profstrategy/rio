@@ -1,6 +1,6 @@
+import { MetricsResponseData } from '@/app/api/user/dashboard-activity-metrics/types'
 import MetricCard from '@/components/reusables/metric-card'
-import { MetricsResponseData } from '@/network/types'
-import { Heart, MessageCircle, QuoteIcon, Repeat2 } from 'lucide-react'
+import { Heart, MessageCircle, Repeat2 } from 'lucide-react'
 import React from 'react'
 import { BsTwitterX } from 'react-icons/bs'
 

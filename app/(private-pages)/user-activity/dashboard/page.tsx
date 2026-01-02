@@ -33,7 +33,7 @@ const DashboardPage = () => {
   }
 
   if (sessionStatus === 'unauthenticated') {
-    router.push('/login')
+    router.push('/')
     return null
   }
 
@@ -102,7 +102,7 @@ const DashboardPage = () => {
           <div className="flex gap-3">
             {isUnauthorized ? (
               <button
-                onClick={() => router.push('/login')}
+                onClick={() => router.push('/')}
                 className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
               >
                 Sign In Again

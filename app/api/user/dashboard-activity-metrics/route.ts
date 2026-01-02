@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma"
 import { getServerSession } from "next-auth"
 import { NextRequest, NextResponse } from "next/server"
 import { getUserLikes } from "../get-rio-likes/route"
-import { searchRioUserActivityPaginated } from "../get-rio-activity/route"
+import { searchRioActivityMetrics } from "../get-rio-activity/route"
 import { testRedis } from "@/lib/test-redis"
 import { ActivityType, Prisma } from "@prisma/client"
 
@@ -53,11 +53,6 @@ if (testMode) {
     success: true,
     mock: true,
     data: {
-      user: {
-        username: session?.user.username ?? 'testuser',
-        displayName: session?.user.name ?? 'Test User',
-      },
-
       metrics: {
         totalTweets: 3,
         totalLikes: 45,
@@ -71,48 +66,48 @@ if (testMode) {
 
       yappingScore: 395,
 
-      activities: {
-        items: [
-          {
-            id: 'mock-1',
-            tweetId: '123456789',
-            type: 'TWEET',
-            text: '#RIO is coming 🚀',
-            likes: 15,
-            retweets: 5,
-            replies: 2,
-            quotes: 1,
-            postedAt: now.toISOString(),
-          },
-          {
-            id: 'mock-2',
-            tweetId: '123456788',
-            type: 'RETWEET',
-            text: 'RT @rio: Big things ahead',
-            likes: 10,
-            retweets: 4,
-            replies: 1,
-            quotes: 0,
-            postedAt: new Date(now.getTime() - 60 * 60 * 1000).toISOString(),
-          },
-          {
-            id: 'mock-3',
-            tweetId: '123456787',
-            type: 'REPLY',
-            text: 'This is huge 🔥',
-            likes: 8,
-            retweets: 2,
-            replies: 3,
-            quotes: 1,
-            postedAt: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(),
-          },
-        ],
+      // activities: {
+      //   items: [
+      //     {
+      //       id: 'mock-1',
+      //       tweetId: '123456789',
+      //       type: 'TWEET',
+      //       text: '#RIO is coming 🚀',
+      //       likes: 15,
+      //       retweets: 5,
+      //       replies: 2,
+      //       quotes: 1,
+      //       postedAt: now.toISOString(),
+      //     },
+      //     {
+      //       id: 'mock-2',
+      //       tweetId: '123456788',
+      //       type: 'RETWEET',
+      //       text: 'RT @rio: Big things ahead',
+      //       likes: 10,
+      //       retweets: 4,
+      //       replies: 1,
+      //       quotes: 0,
+      //       postedAt: new Date(now.getTime() - 60 * 60 * 1000).toISOString(),
+      //     },
+      //     {
+      //       id: 'mock-3',
+      //       tweetId: '123456787',
+      //       type: 'REPLY',
+      //       text: 'This is huge 🔥',
+      //       likes: 8,
+      //       retweets: 2,
+      //       replies: 3,
+      //       quotes: 1,
+      //       postedAt: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(),
+      //     },
+      //   ],
 
-        pageInfo: {
-          nextCursor: 'mock-3',
-          hasNextPage: true,
-        },
-      },
+      //   pageInfo: {
+      //     nextCursor: 'mock-3',
+      //     hasNextPage: true,
+      //   },
+      // },
     },
   })
 }
@@ -144,7 +139,7 @@ if (testMode) {
     // 2. Fetch ingestion sources (ONLY)
     const [likesResult, searchResult] = await Promise.allSettled([
       getUserLikes(twitterId || id, 100, accessToken),
-      searchRioUserActivityPaginated(username, "24h", 10, accessToken),
+      searchRioActivityMetrics(username, accessToken),
     ])
 
     const userLikes = likesResult.status === "fulfilled" ? likesResult.value : []
@@ -170,7 +165,6 @@ if (testMode) {
             },
             create: activity,
             update: {
-              text: activity.text,
               likes: activity.likes,
               retweets: activity.retweets,
               replies: activity.replies,
@@ -212,21 +206,22 @@ if (testMode) {
       (activityAgg._sum.replies ?? 0) +
       (activityAgg._sum.quotes ?? 0)
 
-    // 5. Yapping score (FIXED & CONSISTENT)
+    // 5. Yapping score
     const yappingScore =
       totalTweets * 10 +
       (activityAgg._sum.retweets ?? 0) * 5 +
       (activityAgg._sum.replies ?? 0) * 8 +
       (activityAgg._sum.quotes ?? 0) * 7 +
       userLikes.length * 10 +
-      totalEngagement * 2 +
-      userLikes.length * 10
+      totalEngagement * 2
 
     // 6. Update user snapshot
     await prisma.user.update({
       where: { id: session.user.id },
       data: {
         totalTweets,
+        totalRetweets: activityAgg._sum.retweets ?? 0,
+        totalReplies: activityAgg._sum.replies ?? 0,
         totalLikes: userLikes.length,
         engagementScore: yappingScore,
         lastSyncedAt: new Date(),
@@ -237,10 +232,6 @@ if (testMode) {
     return NextResponse.json({
       success: true,
       data: {
-        user: {
-          username: session.user.username,
-          displayName: session.user.name,
-        },
         metrics: {
           totalTweets,
           totalLikes: userLikes.length,

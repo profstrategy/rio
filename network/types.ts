@@ -1,3 +1,5 @@
+import { ActivityType } from "@prisma/client";
+
 export interface Tweet {
   id: string;
   text: string;
@@ -36,43 +38,10 @@ export interface PaginatedResponse<T> {
   results: T[];
 }
 
-export interface UserActivityDashboardResponse {
-  success: boolean
-  mock?: boolean
-  data: {
-    user: {
-      username: string
-      displayName: string
-    }
-
-    metrics: {
-      totalTweets: number
-      totalRetweets: number
-      totalReplies: number
-      totalQuotes: number
-      totalLikes: number
-      totalEngagement: number
-    }
-
-    count: number
-
-    yappingScore: number
-
-    activities: {
-      items: DashboardActivity[]
-      pageInfo: {
-        nextCursor: string | null
-        hasNextPage: boolean
-      }
-    }
-  }
-}
-
-
-export interface DashboardActivity {
+export interface ActivityItem {
   id: string
   tweetId: string
-  type: 'TWEET' | 'RETWEET' | 'REPLY' | 'QUOTE'
+  type: ActivityType
   text: string
   likes: number
   retweets: number
@@ -81,27 +50,16 @@ export interface DashboardActivity {
   postedAt: string
 }
 
-
-export interface MetricsResponseData {
-  totalTweets: number,
-  totalRetweets: number,
-  totalReplies: number,
-  totalQuotes: number,
-  totalLikes: number,
-  totalEngagements?: number
+export interface ActivityPage {
+  success: boolean
+  data: ActivityItem[]
+  nextCursor: string | null
+  mock?: boolean
 }
 
-export enum ActivityType {
-  tweet = 'TWEET',
-  retweeted = 'RETWEET',
-  replied_to = 'REPLY',
-  quoted = 'QUOTE'
-}
 
-export interface ActivityResponseData {
-  items: DashboardActivity[]
-  pageInfo: {
-    nextCursor: string | null
-    hasNextPage: boolean
-  }
+export interface FetchParams {
+  limit: number
+  cursor?: string
+  window?: string
 }

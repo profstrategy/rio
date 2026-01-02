@@ -5,10 +5,10 @@ import AppButton from "@/components/ui/app-button";
 import { useSession } from "next-auth/react";
 import Metrics from "./metrics";
 import Contents from "./contents";
-import { UserActivityDashboardResponse } from "@/network/types";
+import { RioActivityMetricsResponse } from "@/app/api/user/dashboard-activity-metrics/types";
 
 interface OverviewProps {
-  overview?: UserActivityDashboardResponse
+  overview?: RioActivityMetricsResponse
 }
 
 
@@ -70,7 +70,7 @@ const Overview = (data:OverviewProps) => {
         <Metrics data={data.overview?.data.metrics} />
         
         {/* Main Content Grid */}
-        <Contents data={data.overview?.data.activities} />
+        <Contents />
       </div>
       <style>{`
         @keyframes fadeInUp {

@@ -1,5 +1,5 @@
+import { ActivityResponseData } from '@/app/api/user/dashboard-activity-metrics/types'
 import DashboardCard from '@/components/reusables/dashboard-card'
-import { ActivityResponseData } from '@/network/types'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import React from 'react'
@@ -71,7 +71,7 @@ const Contents = (data: ContentsProps) => {
         <div className="lg:col-span-full">
           <DashboardCard title="Recent Tweets (48hrs)" delay={0.7}>
             <div className="space-y-3 h-64 overflow-auto pr-2">
-              {[1, 2, 3].map((item, i) => (
+              {data.data?.items.map((item, i) => (
                 <div key={i} className="p-4 rounded-xl transition-all hover:scale-102"
                   style={{
                     background: 'linear-gradient(135deg, rgba(184, 235, 254, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%)',
@@ -82,7 +82,7 @@ const Contents = (data: ContentsProps) => {
                       style={{ background: 'linear-gradient(135deg, #00B4DB 0%, #0284c7 100%)' }} />
                     <div className="flex-1">
                       <p className="text-sm font-semibold mb-1" style={{ color: '#0284c7' }}>
-                        @user{item}
+                        {/* @user{item} */}
                       </p>
                       <p className="text-sm mb-2" style={{ color: '#475569' }}>
                         Tweet content about $RIO goes here...
