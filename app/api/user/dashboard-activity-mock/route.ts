@@ -2,7 +2,7 @@ import { authOptions } from "@/_lib/auth"
 import { getServerSession } from "next-auth"
 import { NextRequest, NextResponse } from "next/server"
 import { ActivityType } from "@prisma/client"
-import { encodeCursor, decodeCursor, generateMockActivities } from "../../helper"
+import { generateMockActivities } from "../../helper"
 import { ActivityWindow } from "@/network/types"
 import { getStartTime } from "@/_lib/utils"
 
@@ -16,67 +16,64 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
 
   const mock = searchParams.get("mock") === "true"
-  const limit = Math.min(Number(searchParams.get("limit")) || 20, 50)
-  const cursor = searchParams.get("cursor")
+  const limit = Math.min(Number(searchParams.get("limit")) || 10, 50)
+  const offset = Number(searchParams.get("offset")) || 0
 
-  const type = searchParams.get("type") as ActivityType | null
-  const window = searchParams.get("window") as ActivityWindow | null
+  const typeParam = searchParams.get("type")
+  const type = typeParam ? (typeParam as ActivityType) : null
+  
+  const windowParam = searchParams.get("window")
+  const window = windowParam ? (windowParam as ActivityWindow) : null
 
   /* ================= MOCK MODE ================= */
   if (mock) {
     let activities = generateMockActivities(200)
 
-    // Filter by type
-    if (type) {
+    // Filter by type - proper enum validation
+    if (type && Object.values(ActivityType).includes(type)) {
       activities = activities.filter(a => a.type === type)
     }
 
     // Filter by time window
     if (window) {
       const startTime = new Date(getStartTime(window))
-      activities = activities.filter(
-        a => new Date(a.postedAt) >= startTime
-      )
-    }
-
-    // Cursor pagination
-    if (cursor) {
-      const decoded = decodeCursor(cursor)
       activities = activities.filter(a => {
-        if (new Date(a.postedAt) < decoded.postedAt) return true
-        if (
-          new Date(a.postedAt).getTime() ===
-            decoded.postedAt.getTime() &&
-          a.id < decoded.id
-        ) {
-          return true
-        }
-        return false
+        const activityDate = new Date(a.postedAt)
+        return activityDate >= startTime
       })
     }
 
-    const page = activities.slice(0, limit + 1)
+    // Sort by postedAt descending, then by id descending
+    activities.sort((a, b) => {
+      const dateA = new Date(a.postedAt).getTime()
+      const dateB = new Date(b.postedAt).getTime()
+      
+      if (dateB !== dateA) {
+        return dateB - dateA
+      }
+      
+      // If dates are equal, sort by id descending
+      return b.id.localeCompare(a.id)
+    })
 
-    let nextCursor: string | null = null
-    if (page.length > limit) {
-      const next = page.pop()!
-      nextCursor = encodeCursor({
-        postedAt: new Date(next.postedAt),
-        id: next.id,
-      })
-    }
+    // Calculate total after filtering
+    const total = activities.length
+
+    // Apply offset-based pagination
+    const page = activities.slice(offset, offset + limit)
 
     return NextResponse.json({
       success: true,
       data: page,
-      nextCursor,
+      total,
+      offset,
+      limit,
       mock: true,
-      totalMockCount: activities.length,
     })
   }
 
   /* ================= REAL MODE ================= */
   return NextResponse.json({
     error: "Mock disabled in production",
-  })
+  }, { status: 400 })
 }

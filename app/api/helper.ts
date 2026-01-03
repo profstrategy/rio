@@ -140,7 +140,7 @@ export function encodeCursor(activity: { postedAt: Date, id:string }){
 }
 
 export function decodeCursor(cursor:string){
-  const decoded = JSON.parse(Buffer.from(cursor).toString('utf-8'))
+  const decoded = JSON.parse(Buffer.from(cursor, 'base64').toString('utf-8'))
 
   return {
     postedAt: new Date(decoded.postedAt),

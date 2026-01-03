@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-query';
 import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import { getSession, useSession } from 'next-auth/react';
-import { ActivityPage, FetchParams, PaginatedResponse } from '@/network/types';
+import { PaginatedResponse } from '@/network/types';
 import { network_routes } from './route';
 // import { useErrorHandling } from '@/hooks/handle-error';
 // import { PaginatedResponse } from './types';
@@ -199,24 +199,4 @@ export function useAppMutation<
 
   return mutation
 //   return useErrorHandling(() => mutation)();
-}
-
-export async function fetchActivityMock({
-  limit,
-  cursor,
-  window,
-}: FetchParams): Promise<ActivityPage> {
-  const res = await axiosInstance.get<ActivityPage>(
-    network_routes.user_activity_table_mock,
-    {
-      params: {
-        mock: true,
-        limit,
-        cursor,
-        window,
-      },
-    }
-  )
-
-  return res.data
 }

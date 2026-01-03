@@ -40,26 +40,27 @@ export interface PaginatedResponse<T> {
 
 export interface ActivityItem {
   id: string
-  tweetId: string
+  tweetId: string | null
   type: ActivityType
-  text: string
+  text: string | null
   likes: number
   retweets: number
   replies: number
   quotes: number
-  postedAt: string
+  postedAt: Date | string
 }
 
-export interface ActivityPage {
+export interface PaginatedActivityResponse {
   success: boolean
   data: ActivityItem[]
-  nextCursor: string | null
+  total: number
+  offset: number
+  limit: number
   mock?: boolean
 }
 
-
-export interface FetchParams {
-  limit: number
-  cursor?: string
-  window?: string
+export interface ActivityFilterParams {
+  window?: ActivityWindow
+  type?: ActivityType
+  enabled?: boolean
 }

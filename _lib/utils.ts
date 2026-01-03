@@ -23,15 +23,49 @@ export const cleanName = (name:string): string => {
 
 }
 
-export const getStartTime = (window:ActivityWindow) => {
-    const now = new Date;
+/**
+ * Calculate the start time based on the activity window
+ * @param window - The time window ('24h', '3d', '7d')
+ * @returns ISO string of the start time
+ */
+export function getStartTime(window: ActivityWindow): string {
+  const now = new Date()
+  
+  switch (window) {
+    case '24h':
+      // 24 hours ago
+      return new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString()
+    
+    case '3d':
+      // 3 days ago
+      return new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString()
+    
+    case '7d':
+      // 7 days ago
+      return new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString()
+    
+    default:
+      return now.toISOString()
+  }
+}
 
-    const map = {
-        '24h': 1,
-        '3d': 3,
-        '7d': 7
-    };
+/**
+ * Format activity type for display
+ */
+export function formatActivityType(type: string): string {
+  return type.charAt(0) + type.slice(1).toLowerCase()
+}
 
-    now.setUTCDate(now.getUTCDate() - map[window])
-    return now.toISOString()
+/**
+ * Format date for display
+ */
+export function formatActivityDate(date: Date | string): string {
+  const d = typeof date === 'string' ? new Date(date) : date
+  return d.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 }

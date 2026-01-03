@@ -1,7 +1,9 @@
 import { RioActivityMetricsResponse } from "@/app/api/user/dashboard-activity-metrics/types"
-import { fetchActivityMock, useAppQuery } from "../client-constructor"
+import { useAppQuery } from "../client-constructor"
 import { generateBaseQueryKeyFromRoute, network_routes } from "../route"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { ActivityWindow } from "../types"
+import { ActivityType } from "@prisma/client"
+import axios from "axios"
 
 export const useGetUserActivity = (params?: { page: number }) => {
 const baseQueryKey = generateBaseQueryKeyFromRoute(network_routes.user_activity_dashboard)
@@ -12,30 +14,65 @@ return useAppQuery<RioActivityMetricsResponse>({
 })
 }
 
-interface UseGetActivityMockParams {
+interface FetchActivityParams {
   limit: number
-  window?: string
+  offset: number
+  window?: ActivityWindow
+  type?: ActivityType
 }
 
-export const useGetActivityMockData = ({
-  limit,
-  window,
-}: UseGetActivityMockParams) => {
-  const baseQueryKey = generateBaseQueryKeyFromRoute(
-    network_routes.user_activity_table_mock
+interface ActivityResponse {
+  success: boolean
+  data: any[]
+  total: number
+  offset: number
+  limit: number
+  mock?: boolean
+}
+
+export async function fetchActivityMock(
+  params: FetchActivityParams
+): Promise<ActivityResponse> {
+  const queryParams = new URLSearchParams({
+    mock: "true",
+    limit: params.limit.toString(),
+    offset: params.offset.toString(),
+  })
+
+  if (params.window) {
+    queryParams.append("window", params.window)
+  }
+
+  if (params.type) {
+    queryParams.append("type", params.type)
+  }
+
+  const response = await axios.get(
+    `/api/user/dashboard-activity-mock?${queryParams.toString()}`
   )
 
-  return useInfiniteQuery({
-    queryKey: [...baseQueryKey, { limit, window, mock: true }],
-    queryFn: ({ pageParam }) =>
-      fetchActivityMock({
-        limit,
-        cursor: pageParam,
-        window,
-      }),
-    initialPageParam: undefined as string | undefined,
-    getNextPageParam: lastPage => lastPage.nextCursor ?? undefined,
-    staleTime: 60_000,
-    retry: 1,
+  return response.data
+}
+
+export async function fetchActivityReal(
+  params: FetchActivityParams
+): Promise<ActivityResponse> {
+  const queryParams = new URLSearchParams({
+    limit: params.limit.toString(),
+    offset: params.offset.toString(),
   })
+
+  if (params.window) {
+    queryParams.append("window", params.window)
+  }
+
+  if (params.type) {
+    queryParams.append("type", params.type)
+  }
+
+  const response = await axios.get(
+    `/api/activity?${queryParams.toString()}`
+  )
+
+  return response.data
 }
