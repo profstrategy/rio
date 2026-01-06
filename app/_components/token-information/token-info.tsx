@@ -43,7 +43,7 @@ const TokenInfo = () => {
     if (!mounted) {
         return (
             <main className='flex flex-col gap-4'>
-                <div className="h-16 bg-gradient-to-r from-slate-800 to-slate-700 rounded-lg animate-pulse" />
+                <div className="h-16 bg-linear-to-r from-slate-800 to-slate-700 rounded-lg animate-pulse" />
             </main>
         );
     }
@@ -92,14 +92,14 @@ const TokenInfo = () => {
                     variant='h2'
                     className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text relative z-10 mar-b'
                 >
-                    Token Information
+                    TOKEN INFORMATION
                 </AppHeading>
 
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
-                    <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
+                    <div className="absolute inset-0 rounded-xl p-0.5 bg-linear-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
                         <div className="w-full h-full rounded-xl" style={{
-                            background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
+                            background: 'radial-linear(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
                         }} />
                     </div>
 
@@ -107,7 +107,7 @@ const TokenInfo = () => {
                     <div
                         className='relative h-auto rounded-xl backdrop-blur-sm'
                         style={{
-                            background: 'radial-gradient(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
+                            background: 'radial-linear(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
                             backdropFilter: 'blur(18px)',
                             border: '1px solid rgba(255,255,255,0.08)',
                             padding: '1rem',
@@ -118,11 +118,11 @@ const TokenInfo = () => {
 
                             {/* Token Symbol and Icon */}
                             <div className="flex items-center justify-center gap-4 mb-4">
-                                <div className="w-20 h-16 lg:h-20 md:h-16 bg-gradient-to-br from-orange-400 to-cyan-400 rounded-full flex items-center justify-center text-xl font-bold text-white shadow-lg animate-pulse">
+                                <div className="w-20 h-16 lg:h-20 md:h-16 bg-linear-to-br from-orange-400 to-cyan-400 rounded-full flex items-center justify-center text-xl font-bold text-white shadow-lg animate-pulse">
                                     $RIO
                                 </div>
                                 <div className="text-center">
-                                    <h2 className="text-xl font-bold bg-gradient-to-r from-orange-400 to-cyan-400 bg-clip-text text-transparent">
+                                    <h2 className="text-xl font-bold bg-linear-to-r from-orange-400 to-cyan-400 bg-clip-text text-transparent">
                                         TOKENOMICS
                                     </h2>
                                 </div>

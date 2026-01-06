@@ -7,7 +7,7 @@ import About from "./about";
 // Main Demo Component
 const HeroIdoComponents = () => {
     return (
-        <div className="min-h-116 bg-linear-to-br from-slate-950 via-indigo-950 to-slate-950 container">
+        <div className="min-h-68 pb-4 grid lg:items-center items-start lg:min-h-100 bg-linear-to-br from-slate-950 via-indigo-950 to-slate-950 container">
             <div className="max-w-7xl mx-auto">
                 <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
                     <div className="lg:flex lg:flex-col hidden justify-center">
@@ -19,11 +19,11 @@ const HeroIdoComponents = () => {
                         <div className="w-full flex flex-col gap-2">
                             <IdoLaunch />
                             <ParticipationAmount />
-                        </div>
-                        <div className="w-full flex flex-col gap-2">
-                            <HowToParticipate />
                             <IdoEnd />
                         </div>
+                        {/* <div className="w-full flex flex-col gap-2">
+                            <HowToParticipate />
+                        </div> */}
                     </div>
                 </div>
             </div>
