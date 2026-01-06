@@ -53,7 +53,7 @@ export const LaunchTiming = () => {
 
     return (
         <div className="w-full px-2 py-6">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3">
+            <div className="grid grid-cols-4 gap-2 lg:gap-3">
                 {timeUnits.map((unit, index) => (
                     <div
                         key={unit.key}

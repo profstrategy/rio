@@ -69,7 +69,7 @@ const RoadMap = () => {
         >
             <AppHeading
                 variant="h2"
-                className="text-3xl font-bold text-transparent bg-gradient-to-r from-white/80 to-white/40 bg-clip-text tracking-wide"
+                className="text-3xl font-bold text-transparent bg-linear-to-r from-white/80 to-white/40 bg-clip-text tracking-wide"
             >
                 ROADMAP
             </AppHeading>
@@ -118,7 +118,7 @@ const RoadMap = () => {
                         {/* CYAN GLOW ON HOVER */}
                         <div className="
                             absolute inset-0 opacity-0 hover:opacity-10
-                            bg-gradient-to-br from-cyan-400/30 to-transparent
+                            bg-linear-to-br from-cyan-400/30 to-transparent
                             rounded-xl transition-opacity duration-300
                         " />
                     </motion.div>
