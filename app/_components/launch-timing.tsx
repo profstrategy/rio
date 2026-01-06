@@ -52,7 +52,7 @@ export const LaunchTiming = () => {
     ];
 
     return (
-        <div className="w-full px-2 py-6">
+        <div className="w-full px-2 py-6" style={{ margin: '1.5rem 0' }}>
             <div className="grid grid-cols-4 gap-2 lg:gap-3">
                 {timeUnits.map((unit, index) => (
                     <div

@@ -120,11 +120,11 @@ const LeaderBoard = () => {
 
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
-                   <div className="absolute inset-0 rounded-xl p-0.5 bg-linear-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
-                    <div className="w-full h-full rounded-xl" style={{
-                        background: 'radial-linear(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
-                    }} />
-                </div>
+                    {/* <div className="absolute inset-0 rounded-xl p-0.5 bg-linear-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
+                        <div className="w-full h-full rounded-xl" style={{
+                            background: 'radial-linear(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
+                        }} />
+                    </div> */}
 
                     {/* Table Container */}
                     <div

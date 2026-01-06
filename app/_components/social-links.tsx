@@ -46,7 +46,7 @@ const SocialLinks = () => {
                     variant='h2'
                     className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text mar-b'
                 >
-                    Community Links
+                    COMMUNITY LINKS
                 </AppHeading>
 
                 <div className="relative overflow-hidden rounded-xl">
