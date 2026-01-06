@@ -569,23 +569,21 @@ body {
 }
 
 /* ========================================
-   📱 RESPONSIVE UTILITIES - FIXED
+   📱 RESPONSIVE UTILITIES
 ======================================== */
 
-/* Container - MAJOR FIX HERE */
+
 .container {
   max-width: 1440px;
   margin: auto;
-  padding: 0 100px;
+  padding: 0 50px;
   overflow-x: hidden;
-  /* Added overflow protection */
 }
 
-/* CRITICAL FIX: Mobile container was 900px! */
+
 @media (max-width: 768px) {
   .container {
     max-width: 100%;
-    /* FIXED: Was 900px causing overflow */
     padding: 0 1rem;
     overflow-x: hidden;
   }

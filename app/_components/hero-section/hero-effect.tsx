@@ -98,13 +98,13 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
                 style={{ animationDuration: '5s', animationDelay: '2s' }} />
 
             {/* Hero Image with Darker Blend */}
-            <div className="absolute inset-0">
+            <div className="absolute inset-24 lg:-top-400 md:-top-560 -top-680 w-5/6">
                 <Image
                     src={'/rio_art.png'}
                     alt="hero-image"
                     fill
                     priority
-                    className="w-full h-full object-cover opacity-40 mix-blend-soft-light contrast-110 saturate-110"
+                    className="w-full h-full object-contain opacity-90 mix-blend-soft-light contrast-100 saturate-110"
                 />
             </div>
 

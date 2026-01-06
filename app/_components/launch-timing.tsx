@@ -1,33 +1,48 @@
 import React from 'react';
-import { Wallet, Coins, CheckCircle } from 'lucide-react';
 
 // LaunchTiming Component
 export const LaunchTiming = () => {
     const [timeLeft, setTimeLeft] = React.useState({
-        days: 15,
-        hours: 8,
-        minutes: 42,
-        seconds: 30
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
     });
+    const [ isExpired, setExpired ] = React.useState(false)
 
     React.useEffect(() => {
-        const timer = setInterval(() => {
-            setTimeLeft(prev => {
-                if (prev.seconds > 0) {
-                    return { ...prev, seconds: prev.seconds - 1 };
-                } else if (prev.minutes > 0) {
-                    return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-                } else if (prev.hours > 0) {
-                    return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
-                } else if (prev.days > 0) {
-                    return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 };
-                }
-                return prev;
-            });
-        }, 1000);
+        // jan 20 at 12am
+        const timeTarget = new Date('2026-01-20T00:00:00').getTime();
+
+        const calculateTime = () => {
+            const now = new Date().getTime()
+            const difference = timeTarget - now;
+
+            if(difference <= 0){
+                setExpired(true)
+                setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+                return
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+            const hours = Math.floor(difference % (1000 * 60 * 60 * 24)/ (1000 * 60 * 60))
+            const minutes = Math.floor(difference % (1000 * 60 * 60) / (1000 * 60))
+            const seconds = Math.floor(difference % (1000 * 60) / 1000)
+
+            // set the specific date
+            setTimeLeft({ days: days, hours: hours, minutes: minutes, seconds: seconds })
+        }
+
+        //calculate immediately on mount
+        calculateTime()
+
+        //update every seconds
+        const timer = setInterval(() => {calculateTime()}, 1000);
 
         return () => clearInterval(timer);
     }, []);
+
+
 
     const timeUnits = [
         { label: 'Days', value: timeLeft.days, key: 'days' },
