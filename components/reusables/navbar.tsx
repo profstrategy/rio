@@ -5,12 +5,14 @@ import { AppHeading } from './app-heading'
 import { DesktopNavLinksProps, MobileNavMenuProps } from '@/constants/types'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
-import { signIn, useSession } from 'next-auth/react'
 import { LiaTimesSolid } from 'react-icons/lia'
 import { FaBarsStaggered } from 'react-icons/fa6'
 import AppButton from '../ui/app-button'
 import { useAppDialog } from '@/hooks/use-app-dialog'
 import Link from 'next/link'
+import AppDialogBox from './alert-dialog'
+import { useTwitterOAuth } from '@/hooks/use-twitter-oauth'
+import { Spinner } from '../ui/spinner'
 
 export const Logo = () => {
     return (
@@ -21,8 +23,9 @@ export const Logo = () => {
     )
 }
 
-const DesktopNavMenu = ({ navItems, activeItem, handleNavClick }: DesktopNavLinksProps) => {
-    // const session = useSession()
+const DesktopNavMenu = ({ navItems, activeItem, handleNavClick, openDialog }: DesktopNavLinksProps) => {
+    const { session, handleConnectTwitter } = useTwitterOAuth()
+
     return (
         <>
             <ul className="md:flex items-center justify-center lg:gap-8 md:gap-6 hidden">
@@ -49,9 +52,13 @@ const DesktopNavMenu = ({ navItems, activeItem, handleNavClick }: DesktopNavLink
                     </li>
                 ))}
 
-                <AppButton className="px-6 py-3 shadow-2xs text-xl text-white rounded-lg font-bold w-50 h-10 border-b-2" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
-                    Connect X
+                <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10 border-b-2" onClick={session.status === 'authenticated' ? openDialog : handleConnectTwitter}>
+                    {session.status === 'loading' ? <Spinner /> : session.status === 'authenticated' ? `Dashboard` : `Connect X`}
                 </AppButton>
+
+                {/* <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10 border-b-2" onClick={handleSignOut}>
+                    signout
+                </AppButton> */}
             </ul>
         </>
     )
@@ -64,8 +71,9 @@ const MobileNavMenu = ({
     activeItem,
     handleNavClick,
     setIsOpen,
+    openDialog,
 }: MobileNavMenuProps) => {
-    // const session = useSession()
+    const { session, handleConnectTwitter } = useTwitterOAuth()
 
     return (
         <>
@@ -136,10 +144,9 @@ const MobileNavMenu = ({
                                     transition={{ type: 'spring', stiffness: 500 }}
                                     className="mt-8"
                                 >
-                                    <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10" onClick={() => signIn("twitter", { callbackUrl: '/' })}>
-                                        Connect X
+                                    <AppButton className="px-6 py-3 text-white text-xl rounded-lg font-medium w-50 h-10 border-b-2" onClick={session.status === 'authenticated' ? openDialog : handleConnectTwitter}>
+                                        {session.status === 'loading' ? <Spinner /> : session.status === 'authenticated' ? `Dashboard` : `Connect X`}
                                     </AppButton>
-
                                 </motion.li>
                             </motion.ul>
                         </motion.div>
@@ -154,7 +161,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [activeItem, setActiveItem] = React.useState('/');
     const [scrollY, setScrollY] = React.useState(false);
-    const { dialogProps, openDialog } = useAppDialog()
+    const dialog = useAppDialog()
 
     const navItems = [
         { id: '/', item: 'Home' },
@@ -221,39 +228,44 @@ const Navbar = () => {
     }, []);
 
     return (
-        <nav className={`flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto inset-x-0 container fixed ${scrollY ? 'bg-neutral-700 drop-shadow-white-ash shadow-md border-b border-rio-sky-800/50' : 'bg-transparent'}`}>
-            <Logo />
-            <button
-                className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
-                onClick={() => setIsOpen(!isOpen)}
-                aria-label={isOpen ? 'Close menu' : 'Open menu'}
-                aria-controls='mobile-menu'
-            >
-                {isOpen ? (
-                    <LiaTimesSolid className="w-6 h-6 text-white" />
-                ) : (
-                    <FaBarsStaggered className="w-6 h-6 text-white" />
-                )}
-            </button>
+        <>
+            <nav className={`flex items-center justify-between z-50 opacity-85 transition-shadow duration-300 m-auto inset-x-0 container fixed ${scrollY ? 'bg-neutral-700 drop-shadow-white-ash shadow-md border-b border-rio-sky-800/50' : 'bg-transparent'}`}>
+                <Logo />
+                <button
+                    className="md:hidden p-2 rounded-md hover:bg-gray-900 transition-colors"
+                    onClick={() => setIsOpen(!isOpen)}
+                    aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                    aria-controls='mobile-menu'
+                >
+                    {isOpen ? (
+                        <LiaTimesSolid className="w-6 h-6 text-white" />
+                    ) : (
+                        <FaBarsStaggered className="w-6 h-6 text-white" />
+                    )}
+                </button>
 
-            <MobileNavMenu
-                navItems={navItems}
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-                activeItem={activeItem}
-                handleNavClick={handleNavClick}
-                openDialog={openDialog}
-                dialogProps={dialogProps}
-            />
+                <MobileNavMenu
+                    navItems={navItems}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    activeItem={activeItem}
+                    handleNavClick={handleNavClick}
+                    openDialog={dialog.openDialog}
+                    dialogProps={dialog.dialogProps}
+                />
 
-            <DesktopNavMenu
-                navItems={navItems}
-                activeItem={activeItem}
-                handleNavClick={handleNavClick}
-                openDialog={openDialog}
-                dialogProps={dialogProps}
-            />
-        </nav>
+                <DesktopNavMenu
+                    navItems={navItems}
+                    activeItem={activeItem}
+                    handleNavClick={handleNavClick}
+                    openDialog={dialog.openDialog}
+                    dialogProps={dialog.dialogProps}
+                />
+            </nav>
+            <AppDialogBox
+            {...dialog.dialogProps}
+             />
+        </>
     )
 }
 

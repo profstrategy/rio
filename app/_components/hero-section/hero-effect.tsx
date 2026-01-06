@@ -11,30 +11,30 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
     }, []);
 
     if (!mounted) {
-        return <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" />;
+        return <div className="bg-linear-to-br from-slate-900 via-purple-900 to-slate-900" />;
     }
 
     return (
         <div>
             {/* Deep Base Layer for Better Contrast */}
-            <div className="absolute overflow-hidden inset-0 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950" />
+            <div className="absolute overflow-hidden inset-0 bg-linear-to-br from-slate-950 via-indigo-950 to-slate-950" />
 
             {/* Enhanced Dark Gradient Overlay with Rio Sky Colors */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-sky-950 to-indigo-950 animate-pulse"
+            <div className="absolute inset-0 bg-linear-to-br from-slate-900 via-sky-950 to-indigo-950 animate-pulse"
                 style={{ animationDuration: '4s' }} />
 
             {/* Stronger Color Accent Layer */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-sky-900/60 via-transparent to-cyan-900/60" />
+            <div className="absolute inset-0 bg-linear-to-tr from-sky-900/60 via-transparent to-cyan-900/60" />
 
             {/* Dynamic Rio Color Waves with Darker Tones */}
             <div className="absolute inset-0">
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-sky-700/30 via-transparent to-cyan-700/30 animate-pulse"
+                <div className="absolute top-0 left-0 w-full h-full bg-linear-to-r from-sky-700/30 via-transparent to-cyan-700/30 animate-pulse"
                     style={{
                         clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)',
                         animationDuration: '3s',
                         animationDelay: '0.5s'
                     }} />
-                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-indigo-700/25 via-transparent to-sky-700/25 animate-pulse"
+                <div className="absolute top-0 right-0 w-full h-full bg-linear-to-l from-indigo-700/25 via-transparent to-sky-700/25 animate-pulse"
                     style={{
                         clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)',
                         animationDuration: '3.5s',
@@ -55,7 +55,7 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
                             animationDuration: `${3 + Math.random() * 4}s`
                         }}
                     >
-                        <div className="w-3 h-3 bg-gradient-to-br from-sky-400 to-cyan-500 rounded-full shadow-lg opacity-60" />
+                        <div className="w-3 h-3 bg-linear-to-br from-sky-400 to-cyan-500 rounded-full shadow-lg opacity-60" />
                     </div>
                 ))}
 
@@ -80,8 +80,8 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
                     className="w-full h-full animate-pulse"
                     style={{
                         backgroundImage: `
-                            linear-gradient(rgba(0,180,219,0.3) 2px, transparent 2px),
-                            linear-gradient(90deg, rgba(14,165,233,0.3) 2px, transparent 2px)
+                            linear-linear(rgba(0,180,219,0.3) 2px, transparent 2px),
+                            linear-linear(90deg, rgba(14,165,233,0.3) 2px, transparent 2px)
                         `,
                         backgroundSize: '60px 60px',
                         animationDuration: '6s'
@@ -90,32 +90,32 @@ const HeaderEffect = ({children}: {children:ReactNode}) => {
             </div>
 
             {/* Subtle Glow Effects with Rio Sky Colors */}
-            <div className="absolute top-10 left-10 w-96 h-96 bg-gradient-radial from-sky-600/20 via-sky-800/10 to-transparent rounded-full blur-3xl animate-pulse"
+            <div className="absolute top-10 left-10 w-96 h-96 bg-linear-radial from-sky-600/20 via-sky-800/10 to-transparent rounded-full blur-3xl animate-pulse"
                 style={{ animationDuration: '4s' }} />
-            <div className="absolute bottom-10 right-10 w-80 h-80 bg-gradient-radial from-cyan-600/20 via-indigo-800/10 to-transparent rounded-full blur-2xl animate-pulse"
+            <div className="absolute bottom-10 right-10 w-80 h-80 bg-linear-radial from-cyan-600/20 via-indigo-800/10 to-transparent rounded-full blur-2xl animate-pulse"
                 style={{ animationDuration: '3s', animationDelay: '1s' }} />
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-radial from-sky-500/15 via-sky-800/10 to-transparent rounded-full blur-xl animate-pulse"
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-linear-radial from-sky-500/15 via-sky-800/10 to-transparent rounded-full blur-xl animate-pulse"
                 style={{ animationDuration: '5s', animationDelay: '2s' }} />
 
             {/* Hero Image with Darker Blend */}
-            <div className="absolute inset-0">
+            <div className="absolute inset-24 lg:-top-400 md:-top-560 -top-680 w-5/6">
                 <Image
                     src={'/rio_art.png'}
                     alt="hero-image"
                     fill
                     priority
-                    className="w-full h-full object-cover opacity-40 mix-blend-soft-light contrast-110 saturate-110"
+                    className="w-full h-full object-contain opacity-90 mix-blend-soft-light contrast-100 saturate-110"
                 />
             </div>
 
             {/* Dark Overlay for Better Text Contrast */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-950/40 via-transparent to-indigo-950/40 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-linear-to-br from-slate-950/40 via-transparent to-indigo-950/40 mix-blend-multiply" />
 
             {/* Subtle Rio Sky Accent Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-sky-700/15 via-transparent to-cyan-700/15 mix-blend-overlay" />
+            <div className="absolute inset-0 bg-linear-to-br from-sky-700/15 via-transparent to-cyan-700/15 mix-blend-overlay" />
 
             {/* Subtle Highlight for Depth */}
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/3 to-sky-100/5 mix-blend-screen" />
+            <div className="absolute inset-0 bg-linear-to-t from-transparent via-white/3 to-sky-100/5 mix-blend-screen" />
 
             {/* Shimmer Effect Overlay */}
             <div className="absolute inset-0 animate-shimmer pointer-events-none" />
