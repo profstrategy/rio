@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import NextAuthProvider from "@/providers/session-provider";
 import { Suspense } from "react";
+import RioLoadingFallback from "./rio-loading-fallback-ui";
 
 const poppins = Poppins({
   variable: "--font-geist-mono",
@@ -74,7 +75,7 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased`}
       >
         <NextAuthProvider>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<RioLoadingFallback />}>
           {children}
           </Suspense>
         </NextAuthProvider>
