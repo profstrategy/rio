@@ -1,59 +1,47 @@
-'use client'
-import AppButton from '@/components/ui/app-button'
-import React from 'react'
-import { motion } from 'framer-motion'
-import { useRouter } from 'next/navigation';
-import { globalRoutes } from '@/constants/routes';
-import Image from 'next/image';
-import About from './about';
+import { HowToParticipate } from "../how-to-participate";
+import { IdoEnd } from "../ido-end-date";
+import { IdoLaunch } from "../ido-launch";
+import { ParticipationAmount } from "../participation-amount";
+import About from "./about";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
+// Main Demo Component
+const HeroIdoComponents = () => {
+    return (
+        <div className="min-h-[29rem] bg-linear-to-br from-slate-950 via-indigo-950 to-slate-950 container">
+            <div className="max-w-7xl mx-auto">
+                <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
+                    <div className="lg:flex lg:flex-col hidden justify-center">
+                        <About />
+                    </div>
+
+
+                    <div className="flex flex-col items-center gap-6">
+                        <div className="w-full flex flex-col gap-2">
+                            <IdoLaunch />
+                            <ParticipationAmount />
+                        </div>
+                        <div className="w-full flex flex-col gap-2">
+                            <HowToParticipate />
+                            <IdoEnd />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style jsx>{`
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `}</style>
+        </div>
+    );
 };
 
-const itemVariants: any = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: 'easeOut',
-    },
-  },
-};
-
-const HeroContent = () => {
-  const router = useRouter()
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
-      variants={containerVariants} className="z-10 grid md:grid-cols-2 text-center relative md:min-h-[32rem] min-h-[30rem] container"
-    >
-      <motion.div variants={itemVariants} className='flex flex-col items-start justify-center gap-8'>
-          <About />
-        <AppButton className='md:w-80 w-60 rounded-xl border-b-2' onClick={() => router.push(globalRoutes.externalPage.telegram)}><h3 className='text-2xl font-bold'>JOIN COMMUNITY</h3></AppButton>
-      </motion.div>
-    <div className="relative w-full h-full md:flex items-center justify-end hidden">
-  <Image
-    alt="hero-image"
-    src={'/rio-logo.png'}
-    fill
-    className="object-contain max-w-full"
-    quality={100}
-  />
-</div>
-    </motion.div>
-
-  )
-}
-
-export default HeroContent
+export default HeroIdoComponents;
