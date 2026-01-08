@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import RioLandingPage from "./rio-main";
 import DarkThemeLayout from "../components/layouts/ui-layout/dark-theme-layout";
 
 const Navbar = dynamic(() => import('@/components/reusables/navbar'), { ssr: true });
@@ -8,10 +9,12 @@ const TokenLeaderBoardLayout = dynamic(() => import('@/components/layouts/ui-lay
 export default function Home() {
   return (
     <section>
-      <Navbar />
+      {/* <Navbar />
       <MainHeader />
       <DarkThemeLayout />
-      <TokenLeaderBoardLayout />
+      <TokenLeaderBoardLayout /> */}
+
+      <RioLandingPage />
     </section>
   );
 }
