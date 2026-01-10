@@ -156,7 +156,6 @@
 
 /* ========================================
    🧱 BASE STYLES - FIXED FOR OVERFLOW
-======================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -240,7 +239,6 @@ body {
 
 /* ========================================
    📝 TYPOGRAPHY CLASSES
-======================================== */
 
 /* Headings with Rio Gradient Effect */
 .rio-heading {
@@ -296,7 +294,6 @@ body {
 
 /* ========================================
    🎛️ BUTTON SYSTEM
-======================================== */
 
 /* Base Button */
 .rio-btn {
@@ -388,7 +385,6 @@ body {
 
 /* ========================================
    🃏 CARD SYSTEM
-======================================== */
 
 /* Base Card */
 .rio-card {
@@ -440,7 +436,6 @@ body {
 
 /* ========================================
    📊 STATS & DASHBOARD COMPONENTS
-======================================== */
 
 /* Stats Card */
 .rio-stats-card {
@@ -475,7 +470,6 @@ body {
 
 /* ========================================
    🏆 LEADERBOARD COMPONENTS
-======================================== */
 
 /* Leaderboard Item */
 .rio-leaderboard-item {
@@ -524,7 +518,6 @@ body {
 
 /* ========================================
    🌟 SPECIAL EFFECTS
-======================================== */
 
 /* Floating Animation */
 @keyframes float {
@@ -571,7 +564,6 @@ body {
 
 /* ========================================
    📱 RESPONSIVE UTILITIES - FIXED
-======================================== */
 
 /* Container - MAJOR FIX HERE */
 .container {
@@ -714,3 +706,6 @@ body {
     @apply bg-background text-foreground;
   }
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -8,10 +8,12 @@ const TokenLeaderBoardLayout = dynamic(() => import('@/components/layouts/ui-lay
 export default function Home() {
   return (
     <section>
-      <Navbar />
+      {/* <Navbar />
       <MainHeader />
       <DarkThemeLayout />
-      <TokenLeaderBoardLayout />
+      <TokenLeaderBoardLayout /> */}
+
+      <RioLandingPage />
     </section>
   );
 }

@@ -1,8 +1,8 @@
 'use client'
 import React from 'react'
 import { motion } from 'framer-motion'
-import HowItWorks from '@/app/_components/how-it-works';
 import RoadMap from '@/app/_components/roadmap';
+import { HowToParticipate } from '@/app/_components/how-to-participate';
 
 const DarkThemeLayout = () => {
     const containerVariants = {
@@ -23,7 +23,8 @@ const DarkThemeLayout = () => {
             className='relative flex flex-col gap-4 items-center justify-center bg-black border-0 backdrop-blur-lg container'
             style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
         >
-            <HowItWorks />
+            {/* <HowItWorks /> */}
+            <HowToParticipate />
             <RoadMap />
         </motion.div>
     )

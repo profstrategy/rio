@@ -45,7 +45,7 @@ const LeaderBoard = () => {
     if (!mounted) {
         return (
             <main className="col-span-3 rounded-xl flex flex-col gap-4 md:hidden">
-                <div className="radial-gradient(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)" />
+                <div className="radial-linear(ellipse at center right, #D94A1C 0%, #C23B14 40%, #A62F0F 100%)" />
             </main>
         );
     }
@@ -94,7 +94,7 @@ const LeaderBoard = () => {
                     variant='h2'
                     className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text mar-b'
                 >
-                    Leaderboard
+                    LEADERBOARD
                 </AppHeading>
 
                 <div className='flex justify-end' style={{ marginTop: '4px' }}>
@@ -120,17 +120,17 @@ const LeaderBoard = () => {
 
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
-                   <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
-                    <div className="w-full h-full rounded-xl" style={{
-                        background: 'radial-gradient(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
-                    }} />
-                </div>
+                    {/* <div className="absolute inset-0 rounded-xl p-0.5 bg-linear-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
+                        <div className="w-full h-full rounded-xl" style={{
+                            background: 'radial-linear(ellipse at center right, #1e3a5f 0%, #2c1810 40%, #0a0a0a 100%)'
+                        }} />
+                    </div> */}
 
                     {/* Table Container */}
                     <div
-                        className='relative text-white/90 rounded-xl md:max-h-[35rem] max-h-[20rem] overflow-y-auto custom-scrollbar mb-4'
+                        className='relative text-white/90 rounded-xl md:max-h-140 max-h-80 overflow-y-auto custom-scrollbar mb-4'
                         style={{
-                            background: 'radial-gradient(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
+                            background: 'radial-linear(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
                             backdropFilter: 'blur(18px)',
                             border: '1px solid rgba(255,255,255,0.08)',
                             marginTop: '1rem'
@@ -170,9 +170,9 @@ const LeaderBoard = () => {
                                         className={`
                                         flex justify-between items-center min-h-12 px-3 py-2 rounded-lg
                                         transition-all duration-300 hover:scale-[1.02] hover:shadow-lg
-                                        ${item.rank === 1 ? 'bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30' : ''}
-                                        ${item.rank === 2 ? 'bg-gradient-to-r from-gray-300/10 to-gray-500/10 border border-gray-400/30' : ''}
-                                        ${item.rank === 3 ? 'bg-gradient-to-r from-orange-700/10 to-yellow-700/10 border border-orange-600/30' : ''}
+                                        ${item.rank === 1 ? 'bg-linear-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30' : ''}
+                                        ${item.rank === 2 ? 'bg-linear-to-r from-gray-300/10 to-gray-500/10 border border-gray-400/30' : ''}
+                                        ${item.rank === 3 ? 'bg-linear-to-r from-orange-700/10 to-yellow-700/10 border border-orange-600/30' : ''}
                                         ${item.rank > 3 ? 'bg-white/5 border border-white/10 hover:bg-white/10' : ''}
                                     `}
                                         role="row"
@@ -194,7 +194,7 @@ const LeaderBoard = () => {
                                             <span className="font-medium text-white truncate">{item.user}</span>
                                         </div>
                                         <div className='w-4/12 text-center'>
-                                            <span className="font-bold bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text text-transparent">
+                                            <span className="font-bold bg-linear-to-r from-cyan-400 to-pink-400 bg-clip-text text-transparent">
                                                 {item.points}
                                             </span>
                                         </div>
@@ -263,12 +263,12 @@ const LeaderBoard = () => {
                 }
 
                 .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: linear-gradient(45deg, #FF8A3D, #FF6B2C, #F05A24);
+                    background: linear-linear(45deg, #FF8A3D, #FF6B2C, #F05A24);
                     border-radius: 3px;
                 }
 
                 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: linear-gradient(45deg, #FFA64D, #FF8A3D, #D94A1C);
+                    background: linear-linear(45deg, #FFA64D, #FF8A3D, #D94A1C);
                 }
 
                 /* Enhanced focus styles with new colors */

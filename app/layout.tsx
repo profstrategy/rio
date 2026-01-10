@@ -4,6 +4,8 @@ import "./globals.css";
 import NextAuthProvider from "@/providers/session-provider";
 import ReactQueryProvider from "@/providers/query-client-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { Suspense } from "react";
+import RioLoadingFallback from "./rio-loading-fallback-ui";
 
 const poppins = Poppins({
   variable: "--font-geist-mono",

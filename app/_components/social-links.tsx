@@ -46,12 +46,12 @@ const SocialLinks = () => {
                     variant='h2'
                     className='text-2xl md:text-3xl font-bold text-white/70 drop-shadow-lg bg-clip-text mar-b'
                 >
-                    Community Links
+                    COMMUNITY LINKS
                 </AppHeading>
 
                 <div className="relative overflow-hidden rounded-xl">
                     {/* Animated Shimmer Border */}
-                    <div className="absolute inset-0 rounded-xl p-0.5 bg-gradient-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
+                    <div className="absolute inset-0 rounded-xl p-0.5 bg-linear-to-r from-cyan-400 via-blue-500  to-cyan-400 animate-spin-slow">
                         <div className="w-full h-full rounded-xl" style={{
                             background: 'radial-gradient(ellipse at center right, #0284c7 0%, #0369a1 40%, #0c4a6e 100%)',
                             backdropFilter: 'blur(18px)',
@@ -75,7 +75,7 @@ const SocialLinks = () => {
                             <div className="flex flex-col gap-4">
 
                                 <div
-                                    className='flex justify-center gap-8 items-center rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 hover:scale-z-50 cursor-pointer'
+                                    className='flex justify-center gap-8 items-center rounded-lg bg-linear-to-r from-cyan-500/10 to-blue-500/10 hover:scale-z-50 cursor-pointer'
                                     role="group"
                                     aria-label="Circulating Supply Information"
                                     style={{
