@@ -1,3 +1,5 @@
+import { ActivityWindow } from "@/network/types";
+
 interface NavItems {
   id: string;
   item: string;
@@ -46,3 +48,29 @@ export interface RoadmapItemProps {
   heading: string;
   details: string[];
 }
+
+export interface MetricCardProps {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value?: number;
+  trend?: string;
+  delay?: number;
+}
+
+export interface DashboardCardProps {
+  title: string;
+  height?: string;
+  children: React.ReactNode;
+  delay?: number;
+  activityWindow?: ActivityWindow
+}
+
+export interface TwitterProfile {
+  data: {
+    id: string
+    username: string
+    name: string
+    profile_image_url: string
+  }
+}
+

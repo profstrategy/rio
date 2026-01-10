@@ -12,7 +12,7 @@ export const useAppDialog = () => {
     closeDialog,
     dialogProps: {
       open: showWhitePaper,
-      title: 'Your White Paper',
+      title: 'User activity dashboard',
       confirmText: 'Agreed',
       cancelText: 'Cancel',
       onOpenChange: closeDialog,

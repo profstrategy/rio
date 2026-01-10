@@ -1,14 +1,16 @@
 'use client'
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { useAppDialog } from "./use-app-dialog";
 
 export const useTwitterOAuth = () => {
     const session = useSession()
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { openDialog } = useAppDialog()
 
     useEffect(() => {
         const isConnected = searchParams.get("twitterConnected");
@@ -28,8 +30,13 @@ export const useTwitterOAuth = () => {
         signIn('twitter', { callbackUrl: '/?twitterConnected=1' })
     }
 
+    // const handleSignOut = () => {
+    //     signOut({ callbackUrl: '/', redirect: true })
+    // }
+
     const handleDashboard = () => {
-        router.push('/')
+        // router.push('/user-activity/dashboard')
+        return openDialog
     }
 
     return { handleConnectTwitter, handleDashboard, session };
