@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import NextAuthProvider from "@/providers/session-provider";
+import ReactQueryProvider from "@/providers/query-client-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { Suspense } from "react";
 import RioLoadingFallback from "./rio-loading-fallback-ui";
 
@@ -74,11 +76,12 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} antialiased`}
       >
-        <NextAuthProvider>
-          <Suspense fallback={<RioLoadingFallback />}>
-          {children}
-          </Suspense>
-        </NextAuthProvider>
+        <ReactQueryProvider>
+          <NextAuthProvider>
+            <Toaster position="top-center" richColors />
+            {children}
+          </NextAuthProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

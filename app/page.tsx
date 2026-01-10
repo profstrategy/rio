@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import RioLandingPage from "./rio-main";
 import DarkThemeLayout from "../components/layouts/ui-layout/dark-theme-layout";
 
 const Navbar = dynamic(() => import('@/components/reusables/navbar'), { ssr: true });
