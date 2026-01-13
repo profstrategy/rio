@@ -1,18 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-// import { Ring } from 'ldrs/react'
-// import 'ldrs/react/Ring.css'
-
-// Register the loading animation
-// if (typeof window !== 'undefined') {
-//     <Ring />
-// }
-
-// export const LoadingIcon = ({ color = 'white' }) => {
-//   if (typeof window === 'undefined') return null;
-//   return <Ring size={20} stroke={4} speed={2} color={color} bg-opacity="0" />;
-// };
+import { Spinner } from './spinner'; // Ensure you have this import if using Spinner
 
 interface ButtonProps {
   width?: string;
@@ -22,8 +11,6 @@ interface ButtonProps {
   iconSpacing?: boolean;
   icon?: React.ReactNode;
   iconPosition?: 'start' | 'end';
-  marginBottom?: string;
-  marginRight?: string;
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
@@ -33,15 +20,14 @@ interface ButtonProps {
 }
 
 const AppButton: React.FC<ButtonProps> = ({
-  type,
+  type = 'button',
   width = 'auto',
-  height = '45px',
+  height = 'auto', // Changed to auto to fit content nicely
   loading = false,
-  loadingSize = '40px',
   iconSpacing = false,
   icon,
   iconPosition = 'end',
-  className,
+  className = '',
   onClick,
   disabled = false,
   children,
@@ -58,27 +44,33 @@ const AppButton: React.FC<ButtonProps> = ({
     }
   };
 
+  // 1. Updated Base Classes to match your specific style (text-xs, font-bold, rounded-full)
   const baseClasses = `
     flex justify-${iconSpacing ? 'around' : 'center'} items-center
-    text-sm font-normal
-    rounded-full outline-none transition-all duration-300 select-none
+    text-xs font-bold rounded-full outline-none transition-all duration-300 select-none
     ${disabled || loading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'}
     ${active ? 'shadow-md' : ''}
-    ${loading ? 'w-[40px] h-[45px] p-[10px] rounded-full' : `w-[${width}] h-[${height}] p-5 rounded-full`}
+    ${
+      loading
+        ? 'w-[40px] h-[40px] p-2 justify-center' // Circular shape when loading
+        : `w-[${width}] h-[${height}] px-6 py-2` // Matches your "px-6 py-2" preference
+    }
   `;
 
+  // 2. Updated Variants to use your preferred Blue and Glow
   const variantClasses =
     variant === 'secondary'
-      ? `bg-fire-sky-500 text-white/90 border-[0.5px] border-none hover:bg-fire-rio-sky-500/50 hover:text-white/60 ${disabled ? 'bg-opacity-70' : ''}`
-      : `bg-rio-sky-800 text-white/90 hover:bg-rio-sky-500/50 ${disabled ? 'bg-opacity-70' : ''}`;
+      ? `bg-slate-700 text-white border border-white/10 hover:bg-slate-600`
+      : `bg-blue-600 text-white hover:bg-blue-500 btn-glow shadow-lg shadow-blue-500/30`; 
+      // ^^^ Added bg-blue-600 and btn-glow here
 
   const renderContent = () => {
-    // if (loading) return <LoadingIcon />;
+    if (loading) return <Spinner />; // Or your specific LoadingIcon
 
     if (iconPosition === 'start') {
       return (
         <>
-          {icon && <span className="mx-2">{icon}</span>}
+          {icon && <span className="mr-2">{icon}</span>}
           {children}
         </>
       );
@@ -87,7 +79,7 @@ const AppButton: React.FC<ButtonProps> = ({
     return (
       <>
         {children}
-        {icon && <span className="mx-2">{icon}</span>}
+        {icon && <span className="ml-2">{icon}</span>}
       </>
     );
   };
@@ -97,19 +89,17 @@ const AppButton: React.FC<ButtonProps> = ({
       className={`
         ${baseClasses}
         ${variantClasses}
-        ${className}
+        ${className} 
       `}
       type={type}
       onClick={handleClick}
-      title={disabled ? 'Disabled' : ''}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
       disabled={disabled || loading}
       initial={{ opacity: 1 }}
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.95 }}
-      aria-label={children?.toString() || 'Button'}
+      whileHover={{ scale: disabled ? 1 : 1.05 }} // Subtle hover scale
+      whileTap={{ scale: disabled ? 1 : 0.95 }}
     >
       {renderContent()}
     </motion.button>
