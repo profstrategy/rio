@@ -1,11 +1,11 @@
 // _lib/auth.ts
 import NextAuth, { NextAuthOptions, Account } from "next-auth"
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 import TwitterProvider from "next-auth/providers/twitter"
-import prisma from "@/lib/prisma"
+import { PrismaAdapter } from "@auth/prisma-adapter"
 import { JWT } from "next-auth/jwt"
 import { TwitterProfile } from "@/constants/types"
-import clientPromise from "@/lib/mongodb"
+import { prisma } from "@/lib/prisma"
+
 
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
@@ -71,7 +71,7 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: PrismaAdapter(prisma),
 
   providers: [
     TwitterProvider({
@@ -86,7 +86,7 @@ export const authOptions: NextAuthOptions = {
             "users.read",
             "follows.read",
             "like.read",
-            "offline.access", // Critical for refresh tokens
+            "offline.access",
           ].join(" "),
         },
       },

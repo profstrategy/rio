@@ -1,11 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Head from 'next/head';
-import Image from 'next/image';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import AppButton from '@/components/ui/app-button';
 
 export default function RioLandingPage() {
   // --- State Management (Replacing Alpine.js) ---
