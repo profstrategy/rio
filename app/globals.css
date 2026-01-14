@@ -1,5 +1,54 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+
+@theme {
+  /* --- 1. FONTS --- */
+  --font-space: "Space Grotesk", sans-serif;
+  --font-sync: "Syncopate", sans-serif;
+
+  /* --- 2. RIO CUSTOM COLORS --- */
+  --color-rio-blue: #00D2FF;
+  --color-rio-green: #3AFFAD;
+  
+  /* Button Colors (ported from your old config) */
+  --color-rio-sky-500: #00D2FF;
+  --color-rio-sky-800: #0284c7;
+  --color-fire-sky-500: #FF8C00;
+
+  /* --- 3. PARTNER COMPATIBILITY (Fixes 'border-border' crash) --- */
+  /* These map the missing classes to gray colors so the build passes */
+  --color-border: hsl(214.3 31.8% 91.4%);
+  --color-input: hsl(214.3 31.8% 91.4%);
+  --color-ring: hsl(222.2 84% 4.9%);
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(222.2 84% 4.9%);
+
+  /* --- 4. ANIMATIONS --- */
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+}
+
+/* --- UTILITIES --- */
+/* This handles the dark mode variables required by some UI libraries */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+  }
+}
+
+
+
+
+
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -706,6 +755,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
