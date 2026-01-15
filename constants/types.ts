@@ -1,4 +1,4 @@
-import { ActivityWindow } from "@/network/types";
+// import { ActivityWindow } from "@/network/types";
 
 interface NavItems {
   id: string;
@@ -57,13 +57,13 @@ export interface MetricCardProps {
   delay?: number;
 }
 
-export interface DashboardCardProps {
-  title: string;
-  height?: string;
-  children: React.ReactNode;
-  delay?: number;
-  activityWindow?: ActivityWindow
-}
+// export interface DashboardCardProps {
+//   title: string;
+//   height?: string;
+//   children: React.ReactNode;
+//   delay?: number;
+//   activityWindow?: ActivityWindow
+// }
 
 export interface TwitterProfile {
   data: {

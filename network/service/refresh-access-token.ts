@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma"
+import { prisma } from "@/lib/prisma"
 import { JWT } from "next-auth/jwt"
 
 export async function refreshAccessToken(token: JWT): Promise<string> {

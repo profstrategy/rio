@@ -76,12 +76,12 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} antialiased`}
       >
-        <ReactQueryProvider>
+        {/* <ReactQueryProvider> */}
           <NextAuthProvider>
             <Toaster position="top-center" richColors />
             {children}
           </NextAuthProvider>
-        </ReactQueryProvider>
+        {/* </ReactQueryProvider> */}
       </body>
     </html>
   );
