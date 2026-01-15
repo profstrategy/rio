@@ -1,6 +1,5 @@
 "use client";
 
-
 import 'aos/dist/aos.css';
 import Navbar from '@/components/Frontend Components/Navbar';
 import Hero from '@/components/Frontend Components/Hero';

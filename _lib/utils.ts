@@ -1,4 +1,3 @@
-import { ActivityWindow } from "@/network/types";
 import clsx from "clsx";
 import { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -28,26 +27,26 @@ export const cleanName = (name:string): string => {
  * @param window - The time window ('24h', '3d', '7d')
  * @returns ISO string of the start time
  */
-export function getStartTime(window: ActivityWindow): string {
-  const now = new Date()
+// export function getStartTime(window: ActivityWindow): string {
+//   const now = new Date()
   
-  switch (window) {
-    case '24h':
-      // 24 hours ago
-      return new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString()
+//   switch (window) {
+//     case '24h':
+//       // 24 hours ago
+//       return new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString()
     
-    case '3d':
-      // 3 days ago
-      return new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString()
+//     case '3d':
+//       // 3 days ago
+//       return new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString()
     
-    case '7d':
-      // 7 days ago
-      return new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString()
+//     case '7d':
+//       // 7 days ago
+//       return new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString()
     
-    default:
-      return now.toISOString()
-  }
-}
+//     default:
+//       return now.toISOString()
+//   }
+// }
 
 /**
  * Format activity type for display

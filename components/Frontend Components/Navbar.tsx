@@ -12,7 +12,7 @@ interface NavbarProps {
 // 2. Add curly braces { } to destructure openDialog from props
 const Navbar = ({ openDialog }: NavbarProps) => {
   const [idoModalOpen, setIdoModalOpen] = useState(false);
-  const { session, handleConnectTwitter } = useTwitterOAuth();
+  const { session, handleConnectTwitter, handleDashboard } = useTwitterOAuth();
 
   return (
     <>
@@ -37,7 +37,7 @@ const Navbar = ({ openDialog }: NavbarProps) => {
         <AppButton 
             // 3. Cleaned up classes: removed invalid 'w-50' and fixed height
             className="px-6 py-2 text-white text-sm font-medium border-b-2 border-white/20 min-w-[140px] !h-auto !p-0"
-            onClick={session.status === 'authenticated' && openDialog ? openDialog : handleConnectTwitter}
+            onClick={session.status === 'authenticated' ? handleDashboard : handleConnectTwitter}
             // 4. Pass loading state to AppButton so it disables itself
             loading={session.status === 'loading'}
         >
