@@ -17,7 +17,7 @@ const Ido = () => {
     AOS.init({ duration: 1200, once: true });
 
     // Initialize Countdown
-    const target = new Date("Jan 21, 2026 00:00:00").getTime();
+    const target = new Date("Jan 20, 2026 12:00:00").getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
