@@ -2,6 +2,7 @@ import { ActivityResponseData } from '@/app/api/user/dashboard-activity-metrics/
 import { ActivityPaginatedContainer } from '@/components/reusables/activity-infinite-container'
 import DashboardCard from '@/components/reusables/dashboard-card'
 import { useSession } from 'next-auth/react'
+import { Activity } from 'lucide-react'
 import React from 'react'
 
 interface ContentsProps {
@@ -10,26 +11,51 @@ interface ContentsProps {
 
 const Contents = (data: ContentsProps) => {
   const { data: user } = useSession()
+
+  // --- STYLES ---
+  const styles = {
+    // Glassmorphism Graph Container
+    graphContainer: "h-64 sm:h-80 flex flex-col items-center justify-center rounded-[24px] bg-[#0f172a]/40 border border-[#00D2FF]/20 relative overflow-hidden group transition-all duration-300 hover:border-[#00D2FF]/40",
+    graphPlaceholderText: "font-sync text-xs uppercase tracking-[0.2em] text-[#00D2FF]/60 mt-4",
+    gridGap: "gap-6 sm:gap-8"
+  }
+
   return (
-    <div className='flex flex-col gap-4 sm:gap-6'>
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+    <div className={`flex flex-col ${styles.gridGap}`}>
+      
+      {/* --- Main Content Grid --- */}
+      <div className={`grid grid-cols-1 lg:grid-cols-12 ${styles.gridGap}`}>
+        
+        {/* Engagement Graph Section */}
         <div className="lg:col-span-8">
           <DashboardCard title="Engagement Overview" delay={0.5}>
-            <div className="h-64 sm:h-80 flex items-center justify-center rounded-xl"
-              style={{
-                background: 'linear-gradient(135deg, rgba(184, 235, 254, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%)',
-                border: '2px dashed rgba(56, 189, 248, 0.3)'
-              }}>
-              <p className="text-sm font-medium" style={{ color: '#64748b' }}>
-                Graph Chart Placeholder
+            <div className={styles.graphContainer}>
+              {/* Background Graph Grid Effect */}
+              <div className="absolute inset-0" 
+                   style={{ 
+                     backgroundImage: 'linear-gradient(rgba(0, 210, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 210, 255, 0.03) 1px, transparent 1px)', 
+                     backgroundSize: '20px 20px' 
+                   }} 
+              />
+              
+              {/* Central Icon */}
+              <div className="p-4 rounded-full bg-[#00D2FF]/5 border border-[#00D2FF]/20 shadow-[0_0_30px_rgba(0,210,255,0.1)] group-hover:scale-110 transition-transform duration-500 relative z-10">
+                 <Activity className="w-8 h-8 text-[#00D2FF]" />
+              </div>
+              
+              <p className={styles.graphPlaceholderText}>
+                Awaiting Data Stream
               </p>
             </div>
           </DashboardCard>
         </div>
 
+        {/* Recent Comments Section */}
         <div className="lg:col-span-4">
           <DashboardCard title="Recent Comments" delay={0.6} activityWindow={'24h'}>
+            {/* Ensure ActivityPaginatedContainer handles its own dark mode styling internally.
+               If not, wrap it in a div with `text-gray-400` or similar.
+            */}
             <ActivityPaginatedContainer
               window="24h"
               type='REPLY'
@@ -38,42 +64,18 @@ const Contents = (data: ContentsProps) => {
         </div>
       </div>
 
-      {/* Bottom Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+      {/* --- Bottom Grid --- */}
+      <div className={`grid grid-cols-1 lg:grid-cols-12 ${styles.gridGap}`}>
+        
+        {/* Recent Activity Full Width */}
         <div className="lg:col-span-full">
           <DashboardCard title="Recent Activity (24hrs)" delay={0.7} activityWindow='24h'>
              <ActivityPaginatedContainer
-              window="24h"
+               window="24h"
             />
           </DashboardCard>
         </div>
 
-        {/* <div className="lg:col-span-4">
-          <DashboardCard title="Top Retweeters" delay={0.8}>
-            <div className="space-y-3">
-              {[1, 2, 3, 4, 5].map((item, i) => (
-                <div key={i} className="flex items-center justify-between p-3 rounded-xl transition-all hover:scale-102"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(184, 235, 254, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%)',
-                    border: '1px solid rgba(56, 189, 248, 0.2)'
-                  }}>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                      style={{ background: 'linear-gradient(135deg, #00B4DB 0%, #0284c7 100%)' }}>
-                      {i + 1}
-                    </div>
-                    <span className="text-sm font-medium" style={{ color: '#0284c7' }}>
-                      @user{item}
-                    </span>
-                  </div>
-                  <span className="text-sm font-bold" style={{ color: '#00B4DB' }}>
-                    {Math.floor(Math.random() * 500) + 100}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </DashboardCard>
-        </div> */}
       </div>
     </div>
   )
