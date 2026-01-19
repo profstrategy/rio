@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { globalRoutes } from '@/constants/routes';
 
 const Ido = () => {
   const [idoModalOpen, setIdoModalOpen] = useState(false);
@@ -136,12 +137,16 @@ const Ido = () => {
                 </>
             )}
 
-            <button
+           {isLive ? <a href={globalRoutes.externalPage.ido}><button
+              className="w-full py-4 bg-gradient-to-r from-blue-600 to-green-400 rounded-xl font-bold text-black uppercase tracking-widest hover:scale-105 transition-transform btn-glow"
+            >
+              Connect Wallet
+            </button></a> : <button
               onClick={() => setIdoModalOpen(false)}
               className="w-full py-4 bg-gradient-to-r from-blue-600 to-green-400 rounded-xl font-bold text-black uppercase tracking-widest hover:scale-105 transition-transform btn-glow"
             >
               {isLive ? "Connect Wallet" : "Roger That"}
-            </button>
+            </button>}
           </div>
         </div>
       )}

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AppButton from '../ui/app-button';
 import { Spinner } from '../ui/spinner';
 import { useTwitterOAuth } from '@/hooks/use-twitter-oauth';
+import { globalRoutes } from '@/constants/routes';
 
 // 1. Define the type for your props (if using TypeScript)
 interface NavbarProps {
@@ -12,7 +13,7 @@ interface NavbarProps {
 // 2. Add curly braces { } to destructure openDialog from props
 const Navbar = ({ openDialog }: NavbarProps) => {
   const [idoModalOpen, setIdoModalOpen] = useState(false);
-  const { session, handleConnectTwitter, handleDashboard } = useTwitterOAuth();
+  // const { session, handleConnectTwitter, handleDashboard } = useTwitterOAuth();
 
   return (
     <>
@@ -34,15 +35,15 @@ const Navbar = ({ openDialog }: NavbarProps) => {
         </div>
 
         {/* Connect Button */}
+        <a href={globalRoutes.externalPage.ido}>
         <AppButton 
             // 3. Cleaned up classes: removed invalid 'w-50' and fixed height
             className="px-6 py-2 text-white text-sm font-medium border-b-2 border-white/20 min-w-[140px] !h-auto !p-0"
-            onClick={session.status === 'authenticated' ? handleDashboard : handleConnectTwitter}
-            // 4. Pass loading state to AppButton so it disables itself
-            loading={session.status === 'loading'}
+          
         >
-            {session.status === 'loading' ? <Spinner /> : session.status === 'authenticated' ? 'Dashboard' : 'Connect X'}
+            Buy Now
         </AppButton>
+        </a>
 
       </div>
     </nav>

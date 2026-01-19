@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useAppDialog } from "./use-app-dialog";
+import { globalRoutes } from "@/constants/routes";
 
 export const useTwitterOAuth = () => {
     const session = useSession()
@@ -27,7 +28,8 @@ export const useTwitterOAuth = () => {
     }, [searchParams]);
 
     const handleConnectTwitter = () => {
-        signIn('twitter', { callbackUrl: '/?twitterConnected=1' })
+        // signIn('twitter', { callbackUrl: '/?twitterConnected=1' })
+        return router.push(globalRoutes.externalPage.ido)
     }
 
     // const handleSignOut = () => {
@@ -36,7 +38,7 @@ export const useTwitterOAuth = () => {
 
     const handleDashboard = () => {
         // router.push('/user-activity/dashboard')
-        return openDialog
+        return router.push(globalRoutes.externalPage.ido)
     }
 
     return { handleConnectTwitter, handleDashboard, session };

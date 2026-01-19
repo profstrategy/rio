@@ -1,10 +1,11 @@
-import {useState} from 'react'
+import { globalRoutes } from '@/constants/routes';
+import { useState } from 'react'
 
 const Hero = () => {
-      const [idoModalOpen, setIdoModalOpen] = useState(false);
+  const [idoModalOpen, setIdoModalOpen] = useState(false);
   return (
     <>
-              <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
+      <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/20 blur-[150px] rounded-full"></div>
         <div className="absolute top-1/2 -right-24 w-96 h-96 bg-green-500/10 blur-[150px] rounded-full"></div>
 
@@ -22,12 +23,14 @@ const Hero = () => {
               "Like Blu escaping captivity, $RIO breaks free from traditional dog-coin constraints to soar in the DeFi skies."
             </p>
             <div className="flex gap-4">
-              <button 
-                onClick={() => setIdoModalOpen(true)} 
-                className="px-10 py-5 bg-blue-600 rounded-2xl font-bold shadow-2xl shadow-blue-500/30 hover:scale-105 transition-all text-white"
-              >
-                JOIN IDO
-              </button>
+              <a href={globalRoutes.externalPage.ido}>
+                <button
+
+                  className="px-10 py-5 bg-blue-600 rounded-2xl font-bold shadow-2xl shadow-blue-500/30 hover:scale-105 transition-all text-white"
+                >
+                  JOIN IDO
+                </button>
+              </a>
               <a href="/whitepaper" className="px-10 py-5 glass-premium rounded-2xl font-bold hover:bg-white/10 transition-all flex items-center gap-2">
                 <span>WHITEPAPER</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,11 +46,11 @@ const Hero = () => {
       </section>
 
 
-       {/* --- MODAL --- */}
+      {/* --- MODAL --- */}
       {idoModalOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center px-4">
           {/* Backdrop */}
-          <div 
+          <div
             className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setIdoModalOpen(false)}
           ></div>
@@ -64,7 +67,7 @@ const Hero = () => {
             <p className="text-gray-400 leading-relaxed mb-8">
               The portal is currently fueling up. Wallet connections will go live immediately upon <strong>IDO Launch (Jan 20)</strong>.
             </p>
-            <button 
+            <button
               onClick={() => setIdoModalOpen(false)}
               className="w-full py-4 bg-gradient-to-r from-blue-600 to-green-400 rounded-xl font-bold text-black uppercase tracking-widest hover:scale-105 transition-transform btn-glow"
             >
