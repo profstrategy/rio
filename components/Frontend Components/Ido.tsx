@@ -76,7 +76,7 @@ const Ido = () => {
             <div className="flex flex-col justify-between">
               <div className="space-y-4 text-sm font-bold uppercase tracking-tighter">
                 <div className="flex justify-between border-b border-white/5 pb-2"><span>Min Participation</span> <span className="text-blue-400">$38</span></div>
-                <div className="flex justify-between border-b border-white/5 pb-2"><span>Max Participation</span> <span className="text-blue-400">$78</span></div>
+                <div className="flex justify-between border-b border-white/5 pb-2"><span>Max Participation</span> <span className="text-blue-400">$500</span></div>
                 <div className="flex justify-between"><span>Token Price</span> <span className="text-green-400">$0.001</span></div>
               </div>
               
