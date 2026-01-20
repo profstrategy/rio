@@ -9,7 +9,7 @@ const Hero = () => {
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/20 blur-[150px] rounded-full"></div>
         <div className="absolute top-1/2 -right-24 w-96 h-96 bg-green-500/10 blur-[150px] rounded-full"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center mt-8 md:mt-0">
           <div data-aos="fade-right">
             <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1 rounded-full mb-6">
               <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
