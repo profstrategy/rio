@@ -81,7 +81,7 @@ export default function RioLandingPage() {
 
       <Navbar />
       <Hero />
-      {/* <Ido /> */}
+      <Ido />
       <Participation />
       <Gallery />
       <Tokenomics />

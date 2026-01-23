@@ -1,170 +1,145 @@
 import { useState, useEffect } from 'react'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { globalRoutes } from '@/constants/routes';
+import { Rocket, Zap, Globe, ShieldCheck } from 'lucide-react'; // Added icons for visual appeal
 
 const Ido = () => {
   const [idoModalOpen, setIdoModalOpen] = useState(false);
-  const [isLive, setIsLive] = useState(false); 
-  const [countdown, setCountdown] = useState({
-    DAYS: '00',
-    HOURS: '00',
-    MINS: '00',
-    SECS: '00'
-  });
+  
+  // Removed countdown state logic since IDO is started
 
   useEffect(() => {
     // Initialize AOS
     AOS.init({ duration: 1200, once: true });
-
-    // Initialize Countdown
-    const target = new Date("Jan 20, 2026 12:00:00").getTime();
-
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const d = target - now;
-
-      if (d <= 0) {
-        // Time is up!
-        setIsLive(true);
-        setCountdown({ DAYS: '00', HOURS: '00', MINS: '00', SECS: '00' });
-        clearInterval(interval);
-      } else {
-        // Keep counting down
-        setCountdown({
-          DAYS: String(Math.floor(d / (1000 * 60 * 60 * 24))).padStart(2, '0'),
-          HOURS: String(Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0'),
-          MINS: String(Math.floor((d % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0'),
-          SECS: String(Math.floor((d % (1000 * 60)) / 1000)).padStart(2, '0')
-        });
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
   }, []);
-
 
   return (
     <>
-      <section id="ido" className="py-32 px-6">
-        <div className="max-w-6xl mx-auto glass-premium rounded-[40px] p-12 border-t border-white/10" data-aos="fade-up">
-          <div className="grid lg:grid-cols-3 gap-16">
-            <div className="lg:col-span-2">
-              <h2 className="font-sync text-4xl mb-6">$RIO ON BONK IDO LAUNCH</h2>
-              
-              {isLive ? (
-                <div className="inline-block px-4 py-2 mb-12 rounded-full bg-green-500/20 border border-green-500 animate-pulse">
-                   <p className="text-green-400 uppercase tracking-widest text-sm font-bold flex items-center gap-2">
-                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                      IDO Officially Started
-                   </p>
-                </div>
-              ) : (
-                <p className="text-gray-400 mb-12 uppercase tracking-widest text-sm font-bold">
-                  Begins — 20 Jan 2026
-                </p>
-              )}
+      <section id="ido" className="py-32 px-6 relative overflow-hidden">
+        {/* Background Ambience */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {Object.entries(countdown).map(([label, val]) => (
-                  <div key={label} className="glass-premium p-6 rounded-3xl text-center border-b-2 border-blue-500">
-                    <span className="block text-4xl font-bold mb-1">{val}</span>
-                    <span className="text-[9px] uppercase tracking-widest text-blue-500 font-bold">{label}</span>
+        <div className="max-w-6xl mx-auto glass-premium rounded-[40px] p-8 md:p-12 border-t border-white/10 relative z-10" data-aos="fade-up">
+          <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
+            
+            {/* --- LEFT COLUMN: LIVE STATUS --- */}
+            <div className="lg:col-span-2 flex flex-col justify-center">
+              <div className="flex items-center gap-4 mb-6">
+                <h2 className="font-sync text-3xl md:text-5xl font-bold text-white">$RIO IDO LAUNCH</h2>
+                <div className="hidden md:flex px-3 py-1 rounded-full bg-green-500/20 border border-green-500 items-center gap-2 animate-pulse">
+                    <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                    <span className="text-green-400 text-[10px] font-bold uppercase tracking-widest">Live</span>
+                </div>
+              </div>
+
+              {/* REPLACED COUNTDOWN WITH LIVE STATUS CARDS */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                  {/* Status Card 1 */}
+                  <div className="glass-premium p-6 rounded-3xl border border-green-500/30 bg-green-500/5 relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                          <Rocket className="w-12 h-12 text-green-400" />
+                      </div>
+                      <p className="text-green-400 text-xs font-bold uppercase tracking-widest mb-1">Current Status</p>
+                      <h3 className="text-2xl font-bold text-white mb-2">Public Sale Active</h3>
+                      <p className="text-sm text-gray-400">The portal is open. Allocation is FCFS.</p>
                   </div>
-                ))}
+
+                  {/* Status Card 2 */}
+                  <div className="glass-premium p-6 rounded-3xl border border-blue-500/30 bg-blue-500/5 relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                          <Zap className="w-12 h-12 text-blue-400" />
+                      </div>
+                      <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-1">Network</p>
+                      <h3 className="text-2xl font-bold text-white mb-2">Solana Chain</h3>
+                      <p className="text-sm text-gray-400">Fast transactions, minimal gas fees.</p>
+                  </div>
               </div>
+
+              <p className="text-gray-400 leading-relaxed max-w-xl">
+                 The $RIO token launch is officially live. Join the movement that merges culture, community, and technology on the Solana blockchain. Secure your allocation before the round closes.
+              </p>
             </div>
-            <div className="flex flex-col justify-between">
-              <div className="space-y-4 text-sm font-bold uppercase tracking-tighter">
-                <div className="flex justify-between border-b border-white/5 pb-2"><span>Min Participation</span> <span className="text-blue-400">$38</span></div>
-                <div className="flex justify-between border-b border-white/5 pb-2"><span>Max Participation</span> <span className="text-blue-400">$500</span></div>
-                <div className="flex justify-between"><span>Token Price</span> <span className="text-green-400">$0.001</span></div>
+
+            {/* --- RIGHT COLUMN: DETAILS & ACTION --- */}
+            <div className="flex flex-col justify-center h-full">
+              <div className="glass-premium p-8 rounded-[30px] border border-white/5 bg-black/20">
+                  <div className="space-y-6 text-sm font-bold uppercase tracking-wider mb-8">
+                    <div className="flex justify-between items-center border-b border-white/5 pb-4">
+                        <span className="text-gray-400 flex items-center gap-2"><Globe className="w-4 h-4" /> Min Allocation</span> 
+                        <span className="text-blue-400 text-lg">$38</span>
+                    </div>
+                    <div className="flex justify-between items-center border-b border-white/5 pb-4">
+                        <span className="text-gray-400 flex items-center gap-2"><ShieldCheck className="w-4 h-4" /> Max Allocation</span> 
+                        <span className="text-blue-400 text-lg">$500</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-2">
+                        <span className="text-gray-400">Token Price</span> 
+                        <span className="text-green-400 text-xl font-sync">$0.001</span>
+                    </div>
+                  </div>
+                  
+                  <button
+                    onClick={() => setIdoModalOpen(true)}
+                    className="w-full py-5 rounded-xl font-bold text-black uppercase tracking-[0.2em] transition-all shadow-[0_0_30px_rgba(74,222,128,0.3)] bg-gradient-to-r from-green-500 to-emerald-400 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(74,222,128,0.6)]"
+                  >
+                    Buy Tokens Now
+                  </button>
+                  
+                  <p className="text-center text-[10px] text-gray-500 mt-4 uppercase tracking-widest">
+                      Powered by Solana
+                  </p>
               </div>
-              
-              <button
-                onClick={() => setIdoModalOpen(true)}
-                
-                className={`w-full py-5 rounded-2xl font-bold mt-10 transition-all shadow-xl ${
-                    isLive 
-                    ? "bg-green-500 text-black hover:bg-green-400 hover:scale-105" 
-                    : "bg-white text-black hover:bg-blue-400 hover:text-white"
-                }`}
-              >
-                {isLive ? "BUY TOKENS NOW" : "PARTICIPATE NOW"}
-              </button>
             </div>
           </div>
         </div>
       </section>
 
-
-{/* --- IDO MODAL --- */}
+      {/* --- IDO MODAL (Simplified for Live State) --- */}
       {idoModalOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center px-4">
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+            className="absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity duration-300"
             onClick={() => setIdoModalOpen(false)}
           ></div>
 
           {/* Modal Container */}
-          <div className="relative glass-premium p-8 md:p-12 rounded-[40px] max-w-md w-full text-center border border-blue-500/30 shadow-[0_0_100px_rgba(0,210,255,0.2)] animate-float">
+          <div className="relative glass-premium p-8 md:p-12 rounded-[40px] max-w-md w-full text-center border border-green-500/30 shadow-[0_0_100px_rgba(74,222,128,0.15)] animate-float">
             
-            {/* --- CONDITIONAL CONTENT --- */}
-            {isLive ? (
-              // STATE 1: SALE IS LIVE
-              <>
-                <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-400 text-green-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-10">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </div>
-                <h3 className="font-sync text-2xl md:text-3xl font-bold mb-2 uppercase text-white">Sale is Live!</h3>
-                <p className="text-green-400 text-xs font-bold uppercase tracking-[0.2em] mb-6">Phase 1 Active</p>
-                <p className="text-gray-400 leading-relaxed mb-8">
-                  The IDO is officially open. Click below to access the sale portal.
-                </p>
-                
-                {/* LIVE ACTION BUTTON: LINKS TO EXTERNAL SITE */}
-                <a 
-                  href="https://ido.rioonbonk.io" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block w-full"
-                >
-                  <button className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl font-bold text-black uppercase tracking-widest hover:scale-105 transition-transform btn-glow shadow-[0_0_30px_rgba(74,222,128,0.4)]">
-                    Enter Sale
-                  </button>
-                </a>
-              </>
-            ) : (
-              // STATE 2: SYSTEMS COOLING (WAITING)
-              <>
-                <div className="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-400 text-blue-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-10">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                  </svg>
-                </div>
-                <h3 className="font-sync text-2xl md:text-3xl font-bold mb-2 uppercase text-white">Systems Cooling</h3>
-                <p className="text-blue-400 text-xs font-bold uppercase tracking-[0.2em] mb-6">Launchpad Initiating...</p>
-                <p className="text-gray-400 leading-relaxed mb-8">
-                  The portal is currently fueling up. Wallet connections will go live immediately upon <strong>IDO Launch (Jan 20)</strong>.
-                </p>
+             <div className="w-24 h-24 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-green-400 text-green-400 shadow-[0_0_30px_rgba(74,222,128,0.2)]">
+                <Rocket className="w-10 h-10" />
+             </div>
 
-                {/* WAITING ACTION BUTTON: CLOSES MODAL */}
-                <button 
-                  onClick={() => setIdoModalOpen(false)}
-                  className="w-full py-4 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-xl font-bold text-black uppercase tracking-widest hover:scale-105 transition-transform btn-glow"
-                >
-                  Roger That
-                </button>
-              </>
-            )}
+             <h3 className="font-sync text-3xl font-bold mb-3 uppercase text-white">Access Portal</h3>
+             <div className="inline-block px-3 py-1 rounded-full bg-green-500/20 border border-green-500 mb-6">
+                <p className="text-green-400 text-[10px] font-bold uppercase tracking-[0.2em]">Sale is Live</p>
+             </div>
+             
+             <p className="text-gray-400 leading-relaxed mb-8 text-sm">
+               You are about to be redirected to the official RIO IDO platform. Ensure your wallet is ready for connection.
+             </p>
+             
+             <a 
+               href="https://ido.rioonbonk.io" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="block w-full"
+             >
+               <button className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-400 rounded-xl font-bold text-black uppercase tracking-widest hover:scale-[1.02] transition-transform btn-glow shadow-[0_0_30px_rgba(74,222,128,0.4)]">
+                 Proceed to Sale
+               </button>
+             </a>
 
+             <button 
+                onClick={() => setIdoModalOpen(false)}
+                className="mt-4 text-xs text-gray-500 hover:text-white transition-colors uppercase tracking-widest"
+             >
+                Cancel
+             </button>
           </div>
         </div>
       )}
-    
     </>
   )
 }
