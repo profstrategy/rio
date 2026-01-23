@@ -17,7 +17,7 @@ const Participation = () => {
           <div className="glass-premium p-10 rounded-[40px] text-center group hover:border-green-500/50 transition-all" data-aos="fade-up" data-aos-delay="100">
             <span className="step-number text-6xl font-bold block mb-6">2</span>
             <h3 className="font-sync text-lg mb-4 uppercase">Select Amount</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">Choose your investment tier ($38 - $78) to acquire your $RIO tokens.</p>
+            <p className="text-gray-400 text-sm leading-relaxed">Choose your investment tier ($38 - $500) to acquire your $RIO tokens.</p>
           </div>
           <div className="glass-premium p-10 rounded-[40px] text-center group hover:border-blue-500/50 transition-all" data-aos="fade-up" data-aos-delay="200">
             <span className="step-number text-6xl font-bold block mb-6">3</span>
