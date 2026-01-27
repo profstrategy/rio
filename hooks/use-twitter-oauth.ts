@@ -35,8 +35,8 @@ export const useTwitterOAuth = () => {
     // }
 
     const handleDashboard = () => {
-        // router.push('/user-activity/dashboard')
-        return openDialog
+      return router.push('/user-activity/dashboard')
+        // return openDialog
     }
 
     return { handleConnectTwitter, handleDashboard, session };

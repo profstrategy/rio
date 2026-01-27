@@ -43,7 +43,7 @@ const Overview = ({ overview }: OverviewProps) => {
         <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-[#3AFFAD]/5 rounded-full blur-[120px]" />
       </div>
 
-      <div className="container mx-auto flex flex-col gap-8 relative z-10">
+      <div className=" mx-auto flex flex-col gap-8 relative z-10">
         
 
         

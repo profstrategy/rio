@@ -58,12 +58,14 @@ export interface MetricCardProps {
 }
 
 export interface DashboardCardProps {
-  title: string;
-  height?: string;
-  children: React.ReactNode;
-  delay?: number;
+  title: string
+  children: React.ReactNode
+  delay?: number
+  height?: string
   activityWindow?: ActivityWindow
+  onActivityWindowChange?: (window: ActivityWindow) => void
 }
+
 
 export interface TwitterProfile {
   data: {

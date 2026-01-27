@@ -30,6 +30,7 @@ export interface SearchResponse {
 }
 
 export type ActivityWindow = '24h' | '3d' | '7d';
+export const ACTIVITY_WINDOWS: ActivityWindow[] = ['24h', '3d', '7d']
 
 export interface PaginatedResponse<T> {
   count: number;

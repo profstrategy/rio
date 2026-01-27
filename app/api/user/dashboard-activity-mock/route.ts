@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
 
   const mock = searchParams.get("mock") === "true"
-  const limit = Math.min(Number(searchParams.get("limit")) || 10, 50)
+  const limit = Math.min(Number(searchParams.get("limit")) || 5, 50)
   const offset = Number(searchParams.get("offset")) || 0
 
   const typeParam = searchParams.get("type")

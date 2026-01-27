@@ -1,5 +1,5 @@
 import { authOptions } from "@/_lib/auth"
-import prisma from "@/lib/prisma"
+import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth"
 import { NextRequest, NextResponse } from "next/server"
 import { getUserLikes } from "../get-rio-likes/route"
@@ -207,7 +207,7 @@ export async function GET(req: NextRequest) {
     // 11. Response (DB-backed, stable, with pagination)
     return NextResponse.json({
       success: true,
-      data: activities.map(a => ({
+      data: activities.map((a:any) => ({
         id: a.id,
         tweetId: a.tweetId,
         type: a.type,

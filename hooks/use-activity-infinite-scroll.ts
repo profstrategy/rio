@@ -1,83 +1,51 @@
-import { useQuery } from "@tanstack/react-query"
-import { ActivityType } from "@prisma/client"
 import { ActivityWindow } from "@/network/types"
-import { useState } from "react"
+import { ActivityType } from "@prisma/client"
+import { useQuery } from "@tanstack/react-query"
 
 interface Params {
   window?: ActivityWindow
   type?: ActivityType
+  page: number
   enabled?: boolean
 }
 
-const PAGE_SIZE = 10
-
 export function useActivityPaginated(params: Params) {
-  const [page, setPage] = useState(1)
+  const PAGE_SIZE = 5
+  const offset = (params.page - 1) * PAGE_SIZE
 
   const query = useQuery({
-    queryKey: ["activity-paginated", params.window, params.type, page],
+    queryKey: ["activity-paginated", params.window, params.type, params.page],
     queryFn: async () => {
-      const offset = (page - 1) * PAGE_SIZE
-      
       const queryParams = new URLSearchParams({
         mock: "true",
         limit: PAGE_SIZE.toString(),
         offset: offset.toString(),
       })
 
-      if (params.window) {
-        queryParams.append("window", params.window)
-      }
+      if (params.window) queryParams.append("window", params.window)
+      if (params.type) queryParams.append("type", params.type)
 
-      if (params.type) {
-        queryParams.append("type", params.type)
-      }
+      const res = await fetch(
+        `/api/user/dashboard-activity-mock?${queryParams.toString()}`
+      )
 
-      const response = await fetch(`/api/user/dashboard-activity-mock?${queryParams.toString()}`)
-      
-      if (!response.ok) {
-        throw new Error("Failed to fetch activities")
-      }
-
-      return response.json()
+      if (!res.ok) throw new Error("Failed to fetch activities")
+      return res.json()
     },
-    enabled: params.enabled ?? true,
     staleTime: 60_000,
+    enabled: params.enabled ?? true,
   })
 
-  const totalPages = query.data?.total 
+  const totalPages = query.data?.total
     ? Math.ceil(query.data.total / PAGE_SIZE)
     : 0
-
-  const goToNextPage = () => {
-    if (page < totalPages) {
-      setPage(prev => prev + 1)
-    }
-  }
-
-  const goToPreviousPage = () => {
-    if (page > 1) {
-      setPage(prev => prev - 1)
-    }
-  }
-
-  const goToPage = (pageNumber: number) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setPage(pageNumber)
-    }
-  }
 
   return {
     ...query,
     data: query.data?.data ?? [],
-    total: query.data?.total ?? 0,
-    page,
     totalPages,
-    pageSize: PAGE_SIZE,
-    goToNextPage,
-    goToPreviousPage,
-    goToPage,
-    hasNextPage: page < totalPages,
-    hasPreviousPage: page > 1,
+    page: params.page,
+    hasNextPage: params.page < totalPages,
+    hasPreviousPage: params.page > 1,
   }
 }
