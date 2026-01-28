@@ -9,12 +9,12 @@ interface Params {
   enabled?: boolean
 }
 
-export function useActivityPaginated(params: Params) {
+export function useAppMockQueryPaginated(params: Params, queryKey:string, url:string) {
   const PAGE_SIZE = 5
   const offset = (params.page - 1) * PAGE_SIZE
 
   const query = useQuery({
-    queryKey: ["activity-paginated", params.window, params.type, params.page],
+    queryKey: [queryKey, params.window, params.type, params.page],
     queryFn: async () => {
       const queryParams = new URLSearchParams({
         mock: "true",
@@ -26,7 +26,7 @@ export function useActivityPaginated(params: Params) {
       if (params.type) queryParams.append("type", params.type)
 
       const res = await fetch(
-        `/api/user/dashboard-activity-mock?${queryParams.toString()}`
+        `${url}?${queryParams.toString()}`
       )
 
       if (!res.ok) throw new Error("Failed to fetch activities")

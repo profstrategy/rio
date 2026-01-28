@@ -1,14 +1,12 @@
 "use client"
-
-import { useActivityUrlState } from "@/hooks/use-activity-window-from-url"
+import { useDashboardActivityUrlState } from "@/hooks/use-dashboard-window-from-url"
 import { ActivityTable } from "../../../../../components/reusables/activity-table"
 import { ActivityTableSkeleton } from "../../../../../components/reusables/skeletons/skeleton"
-import { useActivityPaginated } from "@/hooks/use-activity-infinite-scroll"
-import { ActivityType } from "@prisma/client"
+import { useGetUserActivityMock } from "@/network/service/user-activity-dashboard"
 
 
-export function ActivityPaginatedContainer({ type }: { type?: ActivityType }) {
-  const { window, page, setPage } = useActivityUrlState()
+export function ActivityPaginatedContainer() {
+  const { page, setPage, } = useDashboardActivityUrlState()
 
   const {
     data,
@@ -16,12 +14,7 @@ export function ActivityPaginatedContainer({ type }: { type?: ActivityType }) {
     totalPages,
     hasNextPage,
     hasPreviousPage,
-  } = useActivityPaginated({
-    window,
-    type,
-    page,
-  })
-
+  } = useGetUserActivityMock()
   if (isLoading) {
     return <ActivityTableSkeleton rows={5} />
   }

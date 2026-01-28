@@ -10,8 +10,9 @@
  */
 
 export const network_routes = {
-    user_activity_dashboard: 'dashboard-activity-metrics?mock=true',
-    user_activity_table_mock: 'dashboard-activity-mock'
+    user_activity: '/dashboard-activity-metrics?mock=true',
+    user_activity_table_mock: '/api/user/dashboard-activity-mock',
+    user_replies_table_mock: '/api/user/dashboard-tweets-replies-mock',
 }
 
 export const generateBaseQueryKeyFromRoute = (route:string):string => {

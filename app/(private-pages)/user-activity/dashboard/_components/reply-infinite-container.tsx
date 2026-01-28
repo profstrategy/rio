@@ -1,14 +1,13 @@
 "use client"
-
-import { useActivityUrlState } from "@/hooks/use-activity-window-from-url"
-import { useActivityPaginated } from "@/hooks/use-activity-infinite-scroll"
 import { ActivityType } from "@prisma/client"
 import { ActivityTableSkeleton } from "@/components/reusables/skeletons/skeleton"
 import { ActivityTable } from "@/components/reusables/activity-table"
+import { useGetUserRepliesMock } from "@/network/service/user-activity-dashboard"
+import { useDashboardRepliesUrlState } from "@/hooks/use-dashboard-window-from-url"
 
 
 export function ReplyInfiniteContainer({ type }: { type?: ActivityType }) {
-  const { window, page, setPage } = useActivityUrlState()
+  const { page, setPage } = useDashboardRepliesUrlState()
 
   const {
     data,
@@ -16,11 +15,7 @@ export function ReplyInfiniteContainer({ type }: { type?: ActivityType }) {
     totalPages,
     hasNextPage,
     hasPreviousPage,
-  } = useActivityPaginated({
-    window,
-    type,
-    page,
-  })
+  } = useGetUserRepliesMock(type)
 
   if (isLoading) {
     return <ActivityTableSkeleton rows={3} />

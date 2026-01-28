@@ -177,3 +177,24 @@ export function generateMockActivities(count = 200) {
     }
   })
 }
+
+
+export function generateMockReplies(count = 200) {
+  const now = Date.now()
+
+  return Array.from({ length: count }).map((_, i) => {
+    const type = ACTIVITY_TYPES[i % ACTIVITY_TYPES.length]
+
+    return {
+      id: `mock-${i + 1}`,
+      tweetId: `${1000000000 + i}`,
+      type,
+      text: `[MOCK ${type}] Activity item ${i + 1}`,
+      likes: Math.floor(Math.random() * 100),
+      retweets: Math.floor(Math.random() * 50),
+      replies: Math.floor(Math.random() * 30),
+      quotes: Math.floor(Math.random() * 20),
+      postedAt: new Date(now - i * 60_000).toISOString(), // 1-min gaps
+    }
+  })
+}

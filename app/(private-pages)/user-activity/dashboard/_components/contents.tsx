@@ -2,12 +2,12 @@
 import { ActivityPaginatedContainer } from '@/app/(private-pages)/user-activity/dashboard/_components/activity-infinite-container'
 import { Activity } from 'lucide-react'
 import { DashboardCard } from '@/components/reusables/dashboard-card'
-import { useActivityUrlState } from '@/hooks/use-activity-window-from-url'
 import { ReplyInfiniteContainer } from './reply-infinite-container'
+import { useDashboardActivityUrlState, useDashboardRepliesUrlState, } from '@/hooks/use-dashboard-window-from-url'
 
 const Contents = () => {
-  const { window, setWindow } = useActivityUrlState()
-
+  const { window:activityWindow, setWindow:setActivityWindow } = useDashboardActivityUrlState()
+const { window:repliesWindow, setWindow:setRepliesWindow } = useDashboardRepliesUrlState()
   // --- STYLES ---
   const styles = {
     // Glassmorphism Graph Container
@@ -48,7 +48,8 @@ const Contents = () => {
 
         {/* Recent Comments Section */}
         <div className="lg:col-span-4">
-          <DashboardCard title="Recent Comments" delay={0.6} activityWindow={'24h'}>
+          <DashboardCard
+           title="Recent Comments" delay={0.6} activityWindow={repliesWindow} onActivityWindowChange={setRepliesWindow}>
 
             <ReplyInfiniteContainer
               type='REPLY'
@@ -63,10 +64,10 @@ const Contents = () => {
         {/* Recent Activity Full Width */}
         <div className="lg:col-span-full">
           <DashboardCard
-            title={`Recent Activity (${window})`}
+            title={`Recent Activity (${activityWindow})`}
             delay={0.7}
-            activityWindow={window}
-            onActivityWindowChange={setWindow}
+            activityWindow={activityWindow}
+            onActivityWindowChange={setActivityWindow}
           >
             <ActivityPaginatedContainer />
           </DashboardCard>
