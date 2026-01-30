@@ -1,7 +1,7 @@
-import { getLeaderboard } from "@/actions/leaderboard";
-import { getDashboardData } from "@/actions/user";
 import { Crown } from "lucide-react";
-import TierBadge from "@/components/ui/TierBadge";
+import { getLeaderboard } from "../../actions/leaderboard";
+import { getDashboardData } from "../../actions/user";
+import TierBadge from "@/components/ui/tier-badge";
 
 export default async function LeaderboardPage() {
   const leaderboard = await getLeaderboard();

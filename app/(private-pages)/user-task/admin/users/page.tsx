@@ -1,6 +1,6 @@
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { Trash2, Users, Zap, UserPlus, ShieldAlert } from "lucide-react";
-import { deleteUser } from "@/actions/admin";
+import { deleteUser } from "../../actions/admin";
 
 export default async function AdminUsersPage() {
   // Fetch users with their referral count and completion count

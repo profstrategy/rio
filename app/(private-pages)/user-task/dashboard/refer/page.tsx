@@ -1,8 +1,8 @@
-import { getDashboardData } from "@/actions/user";
 import { Users, Zap, UserPlus } from "lucide-react";
-import CopyButton from "@/components/referral/CopyButton";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { getDashboardData } from "../../actions/user";
+import CopyButton from "@/components/ui/copy-button";
 
 export default async function ReferralPage() {
   const user = await getDashboardData();

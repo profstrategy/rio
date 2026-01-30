@@ -1,5 +1,5 @@
-import { getDashboardData } from "@/actions/user";
-import DashboardWrapper from "@/components/layout/DashboardWrapper";
+import DashboardWrapper from "@/components/ui/dashboard-wrapper";
+import { getDashboardData } from "../actions/user";
 
 export default async function DashboardLayout({
   children,

@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { getDashboardData } from "./user";
 import { revalidatePath } from "next/cache";
 

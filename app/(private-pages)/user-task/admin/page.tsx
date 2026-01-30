@@ -1,6 +1,6 @@
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { Trash2, Plus, Sparkles, Link as LinkIcon } from "lucide-react";
-import { createTask, deleteTask } from "@/actions/admin";
+import { createTask, deleteTask } from "../actions/admin";
 
 export default async function AdminTasksPage() {
   const tasks = await prisma.task.findMany({ orderBy: { createdAt: 'desc' } });

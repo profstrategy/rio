@@ -1,9 +1,9 @@
 import { Trophy, Zap, Target, Flame, ArrowRight } from "lucide-react";
-import StatCard from "@/components/ui/StatCard";
-import { getDashboardData } from "@/actions/user";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
+import { getDashboardData } from "../actions/user";
+import StatCard from "@/components/ui/stat-card";
 
 export default async function Dashboard() {
   const user = await getDashboardData();

@@ -1,4 +1,4 @@
-import Accordion from "@/components/ui/Accordion";
+import Accordion from "@/components/ui/accordion";
 import { MessageCircle, Mail } from "lucide-react";
 
 const faqs = [

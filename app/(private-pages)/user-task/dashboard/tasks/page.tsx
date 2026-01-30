@@ -1,5 +1,5 @@
-import { getTasks } from "@/actions/tasks";
-import TaskCard from "@/components/tasks/TaskCard";
+import TaskCard from "@/components/ui/task-card";
+import { getTasks } from "../../actions/tasks";
 
 export default async function TasksPage() {
   const tasks = await getTasks();
