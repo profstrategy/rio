@@ -11,7 +11,7 @@
 
 $RIO is not just another mutt in the pack—it's the rare bird that flies above the noise. Inspired by the iconic macaw from the movie Rio, a bird that escaped captivity and soared into a vibrant world, $RIO represents creative freedom in the BONK ecosystem.
 
-This web platform serves as the central hub for the $RIO community, tracking engagement, celebrating top supporters, and connecting the flock through Twitter integration.
+This web3 platform serves as the central hub for the $RIO community, tracking engagement, celebrating top supporters, and connecting the flock through Twitter integration.
 
 ## ✨ Features
 
