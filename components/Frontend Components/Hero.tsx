@@ -1,7 +1,10 @@
+'use client'
+import { useRouter } from 'next/navigation';
 import {useState} from 'react'
 
 const Hero = () => {
       const [idoModalOpen, setIdoModalOpen] = useState(false);
+      const router = useRouter()
   return (
     <>
               <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
@@ -22,12 +25,12 @@ const Hero = () => {
               "Like Blu escaping captivity, $RIO breaks free from traditional dog-coin constraints to soar in the DeFi skies."
             </p>
             <div className="flex gap-4">
-              <button 
-                onClick={() => setIdoModalOpen(true)} 
+              <a href='https://ido.rioonbonk.io' target='_blank'><button 
+         
                 className="px-10 py-5 bg-blue-600 rounded-2xl font-bold shadow-2xl shadow-blue-500/30 hover:scale-105 transition-all text-white"
               >
                 JOIN IDO
-              </button>
+              </button></a>
               <a href="/whitepaper" className="px-10 py-5 glass-premium rounded-2xl font-bold hover:bg-white/10 transition-all flex items-center gap-2">
                 <span>WHITEPAPER</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

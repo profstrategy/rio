@@ -43,27 +43,27 @@ model User {
   emailVerified    DateTime?
   image            String?
   twitterId        String?    @unique
+   avatarUrl     String?
   username         String?
   displayName      String?
-  engagementScore  Int        @default(0)
-  totalTweets      Int        @default(0)
-  totalRetweets    Int        @default(0)
-  totalLikes       Int        @default(0)
-  totalReplies     Int        @default(0)
-  weeklyScore      Int        @default(0)
-  monthlyScore     Int        @default(0)
-  badge            Badge      @default(NORMAL)
-  lastSyncedAt     DateTime?
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+
+  // Game Stats
+  dreamPoints   Int       @default(0)
+  currentLevel  String    @default("New Dreamer")
+  streakCount   Int       @default(0)
+  lastLoginDate DateTime? @default(now())
+
+  // Relations
+  completions   TaskCompletion[]
+  referrals     Referral[]        @relation("Referrer")
   accounts         Account[]
   recentActivities Activity[]
   sessions         Session[]
 
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
   @@index([username])
-  @@index([engagementScore])
-  @@index([weeklyScore])
-  @@index([monthlyScore])
 }
 
 model VerificationToken {
@@ -97,6 +97,43 @@ model Activity {
   @@index([type, postedAt])
   @@index([isRioRelated, userId])
   @@index([userId, isRioRelated, type, postedAt, id])
+}
+
+// 2. THE TASKS (Quests)
+model Task {
+  id           String   @id @default(uuid())
+  title        String
+  description  String
+  rewardPoints Int
+  category     String   // "Daily", "Social", "Referral"
+  actionUrl    String?  // Link to Tweet/Telegram
+  
+  completions  TaskCompletion[]
+  createdAt    DateTime @default(now())
+}
+
+// 3. COMPLETION RECORDS (Who did what)
+model TaskCompletion {
+  id        String   @id @default(uuid())
+  userId    String
+  taskId    String
+  completedAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id])
+  task      Task     @relation(fields: [taskId], references: [id])
+  
+  @@unique([userId, taskId]) // Prevents double claiming
+}
+
+// 4. REFERRALS
+model Referral {
+  id          String   @id @default(uuid())
+  referrerId  String
+  referredId  String // Stores the Twitter ID of the invited friend
+  
+  referrer    User     @relation("Referrer", fields: [referrerId], references: [id])
+  
+  createdAt   DateTime @default(now())
 }
 
 enum ActivityType {

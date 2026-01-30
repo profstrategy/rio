@@ -118,7 +118,7 @@ export const authOptions: NextAuthOptions = {
               twitterId: twitterData?.data?.id,
               username: twitterData?.data?.username,
               displayName: twitterData?.data?.name,
-              lastSyncedAt: new Date(),
+              lastLoginDate: new Date
             },
             create: {
               id: user.id,
@@ -128,21 +128,7 @@ export const authOptions: NextAuthOptions = {
               twitterId: twitterData?.data?.id,
               username: twitterData?.data?.username,
               displayName: twitterData?.data?.name,
-              engagementScore: 0,
-              totalTweets: 0,
-              totalRetweets: 0,
-              totalLikes: 0,
-              totalReplies: 0,
-              weeklyScore: 0,
-              monthlyScore: 0,
-              badge: 'NORMAL',
-              lastSyncedAt: new Date(),
             },
-          })
-          console.log("✅ User upserted successfully:", {
-            userId: user.id,
-            twitterId: twitterData?.data?.id,
-            username: twitterData?.data?.username
           })
         } catch (error) {
           console.error("Error updating user Twitter data:", error)
@@ -191,11 +177,8 @@ export const authOptions: NextAuthOptions = {
             twitterId: true,
             username: true,
             displayName: true,
-            engagementScore: true,
-            totalTweets: true,
-            totalRetweets: true,
-            totalLikes: true,
-            lastSyncedAt: true,
+            avatarUrl:true,
+            lastLoginDate:true
           },
         })
 
@@ -207,10 +190,7 @@ export const authOptions: NextAuthOptions = {
           username: dbUser?.username ?? token.username ?? '',
           accessToken: token.accessToken as string ?? '',
           name: dbUser?.displayName || session.user.name,
-          engagementScore: dbUser?.engagementScore || 0,
-          totalTweets: dbUser?.totalTweets || 0,
-          totalRetweets: dbUser?.totalRetweets || 0,
-          totalLikes: dbUser?.totalLikes || 0,
+          avatarUrl: dbUser?.avatarUrl ?? ''
         }
 
         // Pass refresh error to frontend if exists

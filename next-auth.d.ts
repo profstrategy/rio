@@ -10,10 +10,7 @@ declare module "next-auth" {
       email?: string | null
       image?: string | null
       accessToken: string
-      engagementScore: number
-      totalTweets?: number
-      totalRetweets?: number
-      totalLikes?: number
+      avatarUrl:string
     }
     error?: string
   }
