@@ -11,11 +11,10 @@ export async function middleware(request: NextRequest) {
   // 1. CHECK FOR REFERRAL CODE
   const refCode = request.nextUrl.searchParams.get("ref");
   if (refCode) {
-    // Save it in a cookie for 30 days
     response.cookies.set("referral_code", refCode, {
       path: "/",
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-      httpOnly: true, // Secure
+      maxAge: 60 * 60 * 24 * 30,
+      httpOnly: true,
     });
   }
 
@@ -25,30 +24,57 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET 
   });
 
-  const user = token?.sub; // This contains the user object from NextAuth session
+  const user = token?.sub;
 
   // Protect Dashboard: If no user, kick to home
   if (!user && request.nextUrl.pathname.startsWith("/user-task/dashboard")) {
     return NextResponse.redirect(new URL("/", request.url));
   }
   
-  // Protect Login: If user exists, kick to dashboard
+  // Parse ADMIN_USERS from comma-separated string
+  const ADMIN_USERS = process.env.ADMIN_USERS?.split(',').map(u => u.trim()) || [];
+  const username = token?.username || token?.name || '';
+  const isAdmin = ADMIN_USERS.includes(username);
+
+  // console.log('🔍 Admin check:', {
+  //   path: request.nextUrl.pathname,
+  //   username,
+  //   adminList: ADMIN_USERS,
+  //   isAdmin
+  // });
+
+  
+  if (user && isAdmin && request.nextUrl.pathname === "/user-task/dashboard") {
+    // console.log('🔄 Redirecting admin to admin page');
+    return NextResponse.redirect(new URL("/user-task/admin", request.url));
+  }
+
+  // Protect Login: If user exists, kick to appropriate dashboard
   if (user && request.nextUrl.pathname === "/") {
+    if (isAdmin) {
+      // console.log('🔄 Redirecting admin to admin page from home');
+      return NextResponse.redirect(new URL("/user-task/admin", request.url));
+    }
     return NextResponse.redirect(new URL("/user-task/dashboard", request.url));
   }
 
-  const ADMIN_USERS = ['Dreamcoinbnb', 'AnotherAdmin']; 
-
-  if (request.nextUrl.pathname.startsWith("/admin")) {
+  // Protect Admin Page: Only admins allowed
+  if (request.nextUrl.pathname.startsWith("/user-task/admin")) {
     if (!user) {
        return NextResponse.redirect(new URL("/", request.url));
     }
     
-    // Check if their username is in the allowed list
-    const username = token.username || token.name; // Twitter handle from NextAuth
-    if (!ADMIN_USERS.includes(username ?? '')) {
-       return NextResponse.redirect(new URL("/dashboard", request.url)); // Kick them out
+    if (!isAdmin) {
+      //  console.log('❌ Non-admin trying to access admin - redirecting to dashboard');
+       return NextResponse.redirect(new URL("/user-task/dashboard", request.url));
     }
+    
+    // console.log('✅ Admin access granted');
+  }
+
+  // Prevent non-admins from accessing dashboard if they should be somewhere else
+  if (user && !isAdmin && request.nextUrl.pathname.startsWith("/user-task/admin")) {
+    return NextResponse.redirect(new URL("/user-task/dashboard", request.url));
   }
 
   return response;
@@ -56,13 +82,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - api/auth (NextAuth routes)
-     */
     '/((?!_next/static|_next/image|favicon.ico|api/auth).*)',
   ],
 }

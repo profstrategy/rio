@@ -26,8 +26,9 @@ export async function getDashboardData() {
       // ATTEMPT CREATE
       dbUser = await prisma.user.create({
         data: {
-          twitterId: user.id, // Changed from user.twitterId to user.id
-          username: user.username || user.name,
+          twitterId: user.id,
+          username: user.username,
+          name: user.name,
           avatarUrl: user.avatarUrl || user.image, // Fallback to image if avatarUrl doesn't exist
           dreamPoints: 0,
         },
@@ -84,7 +85,8 @@ export async function getDashboardData() {
       where: { id: dbUser.id },
       data: {
         lastLoginDate: new Date(),
-        username: user.username || user.name,
+        username: user.username,
+        name:session?.user?.name,
         avatarUrl: user.avatarUrl || user.image,
       }
     });

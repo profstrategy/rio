@@ -25,16 +25,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Navigation Modules */}
         <div className="flex items-center gap-2 bg-black/30 p-1 rounded-xl border border-white/5">
-          <Link href="/admin" className="px-4 py-2 rounded-lg text-sm font-bold text-gray-300 hover:bg-white/10 hover:text-white flex items-center gap-2 transition-all">
+          <Link href="/" className="px-4 py-2 rounded-lg text-sm font-bold text-gray-300 hover:bg-white/10 hover:text-white flex items-center gap-2 transition-all">
             <LayoutGrid size={16} /> Quests
           </Link>
-          <Link href="/admin/users" className="px-4 py-2 rounded-lg text-sm font-bold text-gray-300 hover:bg-white/10 hover:text-white flex items-center gap-2 transition-all">
+          <Link href="/users" className="px-4 py-2 rounded-lg text-sm font-bold text-gray-300 hover:bg-white/10 hover:text-white flex items-center gap-2 transition-all">
             <Users size={16} /> Dreamers
           </Link>
         </div>
 
         {/* Exit Button */}
-        <Link href="/dashboard" className="px-4 py-2 text-xs font-bold text-gray-400 hover:text-neon-cyan flex items-center gap-2 transition-colors border border-transparent hover:border-neon-cyan/30 rounded-lg">
+        <Link href="/" className="px-4 py-2 text-xs font-bold text-gray-400 hover:text-neon-cyan flex items-center gap-2 transition-colors border border-transparent hover:border-neon-cyan/30 rounded-lg">
           <ArrowLeft size={14} /> EXIT TO APP
         </Link>
       </nav>

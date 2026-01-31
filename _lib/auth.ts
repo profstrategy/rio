@@ -1,7 +1,6 @@
 // _lib/auth.ts
 import NextAuth, { NextAuthOptions, Account } from "next-auth"
 import TwitterProvider from "next-auth/providers/twitter"
-import { PrismaAdapter } from "@auth/prisma-adapter"
 import { JWT } from "next-auth/jwt"
 import { TwitterProfile } from "@/constants/types"
 import { prisma } from "@/lib/prisma"
@@ -47,7 +46,7 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
       await prisma.account.updateMany({
         where: {
           provider: "twitter",
-          providerAccountId: token.sub as string,
+          providerAccountId: token.twitterId as string,
         },
         data: {
           access_token: refreshedTokens.access_token,
@@ -71,7 +70,7 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma),
 
   providers: [
     TwitterProvider({
@@ -80,7 +79,6 @@ export const authOptions: NextAuthOptions = {
       version: "2.0",
       authorization: {
         params: {
-          // IMPORTANT: All scopes needed for $RIO tracking
           scope: [
             "tweet.read",
             "users.read",
@@ -90,7 +88,6 @@ export const authOptions: NextAuthOptions = {
           ].join(" "),
         },
       },
-      // Optional: Add profile fields
       profile(profile) {
         return {
           id: profile.data.id,
@@ -104,34 +101,87 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async signIn({ user, account, profile }) {
-      // Store Twitter-specific data when user signs in
       if (account?.provider === "twitter" && profile) {
         try {
-          // Extract Twitter data from profile
           const twitterData = profile as TwitterProfile
+          const twitterId = twitterData?.data?.id
 
-          await new Promise(resolve => setTimeout(resolve, 300))
-
-          await prisma.user.upsert({
-            where: { id: user.id },
-            update: {
-              twitterId: twitterData?.data?.id,
-              username: twitterData?.data?.username,
-              displayName: twitterData?.data?.name,
-              lastLoginDate: new Date
-            },
-            create: {
-              id: user.id,
-              name: twitterData?.data?.name,
-              email: user.email || null,
-              image: twitterData?.data?.profile_image_url,
-              twitterId: twitterData?.data?.id,
-              username: twitterData?.data?.username,
-              displayName: twitterData?.data?.name,
-            },
+          // Check if user exists by twitterId
+          let dbUser = await prisma.user.findUnique({
+            where: { twitterId: twitterId }
           })
+
+          if (!dbUser) {
+            // Create user if doesn't exist
+            try {
+              dbUser = await prisma.user.create({
+                data: {
+                  twitterId: twitterId,
+                  username: twitterData?.data?.username,
+                  displayName: twitterData?.data?.name,
+                  avatarUrl: twitterData?.data?.profile_image_url,
+                  dreamPoints: 0,
+                  lastLoginDate: new Date(),
+                },
+              })
+              console.log("✅ Created new user:", dbUser.id)
+            } catch (createError: any) {
+              // Race condition - another request created the user
+              if (createError.code === 'P2002') {
+                dbUser = await prisma.user.findUnique({
+                  where: { twitterId: twitterId }
+                })
+                console.log("⚠️ Race condition caught, user already exists")
+              } else {
+                throw createError
+              }
+            }
+          } else {
+            // Update existing user
+            await prisma.user.update({
+              where: { id: dbUser.id },
+              data: {
+                username: twitterData?.data?.username,
+                displayName: twitterData?.data?.name,
+                avatarUrl: twitterData?.data?.profile_image_url,
+                lastLoginDate: new Date(),
+              },
+            })
+            console.log("✅ Updated existing user:", dbUser.id)
+          }
+
+          // Create or update Account record
+          if (dbUser && account) {
+            await prisma.account.upsert({
+              where: {
+                provider_providerAccountId: {
+                  provider: account.provider,
+                  providerAccountId: twitterId,
+                },
+              },
+              create: {
+                userId: dbUser.id,
+                type: account.type,
+                provider: account.provider,
+                providerAccountId: twitterId,
+                access_token: account.access_token,
+                refresh_token: account.refresh_token,
+                expires_at: account.expires_at,
+                token_type: account.token_type,
+                scope: account.scope,
+              },
+              update: {
+                access_token: account.access_token,
+                refresh_token: account.refresh_token,
+                expires_at: account.expires_at,
+              },
+            })
+            console.log("✅ Account record updated")
+          }
+
         } catch (error) {
-          console.error("Error updating user Twitter data:", error)
+          console.error("❌ Error in signIn callback:", error)
+          return false // Prevent sign in if error
         }
       }
 
@@ -140,19 +190,17 @@ export const authOptions: NextAuthOptions = {
 
     async jwt({ token, account, user, profile }) {
       // Initial sign in
-      if (account && user) {
-        // Extract Twitter username from profile
+      if (account && profile) {
         const twitterData = profile as TwitterProfile
 
-        // Store tokens and user data in JWT
         return {
           ...token,
           accessToken: account.access_token,
           refreshToken: account.refresh_token,
           accessTokenExpires: account.expires_at
             ? account.expires_at * 1000
-            : Date.now() + 7200 * 1000, // Default 2 hours
-          // twitterId: twitterData?.data?.id,
+            : Date.now() + 7200 * 1000,
+          twitterId: twitterData?.data?.id,
           username: twitterData?.data?.username,
         }
       }
@@ -167,30 +215,31 @@ export const authOptions: NextAuthOptions = {
       return await refreshAccessToken(token)
     },
 
-    async session({ session, token, user }) {
-      if (session?.user && token.sub) {
+    async session({ session, token }) {
+      if (session?.user && token.twitterId) {
         // Fetch latest user data from database
         const dbUser = await prisma.user.findUnique({
-          where: { id: token.sub },
+          where: { twitterId: token.twitterId as string },
           select: {
             id: true,
             twitterId: true,
             username: true,
             displayName: true,
-            avatarUrl:true,
-            lastLoginDate:true
+            avatarUrl: true,
+            lastLoginDate: true,
           },
         })
 
-        // Build session with both token and database data
-        session.user = {
-          ...session.user,
-          id: token.sub,
-          twitterId: dbUser?.twitterId ?? token.twitterId ?? '',
-          username: dbUser?.username ?? token.username ?? '',
-          accessToken: token.accessToken as string ?? '',
-          name: dbUser?.displayName || session.user.name,
-          avatarUrl: dbUser?.avatarUrl ?? ''
+        if (dbUser) {
+          session.user = {
+            ...session.user,
+            id: dbUser.twitterId!, // Use twitterId as the session user.id
+            twitterId: dbUser.twitterId!,
+            username: dbUser.username || '',
+            name: dbUser.displayName,
+            avatarUrl: dbUser.avatarUrl || '',
+            accessToken: token.accessToken as string ?? '',
+          }
         }
 
         // Pass refresh error to frontend if exists
