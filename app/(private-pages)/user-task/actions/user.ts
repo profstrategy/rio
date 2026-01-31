@@ -26,9 +26,9 @@ export async function getDashboardData() {
       // ATTEMPT CREATE
       dbUser = await prisma.user.create({
         data: {
-          id: user.id,
+          twitterId: user.id, // Changed from user.twitterId to user.id
           username: user.username || user.name,
-          avatarUrl: user.avatarUrl,
+          avatarUrl: user.avatarUrl || user.image, // Fallback to image if avatarUrl doesn't exist
           dreamPoints: 0,
         },
       });
@@ -63,10 +63,18 @@ export async function getDashboardData() {
       // If the error code is P2002 (Unique constraint failed), it means 
       // the user was created by a parallel request 1ms ago.
       if (error.code === 'P2002') {
+        console.log("Race condition detected, fetching existing user");
         dbUser = await prisma.user.findUnique({
           where: { twitterId: user.id },
         });
+        
+        if (!dbUser) {
+          // If still not found, something else is wrong
+          console.error("User still not found after P2002 error");
+          throw error;
+        }
       } else {
+        console.error("User creation error:", error);
         throw error; // If it's another error, actually crash
       }
     }
@@ -77,7 +85,7 @@ export async function getDashboardData() {
       data: {
         lastLoginDate: new Date(),
         username: user.username || user.name,
-        avatarUrl: user.avatarUrl,
+        avatarUrl: user.avatarUrl || user.image,
       }
     });
   }

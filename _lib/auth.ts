@@ -209,7 +209,7 @@ export const authOptions: NextAuthOptions = {
   },
 
   pages: {
-    signIn: "/",
+    signIn: "/user-task/dashboard/",
     error: "/auth/error",
   },
 

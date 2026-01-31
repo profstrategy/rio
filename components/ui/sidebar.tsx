@@ -14,22 +14,27 @@ interface SidebarProps {
     dreamPoints: number;
     currentLevel: string;
   } | null;
-  isOpen: boolean;       // NEW: Controls mobile visibility
-  onClose: () => void;   // NEW: Function to close mobile menu
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const menuItems = [
-  { name: "Overview", icon: Home, href: "/dashboard" },
-  { name: "Tasks", icon: CheckSquare, href: "/dashboard/tasks" }, 
-  { name: "Leaderboard", icon: Trophy, href: "/dashboard/leaderboard" },
-  { name: "Referrals", icon: UserIcon, href: "/dashboard/refer" },
-  { name: "Faqs", icon: HelpCircle, href: "/dashboard/faqs" },
+  { name: "Overview", icon: Home, href: "/user-task/dashboard" },
+  { name: "Tasks", icon: CheckSquare, href: "/user-task/dashboard/tasks" },
+  { name: "Leaderboard", icon: Trophy, href: "/user-task/dashboard/leaderboard" },
+  { name: "Referrals", icon: UserIcon, href: "/user-task/dashboard/refer" },
+  { name: "Faqs", icon: HelpCircle, href: "/user-task/dashboard/faqs" },
 ];
 
 export default function Sidebar({ user, isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
 
+  // Handler for navigation
+  const handleNavigation = (href: string) => {
+    router.push(href);
+    onClose(); 
+  };
 
   // REUSABLE CONTENT (Used for both Desktop & Mobile)
   const SidebarContent = (
@@ -61,12 +66,11 @@ export default function Sidebar({ user, isOpen, onClose }: SidebarProps) {
             {menuItems.map((item) => {
             const isActive = pathname === item.href;
             return (
-                <Link
+                <button
                 key={item.name}
-                href={item.href}
-                onClick={onClose} // Close menu on click (Mobile UX)
+                onClick={() => handleNavigation(item.href)}
                 className={clsx(
-                    "relative flex items-center gap-4 px-6 py-4 rounded-xl transition-all duration-300 group",
+                    "w-full relative flex items-center gap-4 px-6 py-4 rounded-xl transition-all duration-300 group",
                     isActive
                     ? "text-white"
                     : "text-gray-400 hover:text-white hover:bg-white/5"
@@ -86,7 +90,7 @@ export default function Sidebar({ user, isOpen, onClose }: SidebarProps) {
                 <span className={clsx("relative z-10 font-medium tracking-wide", isActive ? "font-bold" : "")}>
                     {item.name}
                 </span>
-                </Link>
+                </button>
             );
             })}
         </nav>

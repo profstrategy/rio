@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createServerClient } from "@supabase/ssr";
+import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
@@ -19,32 +19,22 @@ export async function middleware(request: NextRequest) {
     });
   }
 
-  // 2. AUTH CHECK (Standard Supabase Middleware)
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() { return request.cookies.getAll() },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          response = NextResponse.next({ request })
-          cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options))
-        },
-      },
-    }
-  );
+  // 2. AUTH CHECK (NextAuth JWT Token)
+  const token = await getToken({ 
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET 
+  });
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = token?.sub; // This contains the user object from NextAuth session
 
   // Protect Dashboard: If no user, kick to home
-  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
+  if (!user && request.nextUrl.pathname.startsWith("/user-task/dashboard")) {
     return NextResponse.redirect(new URL("/", request.url));
   }
   
   // Protect Login: If user exists, kick to dashboard
   if (user && request.nextUrl.pathname === "/") {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(new URL("/user-task/dashboard", request.url));
   }
 
   const ADMIN_USERS = ['Dreamcoinbnb', 'AnotherAdmin']; 
@@ -55,8 +45,8 @@ export async function middleware(request: NextRequest) {
     }
     
     // Check if their username is in the allowed list
-    const username = user.user_metadata.user_name; // Twitter handle
-    if (!ADMIN_USERS.includes(username)) {
+    const username = token.username || token.name; // Twitter handle from NextAuth
+    if (!ADMIN_USERS.includes(username ?? '')) {
        return NextResponse.redirect(new URL("/dashboard", request.url)); // Kick them out
     }
   }
@@ -71,7 +61,8 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - api/auth (NextAuth routes)
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico|api/auth).*)',
   ],
 }
