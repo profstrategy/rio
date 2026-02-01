@@ -1,4 +1,3 @@
-import { ActivityWindow } from "@/network/types";
 
 interface NavItems {
   id: string;
@@ -55,15 +54,6 @@ export interface MetricCardProps {
   value?: number;
   trend?: string;
   delay?: number;
-}
-
-export interface DashboardCardProps {
-  title: string
-  children: React.ReactNode
-  delay?: number
-  height?: string
-  activityWindow?: ActivityWindow
-  onActivityWindowChange?: (window: ActivityWindow) => void
 }
 
 
