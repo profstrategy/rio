@@ -9,7 +9,7 @@ export async function searchRioActivityMetrics(
   const cacheKey = `twitter:search:${username}:metrics`
 
   return getCachedData(cacheKey, async () => {
-    console.log(`🔍 Searching tweets from:${username} with RIO keywords since`);
+    console.log(`🔍 Searching tweets from:${username} with RIO keywords`);
 
     const params: Record<string, any> = {
       query: `from:${username} (RIO OR RioOnBonk OR $RIO OR $RioOnBonk)`,
